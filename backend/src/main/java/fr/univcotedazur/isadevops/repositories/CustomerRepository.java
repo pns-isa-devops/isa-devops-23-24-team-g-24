@@ -1,6 +1,6 @@
-package fr.univcotedazur.simpletcfs.repositories;
+package fr.univcotedazur.isadevops.repositories;
 
-import fr.univcotedazur.simpletcfs.entities.Customer;
+import fr.univcotedazur.isadevops.entities.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

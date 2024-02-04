@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.exceptions;
+package fr.univcotedazur.isadevops.exceptions;
 
 public class AlreadyExistingCustomerException extends Exception {
 

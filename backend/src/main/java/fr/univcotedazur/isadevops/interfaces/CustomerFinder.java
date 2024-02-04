@@ -1,7 +1,7 @@
-package fr.univcotedazur.simpletcfs.interfaces;
+package fr.univcotedazur.isadevops.interfaces;
 
-import fr.univcotedazur.simpletcfs.entities.Customer;
-import fr.univcotedazur.simpletcfs.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.entities.Customer;
+import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
 
 import java.util.List;
 import java.util.Optional;

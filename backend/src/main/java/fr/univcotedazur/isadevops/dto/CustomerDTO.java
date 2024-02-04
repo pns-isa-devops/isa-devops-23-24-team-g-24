@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.dto;
+package fr.univcotedazur.isadevops.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

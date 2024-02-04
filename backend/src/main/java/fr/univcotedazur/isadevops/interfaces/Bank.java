@@ -1,6 +1,6 @@
-package fr.univcotedazur.simpletcfs.interfaces;
+package fr.univcotedazur.isadevops.interfaces;
 
-import fr.univcotedazur.simpletcfs.entities.Customer;
+import fr.univcotedazur.isadevops.entities.Customer;
 
 import java.util.Optional;
 

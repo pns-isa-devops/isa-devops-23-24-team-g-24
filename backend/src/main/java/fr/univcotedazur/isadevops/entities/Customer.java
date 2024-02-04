@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.entities;
+package fr.univcotedazur.isadevops.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -1,9 +1,9 @@
-package fr.univcotedazur.simpletcfs.connectors;
+package fr.univcotedazur.isadevops.connectors;
 
-import fr.univcotedazur.simpletcfs.connectors.externaldto.PaymentReceiptDTO;
-import fr.univcotedazur.simpletcfs.connectors.externaldto.PaymentRequestDTO;
-import fr.univcotedazur.simpletcfs.entities.Customer;
-import fr.univcotedazur.simpletcfs.interfaces.Bank;
+import fr.univcotedazur.isadevops.connectors.externaldto.PaymentReceiptDTO;
+import fr.univcotedazur.isadevops.connectors.externaldto.PaymentRequestDTO;
+import fr.univcotedazur.isadevops.entities.Customer;
+import fr.univcotedazur.isadevops.interfaces.Bank;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

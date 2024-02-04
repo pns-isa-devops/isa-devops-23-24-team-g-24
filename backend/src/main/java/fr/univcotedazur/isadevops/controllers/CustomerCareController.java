@@ -1,12 +1,12 @@
-package fr.univcotedazur.simpletcfs.controllers;
+package fr.univcotedazur.isadevops.controllers;
 
-import fr.univcotedazur.simpletcfs.dto.CustomerDTO;
-import fr.univcotedazur.simpletcfs.dto.ErrorDTO;
-import fr.univcotedazur.simpletcfs.entities.Customer;
-import fr.univcotedazur.simpletcfs.exceptions.AlreadyExistingCustomerException;
-import fr.univcotedazur.simpletcfs.exceptions.CustomerIdNotFoundException;
-import fr.univcotedazur.simpletcfs.interfaces.CustomerFinder;
-import fr.univcotedazur.simpletcfs.interfaces.CustomerRegistration;
+import fr.univcotedazur.isadevops.dto.CustomerDTO;
+import fr.univcotedazur.isadevops.dto.ErrorDTO;
+import fr.univcotedazur.isadevops.entities.Customer;
+import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
+import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
+import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

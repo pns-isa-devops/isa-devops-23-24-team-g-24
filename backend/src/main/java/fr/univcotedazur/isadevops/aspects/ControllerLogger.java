@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.aspects;
+package fr.univcotedazur.isadevops.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;

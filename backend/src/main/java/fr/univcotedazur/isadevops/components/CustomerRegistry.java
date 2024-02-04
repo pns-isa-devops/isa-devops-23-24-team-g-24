@@ -1,11 +1,11 @@
-package fr.univcotedazur.simpletcfs.components;
+package fr.univcotedazur.isadevops.components;
 
-import fr.univcotedazur.simpletcfs.entities.Customer;
-import fr.univcotedazur.simpletcfs.exceptions.AlreadyExistingCustomerException;
-import fr.univcotedazur.simpletcfs.exceptions.CustomerIdNotFoundException;
-import fr.univcotedazur.simpletcfs.interfaces.CustomerFinder;
-import fr.univcotedazur.simpletcfs.interfaces.CustomerRegistration;
-import fr.univcotedazur.simpletcfs.repositories.CustomerRepository;
+import fr.univcotedazur.isadevops.entities.Customer;
+import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
+import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
+import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
+import fr.univcotedazur.isadevops.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

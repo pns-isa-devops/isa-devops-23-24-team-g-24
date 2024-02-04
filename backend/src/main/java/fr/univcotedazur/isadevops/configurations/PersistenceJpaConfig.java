@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.configurations;
+package fr.univcotedazur.isadevops.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs;
+package fr.univcotedazur.isadevops;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
