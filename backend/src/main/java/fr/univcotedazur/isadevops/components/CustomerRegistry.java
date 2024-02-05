@@ -3,6 +3,8 @@ package fr.univcotedazur.isadevops.components;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.PaymentException;
+import fr.univcotedazur.isadevops.interfaces.Bank;
 import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
 import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
@@ -16,20 +18,28 @@ import java.util.Optional;
 @Service
 public class CustomerRegistry implements CustomerRegistration, CustomerFinder {
 
+    private final Bank bank;
+
     private final CustomerRepository customerRepository;
 
     @Autowired // annotation is optional since Spring 4.3 if component has only one constructor
-    public CustomerRegistry(CustomerRepository customerRepository) {
+    public CustomerRegistry(Bank bank, CustomerRepository customerRepository) {
+        this.bank = bank;
         this.customerRepository = customerRepository;
     }
 
     @Override
     @Transactional
     public Customer register(String name, String creditCard)
-            throws AlreadyExistingCustomerException {
+            throws AlreadyExistingCustomerException, PaymentException {
         if (findByName(name).isPresent())
             throw new AlreadyExistingCustomerException(name);
         Customer newcustomer = new Customer(name, creditCard);
+
+
+        String payment = bank.pay(newcustomer, 0).orElseThrow(() -> new PaymentException(newcustomer.getName(), 0));
+
+
         return customerRepository.save(newcustomer);
     }
 
