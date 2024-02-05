@@ -1,6 +1,5 @@
 package fr.univcotedazur.isadevops.cli.commands;
 
-import fr.univcotedazur.simpletcfs.cli.model.CookieEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;

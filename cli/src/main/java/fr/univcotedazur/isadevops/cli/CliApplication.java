@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.cli;
+package fr.univcotedazur.isadevops.cli;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

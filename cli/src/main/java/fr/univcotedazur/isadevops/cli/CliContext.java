@@ -1,6 +1,6 @@
-package fr.univcotedazur.simpletcfs.cli;
+package fr.univcotedazur.isadevops.cli;
 
-import fr.univcotedazur.simpletcfs.cli.model.CliCustomer;
+import fr.univcotedazur.isadevops.cli.model.CliCustomer;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

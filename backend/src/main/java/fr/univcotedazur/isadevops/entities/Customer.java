@@ -22,11 +22,11 @@ public class Customer {
     @Pattern(regexp = "\\d{10}+", message = "Invalid creditCardNumber")
     private String creditCard;
 
-    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "customer")
-    private Set<Order> orders = new HashSet<>();
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Item> cart = new HashSet<>();
+//    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "customer")
+//    private Set<Order> orders = new HashSet<>();
+//
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private Set<Item> cart = new HashSet<>();
 
     public Customer() {
     }
@@ -56,29 +56,29 @@ public class Customer {
         this.creditCard = creditCard;
     }
 
-    public void addOrder(Order o) {
-        this.orders.add(o);
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-            this.orders = orders;
-    }
-
-    public Set<Item> getCart() {
-        return cart;
-    }
-
-    public void setCart(Set<Item> cart) {
-        this.cart = cart;
-    }
-
-    public void clearCart() {
-        this.cart.clear();
-    }
+//    public void addOrder(Order o) {
+//        this.orders.add(o);
+//    }
+//
+//    public Set<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(Set<Order> orders) {
+//            this.orders = orders;
+//    }
+//
+//    public Set<Item> getCart() {
+//        return cart;
+//    }
+//
+//    public void setCart(Set<Item> cart) {
+//        this.cart = cart;
+//    }
+//
+//    public void clearCart() {
+//        this.cart.clear();
+//    }
 
     @Override
     public boolean equals(Object o) {
