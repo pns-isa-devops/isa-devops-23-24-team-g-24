@@ -35,11 +35,6 @@ public class CustomerRegistry implements CustomerRegistration, CustomerFinder {
         if (findByName(name).isPresent())
             throw new AlreadyExistingCustomerException(name);
         Customer newcustomer = new Customer(name, creditCard);
-
-
-        String payment = bank.pay(newcustomer, 0).orElseThrow(() -> new PaymentException(newcustomer.getName(), 0));
-
-
         return customerRepository.save(newcustomer);
     }
 

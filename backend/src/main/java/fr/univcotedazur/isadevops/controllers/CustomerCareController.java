@@ -5,6 +5,7 @@ import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.PaymentException;
 import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
 import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
 import jakarta.validation.Valid;
@@ -53,6 +54,8 @@ public class CustomerCareController {
         } catch (AlreadyExistingCustomerException e) {
             // Note: Returning 409 (Conflict) can also be seen a security/privacy vulnerability, exposing a service for account enumeration
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (PaymentException e) {
+            throw new RuntimeException(e);
         }
     }
 
