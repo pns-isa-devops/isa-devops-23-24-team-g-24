@@ -1,5 +1,6 @@
 package fr.univcotedazur.isadevops.components;
 
+import fr.univcotedazur.isadevops.components.CustomerRegistry;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;

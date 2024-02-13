@@ -1,18 +1,22 @@
-package fr.univcotedazur.isadevops.repositories;
+package fr.univcotedazur.simpletcfs.repositories;
 
 import fr.univcotedazur.isadevops.entities.Customer;
+import fr.univcotedazur.isadevops.repositories.CustomerRepository;
+
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-@DataJpaTest
-public class CustomerRepositoryTest {
+@DataJpaTest // Only run a test container with the JPA layer (only repositories are up)
+// @DataJpaTest is "transactional rollback by default
+class CustomerRepositoryTest {
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Test
     void testIdGenerationAndUnicity() {
         Customer john = new Customer("john", "1234567890");
@@ -22,6 +26,7 @@ public class CustomerRepositoryTest {
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> customerRepository.saveAndFlush(new Customer("john", "1234567890")));
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> customerRepository.saveAndFlush(new Customer("john", "12345678902")));
     }
+
     @Test
     void testFindCustomerByName() {
         Customer john = new Customer("john", "1234567890");
@@ -42,3 +47,4 @@ public class CustomerRepositoryTest {
         Assertions.assertThrows(ConstraintViolationException.class, () -> customerRepository.saveAndFlush(new Customer("badguy", "123456789")));
     }
 }
+

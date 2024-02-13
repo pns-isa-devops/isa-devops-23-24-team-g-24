@@ -1,8 +1,10 @@
 package fr.univcotedazur.isadevops.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univcotedazur.isadevops.dto.CustomerDTO;
+import fr.univcotedazur.isadevops.components.CustomerRegistry;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
