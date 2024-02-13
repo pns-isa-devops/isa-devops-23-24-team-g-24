@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.repositories;
+package fr.univcotedazur.isadevops.repositories;
 
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
