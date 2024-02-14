@@ -8,12 +8,10 @@ public class CliActivity {
     private int numberOfPlaces;
     private int pointsEarned;
 
-    public CliActivity(String name, String location, int pricePoints, int numberOfPlaces, int pointsEarned) {
+    public CliActivity(String name, String location, int numberOfPlaces) {
         this.name = name;
         this.location = location;
-        this.pricePoints = pricePoints;
         this.numberOfPlaces = numberOfPlaces;
-        this.pointsEarned = pointsEarned;
     }
      public Long getId() {
          return id;

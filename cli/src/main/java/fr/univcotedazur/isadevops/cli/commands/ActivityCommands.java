@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -31,15 +32,11 @@ public class ActivityCommands {
     }
 
 
-    @ShellMethod("List all known activities")
-    public String activities() {
-        return cliContext.getCustomers().toString();
-    }
-
-    @ShellMethod("Update all known activities from server")
-    public String updateActivities() {
-        Map<String, CliActivity> customerMap = cliContext.getActivities();
-        return customerMap.toString();
+    @ShellMethod("List all activities")
+    public String listActivities() {
+        CliActivity[] activities = restTemplate.getForObject(BASE_URI, CliActivity[].class);
+        if (activities == null) return "No activities found.";
+        return Arrays.stream(activities).map(Object::toString).collect(Collectors.joining("\n"));
     }
 
 
