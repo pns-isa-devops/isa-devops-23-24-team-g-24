@@ -54,6 +54,8 @@ public class CustomerCareController {
         } catch (AlreadyExistingCustomerException | PaymentException e) {
             // Note: Returning 409 (Conflict) can also be seen a security/privacy vulnerability, exposing a service for account enumeration
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (PaymentException e) {
+            throw new RuntimeException(e);
         }
     }
 
