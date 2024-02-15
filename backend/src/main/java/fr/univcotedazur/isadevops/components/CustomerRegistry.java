@@ -31,7 +31,7 @@ public class CustomerRegistry implements CustomerRegistration, CustomerFinder {
     @Override
     @Transactional
     public Customer register(String name, String creditCard)
-            throws AlreadyExistingCustomerException, PaymentException {
+            throws AlreadyExistingCustomerException {
         if (findByName(name).isPresent())
             throw new AlreadyExistingCustomerException(name);
         Customer newcustomer = new Customer(name, creditCard);

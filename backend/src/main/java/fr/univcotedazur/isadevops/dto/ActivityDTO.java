@@ -7,5 +7,6 @@ import jakarta.validation.constraints.Pattern;
 public record ActivityDTO (
         Long id,
         @NotBlank(message = "name should not be blank") String name,
-        @Pattern(regexp = "\\d{10}+", message = "credit card should be exactly 10 digits") String creditCard) {
+        @NotBlank(message = "location should not be blank") String location,
+        Long numberOfPlaces){
 }

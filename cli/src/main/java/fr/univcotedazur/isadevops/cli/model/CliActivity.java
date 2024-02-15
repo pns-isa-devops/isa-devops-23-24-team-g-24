@@ -4,11 +4,9 @@ public class CliActivity {
     private Long id;
     private String name;
     private String location;
-    private int pricePoints;
-    private int numberOfPlaces;
-    private int pointsEarned;
+    private Long numberOfPlaces;
 
-    public CliActivity(String name, String location, int numberOfPlaces) {
+    public CliActivity(String name, String location, Long numberOfPlaces) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
@@ -32,28 +30,13 @@ public class CliActivity {
         this.location = location;
     }
 
-    public int getPricePoints() {
-        return pricePoints;
-    }
 
-    public void setPricePoints(int pricePoints) {
-        this.pricePoints = pricePoints;
-    }
-
-    public int getNumberOfPlaces() {
+    public Long getNumberOfPlaces() {
         return numberOfPlaces;
     }
 
-    public void setNumberOfPlaces(int numberOfPlaces) {
+    public void setNumberOfPlaces(Long numberOfPlaces) {
         this.numberOfPlaces = numberOfPlaces;
-    }
-
-    public int getPointsEarned() {
-        return pointsEarned;
-    }
-
-    public void setPointsEarned(int pointsEarned) {
-        this.pointsEarned = pointsEarned;
     }
 
     @Override
@@ -61,9 +44,7 @@ public class CliActivity {
         return "Activity{" +
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
-                ", pricePoints='" + pricePoints + '\'' +
                 ", numberOfPlaces='" + numberOfPlaces + '\'' +
-                ", pointsEarned='" + pointsEarned + '\'' +
                 '}';
     }
 }
