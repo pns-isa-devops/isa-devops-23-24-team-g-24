@@ -19,6 +19,9 @@ public class Activity {
     @NotNull
     private Integer numberOfPlaces;
 
+    @NotNull
+    private double price;
+
     public Long getId() {
         return id;
     }
@@ -46,5 +49,13 @@ public class Activity {
 
     public void setNumberOfPlaces(Integer numberOfPlaces) {
         this.numberOfPlaces = numberOfPlaces;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

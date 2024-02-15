@@ -4,6 +4,7 @@ public class CliActivity {
     private Long id;
     private String name;
     private String location;
+    private double price;
     private int pricePoints;
     private int numberOfPlaces;
     private int pointsEarned;
@@ -54,6 +55,14 @@ public class CliActivity {
 
     public void setPointsEarned(int pointsEarned) {
         this.pointsEarned = pointsEarned;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
