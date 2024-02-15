@@ -51,7 +51,7 @@ public class CustomerCareController {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(convertCustomerToDto(registry.register(cusdto.name(), cusdto.creditCard())));
-        } catch (AlreadyExistingCustomerException | PaymentException e) {
+        } catch (AlreadyExistingCustomerException e) {
             // Note: Returning 409 (Conflict) can also be seen a security/privacy vulnerability, exposing a service for account enumeration
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

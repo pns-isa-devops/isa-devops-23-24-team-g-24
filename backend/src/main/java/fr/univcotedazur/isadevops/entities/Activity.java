@@ -14,10 +14,18 @@ public class Activity {
     private String name;
 
     @NotBlank
-    private String localisation;
+    private String location;
 
     @NotNull
-    private Integer numberOfPlaces;
+    private Long numberOfPlaces;
+
+    public Activity() {
+    }
+    public Activity(String name, String location, Long numberOfPlaces) {
+        this.name = name;
+        this.location = location;
+        this.numberOfPlaces = numberOfPlaces;
+    }
 
     @NotNull
     private double price;
@@ -35,19 +43,19 @@ public class Activity {
         this.name = name;
     }
 
-    public String getLocalisation() {
-        return localisation;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocalisation(String localisation) {
-        this.localisation = localisation;
+    public void setLocation(String localisation) {
+        this.location = localisation;
     }
 
-    public Integer getNumberOfPlaces() {
+    public Long getNumberOfPlaces() {
         return numberOfPlaces;
     }
 
-    public void setNumberOfPlaces(Integer numberOfPlaces) {
+    public void setNumberOfPlaces(Long numberOfPlaces) {
         this.numberOfPlaces = numberOfPlaces;
     }
 

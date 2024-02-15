@@ -31,12 +31,18 @@ public class ActivityCommands {
         this.cliContext = cliContext;
     }
 
-
     @ShellMethod("List all activities")
     public String listActivities() {
+        System.out.println("Fetching activities from server...");
         CliActivity[] activities = restTemplate.getForObject(BASE_URI, CliActivity[].class);
-        if (activities == null) return "No activities found.";
+        if (activities == null || activities.length == 0) return "No activities found.";
         return Arrays.stream(activities).map(Object::toString).collect(Collectors.joining("\n"));
+    }
+
+    @ShellMethod("Add activity")
+    public String addActivity(String name, String location, Long numberOfPlaces) {
+        CliActivity createdActivity = restTemplate.postForObject(BASE_URI, new CliActivity(name, location, numberOfPlaces), CliActivity.class);
+        return createdActivity != null ? "Activity added with success: " + createdActivity.toString() : "Error while adding activity";
     }
 
 
