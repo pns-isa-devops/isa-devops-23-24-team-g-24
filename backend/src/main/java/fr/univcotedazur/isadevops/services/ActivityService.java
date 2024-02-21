@@ -22,6 +22,8 @@ public class ActivityService implements ActivityCreator {
         this.activityRepository = activityRepository;
     }
 
+    @Override
+    @Transactional(readOnly = true)
     public List<Activity> findAllActivities() {
         return activityRepository.findAll();
     }
@@ -29,6 +31,12 @@ public class ActivityService implements ActivityCreator {
     @Transactional(readOnly = true)
     public Optional<Activity> findByName(String name) {
         return activityRepository.findActivityByName(name);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Activity> findById(long id) {
+        return activityRepository.findById(id);
     }
 
     public Activity saveActivity(Activity activity) {
