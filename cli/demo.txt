@@ -1,2 +1,6 @@
-echo "start of demo"
-echo "Premier test réalisé par simon"
+echo "--- Réaliation du script de démonstration End2End ---\n"
+echo "[+] Premier test : Enregistrement d'un customer [+]"
+customers
+register "Philippe" "Collet" "1234567890"
+customers
+register "Anne-Marie" "Derry" ""
