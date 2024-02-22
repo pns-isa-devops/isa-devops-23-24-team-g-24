@@ -1,15 +1,23 @@
 package fr.univcotedazur.isadevops.services;
 
 import fr.univcotedazur.isadevops.entities.Partner;
+import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
+import fr.univcotedazur.isadevops.interfaces.PartnerCreator;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
-public class AdminService {
+public class AdminService implements PartnerCreator {
     private final PartnerRepository partnerRepository;
 
+    @Autowired
+    public AdminService(PartnerRepository partnerRepository) {
+        this.partnerRepository = partnerRepository;
+    }
 
 
     @Override
@@ -24,7 +32,7 @@ public class AdminService {
         if(findByName(name).isPresent())
             throw new AlreadyExistingPartnerException(name);
         Partner newPartner = new Partner(name, location, description);
-        return adminRepository.save(newPartner);
+        return partnerRepository.save(newPartner);
     }
 
 
