@@ -37,4 +37,12 @@ public class AdminCommands {
         return Arrays.stream(partners).map(Object::toString).collect(Collectors.joining("\n"));
     }
 
+    @ShellMethod("Delete partner")
+    public String deletePartner(Long id){
+        System.out.println("Fetching partner...");
+        restTemplate.delete(BASE_URI+"/"+id);
+        System.out.println("Deleting partner");
+        return "Partner deleted with success";
+    }
+
 }

@@ -12,4 +12,5 @@ public interface PartnerCreator {
     Optional<Partner> findById(long id);
     List<Partner> findAll();
     List<Partner> findAllPartners();
+    void delete(long id);
 }

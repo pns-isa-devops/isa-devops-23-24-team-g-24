@@ -11,4 +11,5 @@ public interface PartnerRepository extends JpaRepository<Partner, Long> {
     Optional<Partner> findById(long id);
 
 
+
 }

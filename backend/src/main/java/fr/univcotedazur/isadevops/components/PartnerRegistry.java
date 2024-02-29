@@ -37,6 +37,12 @@ public class PartnerRegistry implements PartnerCreator {
     }
 
     @Override
+    @Transactional
+    public void delete(long id) {
+        partnerRepository.deleteById(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<Partner> findByName(String name) {
         return partnerRepository.findPartnerByName(name);

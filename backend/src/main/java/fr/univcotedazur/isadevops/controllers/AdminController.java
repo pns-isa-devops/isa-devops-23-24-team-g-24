@@ -41,6 +41,13 @@ public class AdminController {
         return ResponseEntity.ok(partnerRegistry.findAll());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePartner(@PathVariable Long id){
+        System.out.println("Deleting partner");
+        partnerRegistry.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<PartnerDTO> addPartner(@RequestBody @Valid PartnerDTO partner){
         System.out.println("Adding partner");
