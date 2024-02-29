@@ -1,6 +1,8 @@
-echo "--- Réaliation du script de démonstration End2End ---\n"
-echo "[+] Premier test : Enregistrement d'un customer [+]"
+echo "Réaliation du script de démonstration End2End"
+echo "Premier test : Enregistrement d'un customer"
 customers
-register "Philippe" "Collet" "1234567890"
+register "Simon" "1234567890"
 customers
-register "Anne-Marie" "Derry" ""
+echo "Deuxième test : Ajout d'une activité dans la liste des activités"
+add-activity "Padel" "Sophia" 5
+list-activities
