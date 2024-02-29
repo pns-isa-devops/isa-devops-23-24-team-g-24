@@ -11,4 +11,5 @@ public interface PartnerCreator {
     Optional<Partner> findByName(String name);
     Optional<Partner> findById(long id);
     List<Partner> findAll();
+    List<Partner> findAllPartners();
 }

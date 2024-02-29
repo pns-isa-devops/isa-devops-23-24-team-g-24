@@ -22,6 +22,12 @@ public class PartnerRegistry implements PartnerCreator {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Partner> findAllPartners() {
+        return partnerRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public Partner create(String name, String location, String description) throws AlreadyExistingPartnerException {
         if (findByName(name).isPresent())

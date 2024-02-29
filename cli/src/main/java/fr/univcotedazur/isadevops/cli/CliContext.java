@@ -1,6 +1,7 @@
 package fr.univcotedazur.isadevops.cli;
 
 import fr.univcotedazur.isadevops.cli.model.CliActivity;
+import fr.univcotedazur.isadevops.cli.model.CliAdmin;
 import fr.univcotedazur.isadevops.cli.model.CliCustomer;
 import org.springframework.stereotype.Component;
 
@@ -31,4 +32,5 @@ public class CliContext {
     public Map<String, CliActivity> getActivities() {
         return null;
     }
+
 }

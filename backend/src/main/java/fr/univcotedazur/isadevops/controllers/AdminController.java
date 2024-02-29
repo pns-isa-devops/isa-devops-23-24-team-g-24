@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
@@ -30,6 +33,14 @@ public class AdminController {
     public ErrorDTO handleExceptions(MethodArgumentNotValidException e){
         return new ErrorDTO("Cannot process Partner information", e.getMessage());
     }
+
+    @GetMapping
+    public ResponseEntity<List<Partner>> getAllPartners(){
+        List<Partner> partners= partnerRegistry.findAllPartners();
+        System.out.println("Fetching partners");
+        return ResponseEntity.ok(partnerRegistry.findAll());
+    }
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<PartnerDTO> addPartner(@RequestBody @Valid PartnerDTO partner){
         System.out.println("Adding partner");
