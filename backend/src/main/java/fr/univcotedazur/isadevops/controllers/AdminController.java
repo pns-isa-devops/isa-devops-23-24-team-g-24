@@ -1,10 +1,10 @@
 package fr.univcotedazur.isadevops.controllers;
 
+import fr.univcotedazur.isadevops.components.*;
 import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.dto.PartnerDTO;
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
-import fr.univcotedazur.isadevops.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(path=AdminController.BASE_URI,produces=APPLICATION_JSON_VALUE)
 public class AdminController {
-    private final AdminService adminService;
+    private final PartnerRegistry partnerRegistry;
     public static final String BASE_URI = "/admin";
 
     @Autowired
-    public AdminController(AdminService adminService){
-        this.adminService=adminService;
+    public AdminController(PartnerRegistry partnerRegistry){
+        this.partnerRegistry=partnerRegistry;
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -35,7 +35,7 @@ public class AdminController {
         System.out.println("Adding partner");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertPartnerToDTO(adminService.create(partner.name(), partner.location(), partner.description())));
+                    .body(convertPartnerToDTO(partnerRegistry.create(partner.name(), partner.location(), partner.description())));
             }catch (AlreadyExistingPartnerException e){
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
