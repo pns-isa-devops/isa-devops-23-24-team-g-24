@@ -2,7 +2,6 @@ package fr.univcotedazur.isadevops.components;
 
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
-import fr.univcotedazur.isadevops.interfaces.Bank;
 import fr.univcotedazur.isadevops.interfaces.PartnerCreator;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

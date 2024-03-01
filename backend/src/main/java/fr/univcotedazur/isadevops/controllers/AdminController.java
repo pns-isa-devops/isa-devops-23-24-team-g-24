@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -40,6 +41,14 @@ public class AdminController {
         System.out.println("Fetching partners");
         return ResponseEntity.ok(partnerRegistry.findAll());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<PartnerDTO> getPartnerById(@PathVariable Long id) {
+        Optional<Partner> optionalPartner = partnerRegistry.findById(id);
+
+        return optionalPartner.map(partner -> ResponseEntity.ok(convertPartnerToDTO(partner)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePartner(@PathVariable Long id){
