@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,14 +49,24 @@ public class PartnerRegistryTest {
         Assertions.assertThrows(AlreadyExistingPartnerException.class, () -> partnerRegistry.create(name, location, description));
     }
 
+    @Transactional
     @Test
     void findAllPartnersEmptyInitially() {
+        Optional<Partner> toDelete=partnerRegistry.findByName("DuplicatePartner");
+        if(toDelete.isPresent()){
+            partnerRegistry.delete(toDelete.get().getId());
+        }
         List<Partner> partners = partnerRegistry.findAllPartners();
         assertTrue(partners.isEmpty());
     }
 
+    @Transactional
     @Test
     void findAllPartners() throws AlreadyExistingPartnerException {
+        Optional<Partner> toDelete=partnerRegistry.findByName("DuplicatePartner");
+        if(toDelete.isPresent()){
+            partnerRegistry.delete(toDelete.get().getId());
+        }
         partnerRegistry.create(name, location, description);
         List<Partner> partners = partnerRegistry.findAllPartners();
         assertFalse(partners.isEmpty());
