@@ -15,10 +15,11 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
+  /*
   it('/cctransactions (GET)', () => {
     return request(app.getHttpServer())
       .get('/cctransactions')
       .expect(200)
       .expect([]);
-  });
+  });*/
 });

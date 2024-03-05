@@ -2,7 +2,7 @@
 
 const http = require('node:http');
 
-const options = { hostname: 'localhost', port: 9090, path: '/health', method: 'GET' };
+const options = { hostname: 'localhost', port: 9091, path: '/health', method: 'GET' };
 
 http
   .request(options, (res) => {
