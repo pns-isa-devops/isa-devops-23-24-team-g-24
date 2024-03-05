@@ -2,4 +2,4 @@
 
 echo "Compiling the TCF Scheduler"
 
-docker build -t tcf-scheduler .
+docker build -t team-g-tcf-scheduler-service .

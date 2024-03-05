@@ -73,3 +73,16 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
+
+  # An external scheduler service in NestJs
+  scheduler:
+    image: team-g-tcf-scheduler-service
+    container_name: scheduler
+    ports:
+      - 9091:9091
+    healthcheck:
+      test: [ "CMD", "/nodejs/bin/node" , "healthcheck.js" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
