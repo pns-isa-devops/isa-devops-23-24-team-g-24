@@ -2,11 +2,10 @@ package fr.univcotedazur.isadevops.cli.model;
 
 public class CliBooking {
     private Long id;
-    private Long customerId;
-    private Long activityId;
+    private long customerId;
+    private long activityId;
 
-    public CliBooking(Long id, Long customerId, Long activityId) {
-        this.id = id;
+    public CliBooking(Long customerId, Long activityId) {
         this.customerId = customerId;
         this.activityId = activityId;
     }

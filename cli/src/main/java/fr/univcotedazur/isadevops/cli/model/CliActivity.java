@@ -65,6 +65,7 @@ public class CliActivity {
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 ", numberOfPlaces='" + numberOfPlaces + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }

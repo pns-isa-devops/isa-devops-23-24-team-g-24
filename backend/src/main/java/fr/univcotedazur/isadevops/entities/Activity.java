@@ -81,4 +81,8 @@ public class Activity {
     public int hashCode() {
         return Objects.hash(name, location);
     }
+
+    public void setId(long l) {
+        this.id = l;
+    }
 }

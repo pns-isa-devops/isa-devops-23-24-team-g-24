@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface BookingFinder {
 
-    Optional<Booking> findById(Long id);
-    List<Booking> findByCustomerId(Long customerId);
+    List<Booking> findAllBookings();
+    List<Booking> findBookingsByCustomerId(Long customerId);
+    List<Booking> findBookingsByActivityId(Long activityId);
 }

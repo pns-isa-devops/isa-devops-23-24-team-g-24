@@ -1,6 +1,7 @@
 package fr.univcotedazur.isadevops.cli.commands;
 
 import fr.univcotedazur.isadevops.cli.CliContext;
+import fr.univcotedazur.isadevops.cli.model.CliBooking;
 import fr.univcotedazur.isadevops.cli.model.CliCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
