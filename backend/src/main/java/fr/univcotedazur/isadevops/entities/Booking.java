@@ -22,5 +22,15 @@ public class Booking {
         this.activity = activity;
     }
 
-    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
 }

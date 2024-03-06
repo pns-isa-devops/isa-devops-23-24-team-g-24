@@ -92,4 +92,7 @@ public class Customer {
         return Objects.hash(name, creditCard);
     }
 
+    public void setId(long l) {
+        this.id = l;
+    }
 }

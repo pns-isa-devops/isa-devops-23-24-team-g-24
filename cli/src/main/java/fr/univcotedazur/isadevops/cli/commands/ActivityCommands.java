@@ -39,11 +39,10 @@ public class ActivityCommands {
         return Arrays.stream(activities).map(Object::toString).collect(Collectors.joining("\n"));
     }
 
-    @ShellMethod("Add activity")
+    @ShellMethod("Add activity (add-activity ACTIVITY_NAME LOCATION NUMBER_OF_PLACES)")
     public String addActivity(String name, String location, Long numberOfPlaces) {
         CliActivity createdActivity = restTemplate.postForObject(BASE_URI, new CliActivity(name, location, numberOfPlaces), CliActivity.class);
         return createdActivity != null ? "Activity added with success: " + createdActivity.toString() : "Error while adding activity";
     }
-
 
 }
