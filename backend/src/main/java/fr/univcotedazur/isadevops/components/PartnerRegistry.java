@@ -2,6 +2,7 @@ package fr.univcotedazur.isadevops.components;
 
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
+import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
 import fr.univcotedazur.isadevops.interfaces.PartnerCreator;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,21 @@ public class PartnerRegistry implements PartnerCreator {
 
     @Override
     @Transactional
-    public void delete(long id) {
-        partnerRepository.deleteById(id);
+    public void delete(long id) throws PartnerNotFoundException {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        Partner partner;
+        System.out.println("BBBBBBBBBBBBB");
+        partner= partnerRepository.findById(id).orElse(null);
+        System.out.println("CCCCCCCCCCCCCCCC");
+
+        if(partner!=null){
+            System.out.println("Deleting partner is working...");
+            partnerRepository.deleteById(id);
+        }else {
+            System.out.println("Deleting partner is not working...");
+            throw new PartnerNotFoundException("Partner not found");
+        }
+
     }
 
     @Override

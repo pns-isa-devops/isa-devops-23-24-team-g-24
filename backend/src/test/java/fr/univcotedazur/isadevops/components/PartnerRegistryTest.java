@@ -2,6 +2,7 @@ package fr.univcotedazur.isadevops.components;
 
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
+import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ public class PartnerRegistryTest {
 
     @Transactional
     @Test
-    void findAllPartnersEmptyInitially() {
+    void findAllPartnersEmptyInitially() throws PartnerNotFoundException {
         Optional<Partner> toDelete=partnerRegistry.findByName("DuplicatePartner");
         if(toDelete.isPresent()){
             partnerRegistry.delete(toDelete.get().getId());
@@ -62,7 +63,7 @@ public class PartnerRegistryTest {
 
     @Transactional
     @Test
-    void findAllPartners() throws AlreadyExistingPartnerException {
+    void findAllPartners() throws AlreadyExistingPartnerException, PartnerNotFoundException{
         Optional<Partner> toDelete=partnerRegistry.findByName("DuplicatePartner");
         if(toDelete.isPresent()){
             partnerRegistry.delete(toDelete.get().getId());
@@ -74,10 +75,15 @@ public class PartnerRegistryTest {
     }
 
     @Test
-    void deletePartner() throws AlreadyExistingPartnerException {
+    void deletePartner() throws AlreadyExistingPartnerException,PartnerNotFoundException {
         Partner registered = partnerRegistry.create(name, location, description);
         partnerRegistry.delete(registered.getId());
         assertFalse(partnerRegistry.findByName(name).isPresent());
+    }
+
+    @Test
+    void deleteUnknownPartner() {
+        Assertions.assertThrows(PartnerNotFoundException.class, () -> partnerRegistry.delete(437385852));
     }
 
 

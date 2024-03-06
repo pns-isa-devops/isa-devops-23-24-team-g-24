@@ -2,6 +2,7 @@ package fr.univcotedazur.isadevops.interfaces;
 
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
+import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
 
 import java.util.Optional;
 import java.util.List;
@@ -12,5 +13,5 @@ public interface PartnerCreator {
     Optional<Partner> findById(long id);
     List<Partner> findAll();
     List<Partner> findAllPartners();
-    void delete(long id);
+    void delete(long id) throws PartnerNotFoundException;
 }

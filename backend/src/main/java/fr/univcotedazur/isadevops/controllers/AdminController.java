@@ -5,6 +5,7 @@ import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.dto.PartnerDTO;
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
+import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +52,13 @@ public class AdminController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePartner(@PathVariable Long id){
+    public ResponseEntity<String> deletePartner(@PathVariable Long id){
         System.out.println("Deleting partner");
-        partnerRegistry.delete(id);
+        try {
+            partnerRegistry.delete(id);
+        }catch (PartnerNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Partner ID not found");
+        }
         return ResponseEntity.noContent().build();
     }
 
