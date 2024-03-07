@@ -14,7 +14,7 @@ import { PaymentReceiptDto} from "./dto/paymentReceipt.dto";
 import { BookReceiptDto} from "./dto/bookReceipt.dto";
 import { BookRequestDto} from "./dto/bookRequest.dto";
 
-@Controller('cctransactions')
+@Controller('scheduler')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 

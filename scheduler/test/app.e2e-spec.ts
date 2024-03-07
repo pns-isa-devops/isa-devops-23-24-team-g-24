@@ -15,11 +15,10 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  /*
-  it('/cctransactions (GET)', () => {
+  it('/scheduler (GET)', () => {
     return request(app.getHttpServer())
-      .get('/cctransactions')
+      .get('/scheduler')
       .expect(200)
       .expect([]);
-  });*/
+  });
 });
