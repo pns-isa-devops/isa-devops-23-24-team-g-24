@@ -7,5 +7,5 @@ import fr.univcotedazur.isadevops.exceptions.PaymentException;
 public interface CustomerRegistration {
 
     Customer register(String name, String creditCard)
-            throws AlreadyExistingCustomerException, PaymentException;
+            throws AlreadyExistingCustomerException;
 }
