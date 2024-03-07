@@ -1,9 +1,11 @@
 import {IsBoolean, IsNotEmpty, IsPositive, IsString} from 'class-validator';
 
 export class BookReceiptDto {
-  constructor(bookReceiptId: string, isAuthorized: boolean) {
+  constructor(bookReceiptId: string, dateBook: string, nameActivity: string, namePartner: string) {
     this.bookReceiptId = bookReceiptId;
-    this.isAuthorized = isAuthorized;
+    this.dateBook = dateBook;
+    this.nameActivity = nameActivity;
+    this.namePartner = namePartner;
   }
 
   @IsNotEmpty()
@@ -11,6 +13,14 @@ export class BookReceiptDto {
   bookReceiptId: string;
 
   @IsNotEmpty()
-  @IsBoolean()
-  isAuthorized: boolean;
+  @IsString()
+  dateBook: string;
+
+  @IsNotEmpty()
+  @IsString()
+  nameActivity: string;
+
+  @IsNotEmpty()
+  @IsString()
+  namePartner: string;
 }

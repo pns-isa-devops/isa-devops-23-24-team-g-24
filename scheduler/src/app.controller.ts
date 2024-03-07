@@ -11,6 +11,9 @@ import { AppService } from './app.service';
 import { PaymentRequestDto } from './dto/paymentRequest.dto';
 import { PaymentReceiptDto} from "./dto/paymentReceipt.dto";
 
+import { BookReceiptDto} from "./dto/bookReceipt.dto";
+import { BookRequestDto} from "./dto/bookRequest.dto";
+
 @Controller('cctransactions')
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -31,4 +34,27 @@ export class AppController {
       );
     }
   }
+
+  @Get()
+    getAllBookTransactions(): BookReceiptDto[]{
+    return this.appService.findAllBook();
+  }
+
+  @Post()
+    bookActivity(@Body() bookRequestDto: BookRequestDto): BookReceiptDto {
+    try {
+      return this.appService.book(bookRequestDto);
+    } catch (e) {
+      throw new HttpException(
+        'business error: ' + e.message,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Get()
+    getAllBooksPartner(@Body() namePartner: string): BookReceiptDto[]{
+      return this.appService.findBooksPartner(namePartner);
+  }
+
 }
