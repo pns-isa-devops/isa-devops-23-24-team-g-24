@@ -18,8 +18,8 @@ import java.util.Optional;
 @Component
 public class SchedulerProxy implements Scheduler {
 
-    @Value("${scheduler.host.baseurl}")
-    private String schedulerHostandPort;
+    //@Value("${scheduler.host.baseurl}")
+    private String schedulerHostandPort = "http://localhost:9091";
 
     private final RestTemplate restTemplate = new RestTemplate();
 
