@@ -18,6 +18,7 @@ import { BookRequestDto} from "./dto/bookRequest.dto";
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+/*
   @Get()
   getAllTransactions(): PaymentReceiptDto[] {
     return this.appService.findAll();
@@ -34,7 +35,7 @@ export class AppController {
       );
     }
   }
-
+*/
   @Get()
     getAllBookTransactions(): BookReceiptDto[]{
     return this.appService.findAllBook();
@@ -50,11 +51,6 @@ export class AppController {
         HttpStatus.BAD_REQUEST,
       );
     }
-  }
-
-  @Get()
-    getAllBooksPartner(@Body() namePartner: string): BookReceiptDto[]{
-      return this.appService.findBooksPartner(namePartner);
   }
 
 }
