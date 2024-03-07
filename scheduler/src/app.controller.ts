@@ -17,25 +17,6 @@ import { BookRequestDto} from "./dto/bookRequest.dto";
 @Controller('scheduler')
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-/*
-  @Get()
-  getAllTransactions(): PaymentReceiptDto[] {
-    return this.appService.findAll();
-  }
-
-  @Post()
-  payByCreditCard(@Body() paymentRequestDto: PaymentRequestDto): PaymentReceiptDto {
-    try {
-      return this.appService.pay(paymentRequestDto);
-    } catch (e) {
-      throw new HttpException(
-        'business error: ' + e.message,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-*/
   @Get()
     getAllBookTransactions(): BookReceiptDto[]{
     return this.appService.findAllBook();
@@ -44,6 +25,7 @@ export class AppController {
   @Post()
     bookActivity(@Body() bookRequestDto: BookRequestDto): BookReceiptDto {
     try {
+       console.log("OUAIIIS ON EST DANS LE SCHEDULER");
       return this.appService.book(bookRequestDto);
     } catch (e) {
       throw new HttpException(

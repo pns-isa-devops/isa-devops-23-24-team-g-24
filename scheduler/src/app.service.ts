@@ -10,44 +10,15 @@ import {ActivityAlreadyBooked} from "./exceptions/activity-already-booked";
 
 @Injectable()
 export class AppService {
-  private static readonly magicKey: string = '896983'; // ASCII code for 'YES'
-
-  private transactions: Array<PaymentReceiptDto>;
 
   private books: Array<BookReceiptDto>;
 
   constructor() {
-    this.transactions = [];
     this.books = [];
-  }
-
-  findAll(): PaymentReceiptDto[] {
-    return this.transactions;
   }
 
   findAllBook(): BookReceiptDto[]{
       return this.books;
-  }
-
-  pay(paymentRequestDto: PaymentRequestDto): PaymentReceiptDto {
-    let paymentReceiptDto: PaymentReceiptDto;
-    if (paymentRequestDto.creditCard.includes(AppService.magicKey)) {
-      paymentReceiptDto = new PaymentReceiptDto(
-        'RECEIPT:' + randomUUID(),
-        paymentRequestDto.amount,
-      );
-      this.transactions.push(paymentReceiptDto);
-      console.log(
-        'Payment accepted(' +
-          paymentReceiptDto.payReceiptId +
-          '): ' +
-          paymentReceiptDto.amount,
-      );
-      return paymentReceiptDto;
-    } else {
-      console.log('Payment rejected: ' + paymentRequestDto.amount);
-      throw new PaymentRejectedException(paymentRequestDto.amount);
-    }
   }
 
 book(bookRequestDto: BookRequestDto): BookReceiptDto {
