@@ -13,10 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+
 import java.util.Optional;
 
 @Component
 public class SchedulerProxy implements Scheduler {
+
+        private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerProxy.class);
 
     //@Value("${scheduler.host.baseurl}")
     private String schedulerHostandPort = "http://localhost:9091";
@@ -26,6 +33,7 @@ public class SchedulerProxy implements Scheduler {
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public Optional<String> book(String dateBook, String nameActivity, String namePartner) {
+        LOGGER.info("ON ENTRE DANS LE PROXY COTE BACKEND");
         try {
             ResponseEntity<BookReceiptDTO> result = restTemplate.postForEntity(
                     schedulerHostandPort + "/scheduler",

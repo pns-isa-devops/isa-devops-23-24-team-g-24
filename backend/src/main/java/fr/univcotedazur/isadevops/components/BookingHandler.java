@@ -1,5 +1,6 @@
 package fr.univcotedazur.isadevops.components;
 
+import fr.univcotedazur.isadevops.connectors.SchedulerProxy;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,17 +28,23 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     private final BookingRepository bookingRepository;
     private final CustomerRepository customerRepository;
     private final ActivityRepository activityRepository;
+
     @Autowired
     CustomerFinder customerFinder;
 
     @Autowired
     ActivityService activityService;
+
     @Autowired
-    public BookingHandler(BookingRepository bookingRepository, CustomerRepository customerRepository, ActivityRepository activityRepository, Payment payment){
+    SchedulerProxy schedulerProxy;
+    @Autowired
+    public BookingHandler(BookingRepository bookingRepository, CustomerRepository customerRepository, ActivityRepository activityRepository,
+                          Payment payment, SchedulerProxy schedulerProxy){
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
         this.activityRepository = activityRepository;
         this.payment = payment;
+        this.schedulerProxy = schedulerProxy;
     }
 
     @Override
@@ -50,6 +58,12 @@ public class BookingHandler implements BookingCreator, BookingFinder {
                 .orElseThrow(() -> new ActivityIdNotFoundException());
 
         // Il faut check si l'activité a assez de places
+        Optional<String> ret = schedulerProxy.book("2021-12-12", activity.getName(), activity.getPartner().getName());
+        if (ret.isEmpty()) {
+            System.out.println("Erreur lors de la réservation");
+        }else{
+            System.out.println("Réservation effectuée");
+        }
 
         Booking booking = new Booking(customer, activity);
         return bookingRepository.save(booking);
