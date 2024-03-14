@@ -14,12 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import fr.univcotedazur.isadevops.interfaces.*;
+import fr.univcotedazur.isadevops.connectors.*;
+
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
+
 
 @SpringBootTest
 public class BookingHandlerTest {
@@ -38,6 +42,9 @@ public class BookingHandlerTest {
 
     private static Customer testCustomer;
     private static Activity testActivity;
+    
+    @MockBean
+    private SchedulerProxy schedulerProxy;
 
     @BeforeAll
    static public void setUp() {
@@ -52,6 +59,8 @@ public class BookingHandlerTest {
         when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
         when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(schedulerProxy.book("2022", testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
+
 
         Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId());
 
@@ -63,6 +72,8 @@ public class BookingHandlerTest {
     @Test
     public void createBooking_shouldThrowException_whenInvalidCustomerGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
         when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(schedulerProxy.book("2022", testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
+
 
         assertThrows(CustomerIdNotFoundException.class ,() -> bookingHandler.createBooking(999L, testActivity.getId()));
     }

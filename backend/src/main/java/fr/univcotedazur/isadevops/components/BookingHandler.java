@@ -64,10 +64,12 @@ public class BookingHandler implements BookingCreator, BookingFinder {
 
         Booking booking = new Booking(customer, activity);
 
-        //this.scheduler.book("2022", "padel", "sophia");
+        this.scheduler.book("2022", activity.getName(), "sophia");
 
         return bookingRepository.save(booking);
     }
+
+
 
     @Override
     @Transactional
