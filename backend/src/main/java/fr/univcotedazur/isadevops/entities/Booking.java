@@ -2,6 +2,7 @@ package fr.univcotedazur.isadevops.entities;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Booking {
@@ -13,11 +14,14 @@ public class Booking {
     private Customer customer;
     @ManyToOne
     private Activity activity;
+    @NotBlank
+    private boolean usePoints;
+
 
     // Add default constructor for JPA
     public Booking() {}
 
-    public Booking(Customer customer, Activity activity) {
+    public Booking(Customer customer, Activity activity, boolean usePoints) {
         this.customer = customer;
         this.activity = activity;
     }
@@ -32,5 +36,8 @@ public class Booking {
 
     public Activity getActivity() {
         return activity;
+    }
+    public boolean getUsePoints() {
+        return usePoints;
     }
 }

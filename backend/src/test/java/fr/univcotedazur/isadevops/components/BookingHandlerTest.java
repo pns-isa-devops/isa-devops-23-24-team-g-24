@@ -5,6 +5,8 @@ import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.NotEnoughPointsException;
+import fr.univcotedazur.isadevops.exceptions.PaymentException;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.BookingRepository;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
@@ -43,17 +45,17 @@ public class BookingHandlerTest {
    static public void setUp() {
         testCustomer = new Customer("John Doe", "1234567890");
         testCustomer.setId(1L);
-        testActivity = new Activity("Hiking", "Mountain", 20L);
+        testActivity = new Activity("Hiking", "Mountain", 20L, 5, 10, 10);
         testActivity.setId(1L);
     }
 
     @Test
-    public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
+    public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException, PaymentException, NotEnoughPointsException {
         when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
         when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId());
+        Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId(), false);
 
         assertNotNull(booking);
         assertEquals(testCustomer.getId(), booking.getCustomer().getId());
@@ -64,7 +66,7 @@ public class BookingHandlerTest {
     public void createBooking_shouldThrowException_whenInvalidCustomerGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
         when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(CustomerIdNotFoundException.class ,() -> bookingHandler.createBooking(999L, testActivity.getId()));
+        assertThrows(CustomerIdNotFoundException.class ,() -> bookingHandler.createBooking(999L, testActivity.getId(),false));
     }
 
     @Test
@@ -79,7 +81,7 @@ public class BookingHandlerTest {
 
     @Test
     public void findAllBookings_shouldReturnAllBookings() {
-        List<Booking> bookings = List.of(new Booking(testCustomer, testActivity));
+        List<Booking> bookings = List.of(new Booking(testCustomer, testActivity,false));
         when(bookingRepository.findAll()).thenReturn(bookings);
 
         List<Booking> foundBookings = bookingHandler.findAllBookings();

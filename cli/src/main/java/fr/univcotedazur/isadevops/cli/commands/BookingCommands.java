@@ -30,8 +30,8 @@ public class BookingCommands {
         this.cliContext = cliContext;
     }
     @ShellMethod("Create a new booking")
-    public String createBooking(Long customerId, Long activityId) {
-        CliBooking booking = new CliBooking(customerId, activityId);
+    public String createBooking(Long customerId, Long activityId, boolean usePoints) {
+        CliBooking booking = new CliBooking(customerId, activityId, usePoints);
         System.out.println("Creating booking: " + booking.getActivityId() + " for customer " + booking.getCustomerId());
         ResponseEntity<CliBooking> response = restTemplate.postForEntity(BASE_URI, booking, CliBooking.class);
 

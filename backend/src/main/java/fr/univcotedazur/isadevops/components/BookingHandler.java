@@ -5,6 +5,7 @@ import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.NotEnoughPointsException;
 import fr.univcotedazur.isadevops.exceptions.PaymentException;
 import fr.univcotedazur.isadevops.interfaces.*;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
@@ -41,19 +42,29 @@ public class BookingHandler implements BookingCreator, BookingFinder {
 
     @Override
     @Transactional
-    public Booking createBooking(Long customerId, Long activityId) throws CustomerIdNotFoundException, ActivityIdNotFoundException {
-        System.out.println("CustomerID: " + customerId);
-        System.out.println("ActivityID: " + activityId);
+    public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException {
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerIdNotFoundException());
+                .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
         Activity activity = activityRepository.findById(activityId)
-                .orElseThrow(() -> new ActivityIdNotFoundException());
+                .orElseThrow(() -> new ActivityIdNotFoundException(activityId));
 
-        // Il faut check si l'activité a assez de places
+        // Vérifiez si l'activité a assez de places (logique à implémenter)
 
-        Booking booking = new Booking(customer, activity);
+        if (usePoints) {
+            if (customer.getPointsBalance() < activity.getPricePoints()) {
+                throw new NotEnoughPointsException();
+            }
+            customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
+        } else {
+            payment.pay(activity.getPrice(), customer);
+        }
+
+        customerRepository.save(customer);
+
+        Booking booking = new Booking(customer, activity, usePoints);
         return bookingRepository.save(booking);
     }
+
 
     @Override
     @Transactional

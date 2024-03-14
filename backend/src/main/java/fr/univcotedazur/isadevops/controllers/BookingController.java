@@ -31,7 +31,7 @@ public class BookingController {
     public ResponseEntity<Object> createBooking(@RequestBody @Valid BookingDTO bookingDTO) {
         System.out.println("Creation of a booking for customer " + bookingDTO.customerId() + " and activity " + bookingDTO.activityId());
         try {
-            Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId());
+            Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId(), bookingDTO.usePoints());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(convertToDTO(booking));
         } catch (CustomerIdNotFoundException e) {
@@ -65,6 +65,6 @@ public class BookingController {
     // Additional endpoints to list bookings by customer or activity can be similar to listAllBookings()
 
     private BookingDTO convertToDTO(Booking booking) {
-        return new BookingDTO(booking.getId(), booking.getCustomer().getId(), booking.getActivity().getId());
+        return new BookingDTO(booking.getId(), booking.getCustomer().getId(), booking.getActivity().getId(), booking.getUsePoints());
     }
 }
