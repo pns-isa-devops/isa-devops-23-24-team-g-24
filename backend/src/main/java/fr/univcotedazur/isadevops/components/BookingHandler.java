@@ -23,28 +23,32 @@ import java.util.Optional;
 
 @Service
 public class BookingHandler implements BookingCreator, BookingFinder {
-
-    private final Payment payment;
     private final BookingRepository bookingRepository;
     private final CustomerRepository customerRepository;
     private final ActivityRepository activityRepository;
 
-    @Autowired
     CustomerFinder customerFinder;
 
-    @Autowired
-    ActivityService activityService;
+    ActivityCreator activityService;
+
+    private final Scheduler scheduler;
 
     @Autowired
-    SchedulerProxy schedulerProxy;
-    @Autowired
-    public BookingHandler(BookingRepository bookingRepository, CustomerRepository customerRepository, ActivityRepository activityRepository,
-                          Payment payment, SchedulerProxy schedulerProxy){
+    public BookingHandler(
+                          BookingRepository bookingRepository, 
+                          CustomerRepository customerRepository, 
+                          ActivityRepository activityRepository,
+                          CustomerFinder customerFinder,
+                          ActivityCreator activityCreator,
+                          Scheduler scheduler){
+
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
         this.activityRepository = activityRepository;
-        this.payment = payment;
-        this.schedulerProxy = schedulerProxy;
+
+        this.customerFinder = customerFinder;
+        this.activityService = activityCreator;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -57,15 +61,10 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         Activity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new ActivityIdNotFoundException());
 
-        // Il faut check si l'activité a assez de places
-        Optional<String> ret = schedulerProxy.book("2021-12-12", activity.getName(), activity.getPartner().getName());
-        if (ret.isEmpty()) {
-            System.out.println("Erreur lors de la réservation");
-        }else{
-            System.out.println("Réservation effectuée");
-        }
-
         Booking booking = new Booking(customer, activity);
+
+        //this.scheduler.book("date", "test", "testName");
+
         return bookingRepository.save(booking);
     }
 

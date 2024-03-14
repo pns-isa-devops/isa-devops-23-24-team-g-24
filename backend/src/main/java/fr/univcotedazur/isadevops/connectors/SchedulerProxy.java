@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.Optional;
@@ -23,17 +20,15 @@ import java.util.Optional;
 @Component
 public class SchedulerProxy implements Scheduler {
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerProxy.class);
-
     //@Value("${scheduler.host.baseurl}")
-    private String schedulerHostandPort = "http://localhost:9091";
+    private String schedulerHostandPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public Optional<String> book(String dateBook, String nameActivity, String namePartner) {
-        LOGGER.info("ON ENTRE DANS LE PROXY COTE BACKEND");
+        System.out.println("ON ENTRE DANS LE SCHEDULER");
         try {
             ResponseEntity<BookReceiptDTO> result = restTemplate.postForEntity(
                     schedulerHostandPort + "/scheduler",

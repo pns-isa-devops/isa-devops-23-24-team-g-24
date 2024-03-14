@@ -10,7 +10,8 @@ services:
     environment:
       - BANK_WITH_PORT=bank-system:9090
       - POSTGRES_HOST=postgres:5432
-    entrypoint: "java -jar /opt/app/app.jar --bank.host.baseurl=http://$${BANK_WITH_PORT}"
+      - SCHEDULER_WITH_PORT=scheduler:9091
+    entrypoint: "java -jar /opt/app/app.jar --bank.host.baseurl=http://$${BANK_WITH_PORT} --scheduler.host.baseurl=http://$${SCHEDULER_WITH_PORT}"
     restart: always
     depends_on:
       bank-system:
