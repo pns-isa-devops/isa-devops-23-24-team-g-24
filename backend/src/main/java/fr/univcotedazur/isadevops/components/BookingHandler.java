@@ -67,12 +67,12 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         Optional<String> result_post = this.scheduler.book("2022", activity.getName(), "sophia");
         if(result_post.isEmpty()){
             System.out.println("Resultat vide de la part du scheduler");
+            return null;
         }else{
             System.out.println("Resultat avec du contenu");
             System.out.println(result_post.get());
+            return bookingRepository.save(booking);
         }
-
-        return bookingRepository.save(booking);
     }
 
 
