@@ -47,7 +47,7 @@ public class ActivityService implements ActivityCreator {
     public Activity create(String name, String localisation, long numberOfPlaces) throws AlreadyExistingActivityException{
         if (findByName(name).isPresent())
             throw new AlreadyExistingActivityException(name);
-        Activity newactivity = new Activity(name, localisation, numberOfPlaces);
+        Activity newactivity = new Activity(name, localisation, numberOfPlaces,5, 10, 10);
         return activityRepository.save(newactivity);
     }
 }

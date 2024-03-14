@@ -48,7 +48,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         Activity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new ActivityIdNotFoundException(activityId));
 
-        // Vérifiez si l'activité a assez de places (logique à implémenter)
+        // Vérifier si l'activité a assez de places (logique à implémenter)
 
         if (usePoints) {
             if (customer.getPointsBalance() < activity.getPricePoints()) {
