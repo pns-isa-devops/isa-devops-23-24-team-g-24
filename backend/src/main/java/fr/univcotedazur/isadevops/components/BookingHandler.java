@@ -31,7 +31,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
 
     ActivityCreator activityService;
 
-    private final Scheduler scheduler;
+    private Scheduler scheduler;
 
     @Autowired
     public BookingHandler(
@@ -40,7 +40,8 @@ public class BookingHandler implements BookingCreator, BookingFinder {
                           ActivityRepository activityRepository,
                           CustomerFinder customerFinder,
                           ActivityCreator activityCreator,
-                          Scheduler scheduler){
+                          Scheduler scheduler
+                          ){
 
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
@@ -63,7 +64,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
 
         Booking booking = new Booking(customer, activity);
 
-        //this.scheduler.book("date", "test", "testName");
+        //this.scheduler.book("2022", "padel", "sophia");
 
         return bookingRepository.save(booking);
     }

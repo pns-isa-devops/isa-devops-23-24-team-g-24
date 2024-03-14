@@ -20,7 +20,7 @@ import java.util.Optional;
 @Component
 public class SchedulerProxy implements Scheduler {
 
-    //@Value("${scheduler.host.baseurl}")
+    @Value("${scheduler.host.baseurl}")
     private String schedulerHostandPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
