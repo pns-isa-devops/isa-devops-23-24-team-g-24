@@ -1,0 +1,8 @@
+echo "Réaliation du script de démonstration End2End"
+echo "Premier test : Enregistrement d'un customer"
+customers
+register "Simon" "1234567890"
+customers
+echo "Deuxième test : Ajout d'une activité dans la liste des activités"
+add-activity "Padel" "Sophia" 5
+list-activities

@@ -5,6 +5,7 @@ import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.PaymentException;
 import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
 import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
 import jakarta.validation.Valid;
