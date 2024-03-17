@@ -22,16 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc
 public class ITSchedulerProxy {
     @Autowired
-    private SchedulerProxy schedulerProxy;
+    private MockMvc mockMvc;
 
     @Test
-    void bookAnActivity() {
-        assertFalse(schedulerProxy.book("2021-12-31", "activity", "partner").isEmpty());
-    }
-
-    @Test
-    void bookAnActivityAlreadeBooked() {
-        assertFalse(schedulerProxy.book("2023-03-17", "activity", "partner").isEmpty());
-        assertTrue(schedulerProxy.book("2023-03-17", "activity", "partner").isEmpty());
+    void callBankForPayment() {
     }
 }
