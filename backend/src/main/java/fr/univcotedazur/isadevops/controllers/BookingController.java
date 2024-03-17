@@ -32,8 +32,13 @@ public class BookingController {
         System.out.println("Creation of a booking for customer " + bookingDTO.customerId() + " and activity " + bookingDTO.activityId());
         try {
             Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId());
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertToDTO(booking));
+            if(booking == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Activity already booked for this time slot");
+            }else {
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(convertToDTO(booking));
+            }
         } catch (CustomerIdNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Customer ID " + bookingDTO.customerId() + " not found.");

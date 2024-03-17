@@ -12,20 +12,23 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.Optional;
 
 @Component
 public class SchedulerProxy implements Scheduler {
 
-    //@Value("${scheduler.host.baseurl}")
-    private String schedulerHostandPort = "http://localhost:9091";
+    @Value("${scheduler.host.baseurl}")
+    private String schedulerHostandPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public Optional<String> book(String dateBook, String nameActivity, String namePartner) {
+        System.out.println("ON ENTRE DANS LE SCHEDULER");
         try {
             ResponseEntity<BookReceiptDTO> result = restTemplate.postForEntity(
                     schedulerHostandPort + "/scheduler",

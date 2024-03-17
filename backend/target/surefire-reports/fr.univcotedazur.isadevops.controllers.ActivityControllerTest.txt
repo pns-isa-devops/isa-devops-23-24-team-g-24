@@ -1,15 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: fr.univcotedazur.isadevops.controllers.ActivityControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.128 s <<< FAILURE! -- in fr.univcotedazur.isadevops.controllers.ActivityControllerTest
-fr.univcotedazur.isadevops.controllers.ActivityControllerTest.inValidActivityTest -- Time elapsed: 0.060 s <<< FAILURE!
-java.lang.AssertionError: Status expected:<422> but was:<400>
-	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
-	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
-	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
-	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
-	at fr.univcotedazur.isadevops.controllers.ActivityControllerTest.inValidActivityTest(ActivityControllerTest.java:55)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.204 s -- in fr.univcotedazur.isadevops.controllers.ActivityControllerTest
