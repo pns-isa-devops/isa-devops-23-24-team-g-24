@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: fr.univcotedazur.isadevops.repositories.CustomerRepositoryTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.129 s -- in fr.univcotedazur.isadevops.repositories.CustomerRepositoryTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.145 s -- in fr.univcotedazur.isadevops.repositories.CustomerRepositoryTest
