@@ -4,4 +4,4 @@ Membre du groupe :
 - STENGEL Damein
 - MAUROIS Quentin
 - FROMENT Lorenzo
-- BEUREL Simon 
+-  Simon le beurre demi sel 
