@@ -2,6 +2,6 @@
 
 Membre du groupe : 
 - STENGEL Damein
-- MAUROIS Quentin
+- Quentin la mort au rat
 - FROMENT Lorenzo
 -  Simon le beurre demi sel 
