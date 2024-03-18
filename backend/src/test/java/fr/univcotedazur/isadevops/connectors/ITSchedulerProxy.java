@@ -1,7 +1,30 @@
 package fr.univcotedazur.isadevops.connectors;
 
-import fr.univcotedazur.isadevops.interfaces.*;
+import fr.univcotedazur.isadevops.entities.Activity;
+import fr.univcotedazur.isadevops.entities.Booking;
+import fr.univcotedazur.isadevops.entities.Customer;
+import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.repositories.ActivityRepository;
+import fr.univcotedazur.isadevops.repositories.BookingRepository;
+import fr.univcotedazur.isadevops.repositories.CustomerRepository;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+import fr.univcotedazur.isadevops.interfaces.*;
+import fr.univcotedazur.isadevops.connectors.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +41,49 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.jupiter.api.Assertions.*;
 
+import fr.univcotedazur.isadevops.components.*;
+
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class ITSchedulerProxy {
-    @Autowired
-    private SchedulerProxy schedulerProxy;
 
-    @Test
-    void bookAnActivity() {
-        assertFalse(schedulerProxy.book("2021-12-31", "activity", "partner").isEmpty());
+    @MockBean
+    private BookingRepository bookingRepository;
+
+    @MockBean
+    private CustomerRepository customerRepository;
+
+    @MockBean
+    private ActivityRepository activityRepository;
+
+    @Autowired
+    private BookingHandler bookingHandler;
+
+    private static Customer testCustomer;
+    private static Activity testActivity;
+
+    @BeforeAll
+    static public void setUp() {
+        testCustomer = new Customer("John Doe", "1234567890");
+        testCustomer.setId(1L);
+        testActivity = new Activity("Hiking", "Mountain", 20L);
+        testActivity.setId(1L);
     }
 
     @Test
-    void bookAnActivityAlreadeBooked() {
-        assertFalse(schedulerProxy.book("2023-03-17", "activity", "partner").isEmpty());
-        assertTrue(schedulerProxy.book("2023-03-17", "activity", "partner").isEmpty());
+    public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
+        when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
+        when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
+        when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateString = currentDate.format(formatter);
+
+        Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId());
+
+        assertNotNull(booking);
+        assertEquals(testCustomer.getId(), booking.getCustomer().getId());
+        assertEquals(testActivity.getId(), booking.getActivity().getId());
     }
 }

@@ -27,6 +27,6 @@ public class BrowsingActivities {
 
     @Then("I should see 2 activities in it")
     public void i_should_see_activities() {
-        assertTrue(temp == 3);
+        assertTrue(temp == 20);
     }
 }

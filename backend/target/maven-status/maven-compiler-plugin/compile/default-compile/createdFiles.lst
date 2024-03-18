@@ -27,8 +27,8 @@ fr/univcotedazur/isadevops/interfaces/PartnerCreator.class
 fr/univcotedazur/isadevops/connectors/externaldto/PaymentReceiptDTO.class
 fr/univcotedazur/isadevops/repositories/ActivityRepository.class
 fr/univcotedazur/isadevops/exceptions/CustomerIdNotFoundException.class
-fr/univcotedazur/isadevops/services/ActivityService.class
 fr/univcotedazur/isadevops/interfaces/BookingCreator.class
+fr/univcotedazur/isadevops/services/ActivityService.class
 fr/univcotedazur/isadevops/interfaces/Scheduler.class
 fr/univcotedazur/isadevops/controllers/AdminController.class
 fr/univcotedazur/isadevops/exceptions/AlreadyExistingActivityException.class

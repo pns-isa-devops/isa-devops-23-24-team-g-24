@@ -3,9 +3,11 @@ fr/univcotedazur/isadevops/components/CustomerRegistryTest.class
 fr/univcotedazur/isadevops/components/PartnerRegistryTest.class
 fr/univcotedazur/isadevops/repositories/PartnerRepositoryTest.class
 fr/univcotedazur/isadevops/controllers/AdminControllerTest.class
+fr/univcotedazur/isadevops/connectors/ITBankProxy.class
 fr/univcotedazur/isadevops/repositories/CustomerRepositoryTest.class
 fr/univcotedazur/isadevops/repositories/ActivityRepositoryTest.class
 fr/univcotedazur/isadevops/controllers/CustomerCareControllerTest.class
+fr/univcotedazur/simpletcfs/cucumber/activity/BrowsingActivities.class
 fr/univcotedazur/isadevops/components/BookingHandlerTest.class
 fr/univcotedazur/isadevops/controllers/ActivityControllerTest.class
 fr/univcotedazur/isadevops/connectors/ITSchedulerProxy.class

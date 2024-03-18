@@ -82,7 +82,6 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     }
 
     //Test commit
-
     @Override
     @Transactional
     public boolean cancelBooking(Long bookingId) {
