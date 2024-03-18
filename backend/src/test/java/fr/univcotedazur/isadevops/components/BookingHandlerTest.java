@@ -61,6 +61,8 @@ public class BookingHandlerTest {
         when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
         when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(schedulerProxy.book("2022", testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
+
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
