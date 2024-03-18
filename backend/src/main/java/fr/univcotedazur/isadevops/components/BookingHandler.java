@@ -3,10 +3,7 @@ package fr.univcotedazur.isadevops.components;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
-import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.NotEnoughPointsException;
-import fr.univcotedazur.isadevops.exceptions.PaymentException;
+import fr.univcotedazur.isadevops.exceptions.*;
 import fr.univcotedazur.isadevops.interfaces.*;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.BookingRepository;
@@ -42,14 +39,14 @@ public class BookingHandler implements BookingCreator, BookingFinder {
 
     @Override
     @Transactional
-    public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException {
+    public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
         Activity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new ActivityIdNotFoundException(activityId));
-
-        // Vérifier si l'activité a assez de places (logique à implémenter)
-
+        if(bookingRepository.findByActivityId(activityId).size()>=activity.getNumberOfPlaces()){
+            throw new NotEnoughPlacesException();
+        }
         if (usePoints) {
             if (customer.getPointsBalance() < activity.getPricePoints()) {
                 throw new NotEnoughPointsException();
@@ -58,7 +55,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         } else {
             payment.pay(activity.getPrice(), customer);
         }
-
+        customer.setPointsBalance(customer.getPointsBalance() + activity.getPointEarned());
         customerRepository.save(customer);
 
         Booking booking = new Booking(customer, activity, usePoints);
@@ -93,6 +90,4 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     public List<Booking> findBookingsByActivityId(Long activityId) {
         return bookingRepository.findByActivityId(activityId);
     }
-
-
 }

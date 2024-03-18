@@ -3,6 +3,7 @@ package fr.univcotedazur.isadevops.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Booking {
@@ -14,7 +15,7 @@ public class Booking {
     private Customer customer;
     @ManyToOne
     private Activity activity;
-    @NotBlank
+    @NotNull
     private boolean usePoints;
 
 
@@ -24,6 +25,7 @@ public class Booking {
     public Booking(Customer customer, Activity activity, boolean usePoints) {
         this.customer = customer;
         this.activity = activity;
+        this.usePoints = usePoints;
     }
 
     public Long getId() {

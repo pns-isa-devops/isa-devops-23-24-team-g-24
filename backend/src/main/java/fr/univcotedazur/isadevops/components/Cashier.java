@@ -32,6 +32,7 @@ public class Cashier implements Payment {
         }
 
         Optional<String> response = bank.pay(customer, price);
+        System.out.println("response: " + response);
         if (response.isEmpty()) {
             throw new PaymentException(customer.getName(), price);
         }

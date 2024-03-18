@@ -24,7 +24,7 @@ public class Customer {
     private String creditCard;
 
     @NotNull
-    private double pointsBalance;
+    private double pointsBalance = 0;
 
 //    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "customer")
 //    private Set<Order> orders = new HashSet<>();
@@ -38,6 +38,7 @@ public class Customer {
     public Customer(String n, String c) {
         this.name = n;
         this.creditCard = c;
+        this.pointsBalance = 0;
     }
 
     public Long getId() {

@@ -42,7 +42,7 @@ public class BookingController {
                     .body("Activity ID " + bookingDTO.activityId() + " not found.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred while creating the booking.");
+                    .body("An error occurred while creating the booking: "+e.getMessage());
         }
     }
 

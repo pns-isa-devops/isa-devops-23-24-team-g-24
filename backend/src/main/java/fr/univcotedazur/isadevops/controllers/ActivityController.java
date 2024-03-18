@@ -51,16 +51,17 @@ public class ActivityController {
     }
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ActivityDTO> addActivity(@RequestBody @Valid ActivityDTO activity) {
+        System.out.println("MARCHE PLS"+activity.pricePoints());
         System.out.println("Adding activity");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces())));
+                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(), activity.pointsEarned(), activity.price(), activity.pricePoints())));
         } catch (AlreadyExistingActivityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 
     private static ActivityDTO convertActivityToDTO(Activity activity) { // In more complex cases, we could use a ModelMapper such as MapStruct
-        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces());
+        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(), activity.getPointEarned(), activity.getPrice(), activity.getPricePoints());
     }
 }

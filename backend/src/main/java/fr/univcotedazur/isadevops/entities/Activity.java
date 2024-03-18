@@ -23,17 +23,17 @@ public class Activity {
     @NotNull
     private double price;
     @NotNull
-    private double pricePoints;
+    private Long pricePoints;
     @NotNull
-    private double pointEarned;
+    private Long pointsEarned;
 
     public Activity() {
     }
-    public Activity(String name, String location, Long numberOfPlaces, double pointEarned, double price, double pricePoints) {
+    public Activity(String name, String location, Long numberOfPlaces, Long pointsEarned, double price, Long pricePoints) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
-        this.pointEarned = pointEarned;
+        this.pointsEarned = pointsEarned;
         this.price = price;
         this.pricePoints = pricePoints;
     }
@@ -76,8 +76,11 @@ public class Activity {
         this.price = price;
     }
 
-    public double getPricePoints() {
+    public Long getPricePoints() {
         return pricePoints;
+    }
+    public Long getPointEarned() {
+        return pointsEarned;
     }
 
 
