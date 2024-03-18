@@ -66,25 +66,16 @@ public class BookingHandler implements BookingCreator, BookingFinder {
                 .orElseThrow(() -> new ActivityIdNotFoundException());
 
         Booking booking = new Booking(customer, activity);
-
-<<<<<<< HEAD
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String dateString = currentDate.format(formatter);
 
         Optional<String> result_post = this.scheduler.book(dateString, activity.getName(), "magicPartner");
-=======
-        Optional<String> result_post = this.scheduler.book("2022", activity.getName(), "sophia");
->>>>>>> 88c3eea07166f79bc5da9cecf7303707c8f64337
         if(result_post.isEmpty()){
             System.out.println("Resultat vide de la part du scheduler");
             return null;
         }else{
-<<<<<<< HEAD
             System.out.println("Resultat avec du contenu de la part du scheduler");
-=======
-            System.out.println("Resultat avec du contenu");
->>>>>>> 88c3eea07166f79bc5da9cecf7303707c8f64337
             System.out.println(result_post.get());
             return bookingRepository.save(booking);
         }
