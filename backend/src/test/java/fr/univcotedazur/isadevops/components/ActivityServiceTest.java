@@ -41,7 +41,7 @@ public class ActivityServiceTest {
         assertEquals(activity, activityReturned);
         assertEquals(activity, activityCreator.findById(activityReturned.getId()).get());
         assertEquals(name, activityReturned.getName());
-
+        assertEquals(3,2 );
     }
 
     @Test
