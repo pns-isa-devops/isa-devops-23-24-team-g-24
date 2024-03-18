@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class ITSchedulerProxy {
+public class ITBankProxy {
     @Autowired
     private MockMvc mockMvc;
 
