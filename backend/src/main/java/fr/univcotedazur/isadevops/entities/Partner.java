@@ -1,8 +1,5 @@
 package fr.univcotedazur.isadevops.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.*;
 
@@ -33,6 +30,10 @@ public class Partner {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(long l) {
+        this.id = l;
     }
 
     public String getName() {
