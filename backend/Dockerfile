@@ -5,7 +5,7 @@ COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 RUN ./mvnw -B dependency:go-offline
 COPY ./src ./src
-RUN ./mvnw -B verify
+RUN ./mvnw -B package
 
 FROM eclipse-temurin:17-jre-jammy
 LABEL org.opencontainers.image.authors="Philippe Collet philippe.collet@univ-cotedazur.fr"
