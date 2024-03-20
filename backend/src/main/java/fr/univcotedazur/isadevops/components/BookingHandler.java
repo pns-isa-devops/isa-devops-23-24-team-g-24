@@ -1,5 +1,6 @@
 package fr.univcotedazur.isadevops.components;
 
+import fr.univcotedazur.isadevops.connectors.SchedulerProxy;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
@@ -14,27 +15,42 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 import java.util.Optional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class BookingHandler implements BookingCreator, BookingFinder {
-
-    private final Payment payment;
     private final BookingRepository bookingRepository;
     private final CustomerRepository customerRepository;
     private final ActivityRepository activityRepository;
-    @Autowired
+
     CustomerFinder customerFinder;
 
+    ActivityCreator activityService;
+
+    private Scheduler scheduler;
+
     @Autowired
-    ActivityService activityService;
-    @Autowired
-    public BookingHandler(BookingRepository bookingRepository, CustomerRepository customerRepository, ActivityRepository activityRepository, Payment payment){
+    public BookingHandler(
+                          BookingRepository bookingRepository,
+                          CustomerRepository customerRepository,
+                          ActivityRepository activityRepository,
+                          CustomerFinder customerFinder,
+                          ActivityCreator activityCreator,
+                          Scheduler scheduler
+                          ){
+
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
         this.activityRepository = activityRepository;
-        this.payment = payment;
+
+        this.customerFinder = customerFinder;
+        this.activityService = activityCreator;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -59,7 +75,19 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         customerRepository.save(customer);
 
         Booking booking = new Booking(customer, activity, usePoints);
-        return bookingRepository.save(booking);
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateString = currentDate.format(formatter);
+
+        Optional<String> result_post = this.scheduler.book(dateString, activity.getName(), "magicPartner");
+        if(result_post.isEmpty()){
+            System.out.println("Resultat vide de la part du scheduler");
+            return null;
+        }else{
+            System.out.println("Resultat avec du contenu de la part du scheduler");
+            System.out.println(result_post.get());
+            return bookingRepository.save(booking);
+        }
     }
 
 

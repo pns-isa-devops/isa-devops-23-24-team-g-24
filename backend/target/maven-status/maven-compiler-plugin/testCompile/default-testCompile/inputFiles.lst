@@ -1,0 +1,13 @@
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/cucumber/activity/BrowsingActivities.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/controllers/ActivityControllerTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/repositories/CustomerRepositoryTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/connectors/ITSchedulerProxy.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/BookingHandlerTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/ActivityServiceTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/controllers/AdminControllerTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/repositories/PartnerRepositoryTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/PartnerRegistryTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/repositories/ActivityRepositoryTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/controllers/CustomerCareControllerTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/CustomerRegistryTest.java
+/home/s1o/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/connectors/ITBankProxy.java
