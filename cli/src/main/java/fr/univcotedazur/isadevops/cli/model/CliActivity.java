@@ -60,7 +60,12 @@ public class CliActivity {
     public void setPrice(double price) {
         this.price = price;
     }
-
+    public Long getPricePoints() {
+        return pricePoints;
+    }
+    public void setPricePoints(Long pricePoints) {
+        this.pricePoints = pricePoints;
+    }
 
     @Override
     public String toString() {

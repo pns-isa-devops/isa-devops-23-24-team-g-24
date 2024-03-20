@@ -51,7 +51,6 @@ public class ActivityController {
     }
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ActivityDTO> addActivity(@RequestBody @Valid ActivityDTO activity) {
-        System.out.println("MARCHE PLS"+activity.pricePoints());
         System.out.println("Adding activity");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)

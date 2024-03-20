@@ -7,12 +7,17 @@ import jakarta.validation.constraints.Pattern;
 
 public record ActivityDTO (
         Long id,
-        @NotBlank(message = "name should not be blank") String name,
-        @NotBlank(message = "location should not be blank") String location,
+        @NotBlank(message = "name should not be blank")
+        String name,
+        @NotBlank(message = "location should not be blank")
+        String location,
+        @NotNull
         Long numberOfPlaces,
+        @NotNull
         Long pointsEarned,
         @NotNull
         double price,
+        @NotNull
         Long pricePoints
         ){
 }
