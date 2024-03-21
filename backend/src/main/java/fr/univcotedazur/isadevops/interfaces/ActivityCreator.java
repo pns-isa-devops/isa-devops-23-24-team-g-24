@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ActivityCreator {
-    Activity create(String name, String localisation, long numberOfPlaces) throws AlreadyExistingActivityException;
+    Activity create(String name, String localisation, long numberOfPlaces, long pointsEarned, double price, long pricePoints) throws AlreadyExistingActivityException;
     Optional<Activity> findByName(String name);
     Optional<Activity> findById(long id);
     List<Activity> findAllActivities();

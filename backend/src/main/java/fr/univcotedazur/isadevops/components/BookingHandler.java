@@ -1,11 +1,10 @@
 package fr.univcotedazur.isadevops.components;
 
+import fr.univcotedazur.isadevops.connectors.SchedulerProxy;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
-import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.PaymentException;
+import fr.univcotedazur.isadevops.exceptions.*;
 import fr.univcotedazur.isadevops.interfaces.*;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.BookingRepository;
@@ -16,44 +15,83 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 import java.util.Optional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class BookingHandler implements BookingCreator, BookingFinder {
-
-    private final Payment payment;
     private final BookingRepository bookingRepository;
     private final CustomerRepository customerRepository;
     private final ActivityRepository activityRepository;
-    @Autowired
+
     CustomerFinder customerFinder;
 
+    ActivityCreator activityService;
+
+    private Scheduler scheduler;
+    private Payment payment;
+
     @Autowired
-    ActivityService activityService;
-    @Autowired
-    public BookingHandler(BookingRepository bookingRepository, CustomerRepository customerRepository, ActivityRepository activityRepository, Payment payment){
+    public BookingHandler(
+                          BookingRepository bookingRepository,
+                          CustomerRepository customerRepository,
+                          ActivityRepository activityRepository,
+                          CustomerFinder customerFinder,
+                          ActivityCreator activityCreator,
+                          Scheduler scheduler,
+                          Payment payment
+                          ){
+
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
         this.activityRepository = activityRepository;
+        this.customerFinder = customerFinder;
+        this.activityService = activityCreator;
+        this.scheduler = scheduler;
         this.payment = payment;
     }
 
     @Override
     @Transactional
-    public Booking createBooking(Long customerId, Long activityId) throws CustomerIdNotFoundException, ActivityIdNotFoundException {
-        System.out.println("CustomerID: " + customerId);
-        System.out.println("ActivityID: " + activityId);
+    public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerIdNotFoundException());
+                .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
         Activity activity = activityRepository.findById(activityId)
-                .orElseThrow(() -> new ActivityIdNotFoundException());
+                .orElseThrow(() -> new ActivityIdNotFoundException(activityId));
+        if(bookingRepository.findByActivityId(activityId).size()>=activity.getNumberOfPlaces()){
+            throw new NotEnoughPlacesException();
+        }
+        if (usePoints) {
+            if (customer.getPointsBalance() < activity.getPricePoints()) {
+                throw new NotEnoughPointsException();
+            }
+            customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
+        } else {
+            payment.pay(activity.getPrice(), customer);
+        }
+        customer.setPointsBalance(customer.getPointsBalance() + activity.getPointEarned());
+        customerRepository.save(customer);
 
-        // Il faut check si l'activité a assez de places
+        Booking booking = new Booking(customer, activity, usePoints);
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateString = currentDate.format(formatter);
 
-        Booking booking = new Booking(customer, activity);
-        return bookingRepository.save(booking);
+        Optional<String> result_post = this.scheduler.book(dateString, activity.getName(), "magicPartner");
+        if(result_post.isEmpty()){
+            System.out.println("Resultat vide de la part du scheduler");
+            return null;
+        }else{
+            System.out.println("Resultat avec du contenu de la part du scheduler");
+            System.out.println(result_post.get());
+            return bookingRepository.save(booking);
+        }
     }
+
 
     @Override
     @Transactional
@@ -82,6 +120,4 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     public List<Booking> findBookingsByActivityId(Long activityId) {
         return bookingRepository.findByActivityId(activityId);
     }
-
-
 }
