@@ -26,6 +26,9 @@ public class ActivityServiceTest {
     private final String name = "Tennis";
     private final String localisation = "Nice";
     private final long numberOfPlaces = 10;
+    private final int pointsEarned = 10;
+    private final double price = 10;
+    private final int pricePoints = 10;
 
     @Test
     void unknownCustomer() {
@@ -34,7 +37,7 @@ public class ActivityServiceTest {
 
     @Test
     void addActivity() throws Exception, AlreadyExistingActivityException {
-        Activity activity = activityCreator.create(name, localisation, numberOfPlaces);
+        Activity activity = activityCreator.create(name, localisation, numberOfPlaces, pointsEarned, price, pricePoints);
         Optional<Activity> returned = activityCreator.findByName(name);
         assertTrue(returned.isPresent());
         Activity activityReturned = returned.get();
@@ -45,8 +48,8 @@ public class ActivityServiceTest {
 
     @Test
     void cannotAddTwice() throws Exception, AlreadyExistingActivityException {
-        activityCreator.create(name, localisation, numberOfPlaces);
-        Assertions.assertThrows(AlreadyExistingActivityException.class, () -> activityCreator.create(name, localisation, numberOfPlaces));
+        activityCreator.create(name, localisation, numberOfPlaces, pointsEarned, price, pricePoints);
+        Assertions.assertThrows(AlreadyExistingActivityException.class, () -> activityCreator.create(name, localisation, numberOfPlaces, pointsEarned, price, pricePoints));
     }
 
     @Test
@@ -57,11 +60,11 @@ public class ActivityServiceTest {
 
     @Test
     void findAllCustomers() throws Exception, AlreadyExistingActivityException {
-        activityCreator.create(name, localisation, numberOfPlaces);
+        activityCreator.create(name, localisation, numberOfPlaces, pointsEarned, price, pricePoints);
         List<Activity> activities = activityCreator.findAllActivities();
         assertFalse(activities.isEmpty());
         assertEquals(1, activities.size());
-        activityCreator.create("Football", "Nice", 20);
+        activityCreator.create("Football", "Nice", 20, 20, 20, 20);
         activities = activityCreator.findAllActivities();
         assertFalse(activities.isEmpty());
         assertEquals(2, activities.size());

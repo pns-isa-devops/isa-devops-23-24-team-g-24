@@ -4,9 +4,7 @@ import fr.univcotedazur.isadevops.connectors.SchedulerProxy;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
-import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.PaymentException;
+import fr.univcotedazur.isadevops.exceptions.*;
 import fr.univcotedazur.isadevops.interfaces.*;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.BookingRepository;
@@ -35,37 +33,50 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     ActivityCreator activityService;
 
     private Scheduler scheduler;
+    private Payment payment;
 
     @Autowired
     public BookingHandler(
-                          BookingRepository bookingRepository, 
-                          CustomerRepository customerRepository, 
+                          BookingRepository bookingRepository,
+                          CustomerRepository customerRepository,
                           ActivityRepository activityRepository,
                           CustomerFinder customerFinder,
                           ActivityCreator activityCreator,
-                          Scheduler scheduler
+                          Scheduler scheduler,
+                          Payment payment
                           ){
 
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
         this.activityRepository = activityRepository;
-
         this.customerFinder = customerFinder;
         this.activityService = activityCreator;
         this.scheduler = scheduler;
+        this.payment = payment;
     }
 
     @Override
     @Transactional
-    public Booking createBooking(Long customerId, Long activityId) throws CustomerIdNotFoundException, ActivityIdNotFoundException {
-        System.out.println("CustomerID: " + customerId);
-        System.out.println("ActivityID: " + activityId);
+    public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerIdNotFoundException());
+                .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
         Activity activity = activityRepository.findById(activityId)
-                .orElseThrow(() -> new ActivityIdNotFoundException());
+                .orElseThrow(() -> new ActivityIdNotFoundException(activityId));
+        if(bookingRepository.findByActivityId(activityId).size()>=activity.getNumberOfPlaces()){
+            throw new NotEnoughPlacesException();
+        }
+        if (usePoints) {
+            if (customer.getPointsBalance() < activity.getPricePoints()) {
+                throw new NotEnoughPointsException();
+            }
+            customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
+        } else {
+            payment.pay(activity.getPrice(), customer);
+        }
+        customer.setPointsBalance(customer.getPointsBalance() + activity.getPointEarned());
+        customerRepository.save(customer);
 
-        Booking booking = new Booking(customer, activity);
+        Booking booking = new Booking(customer, activity, usePoints);
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String dateString = currentDate.format(formatter);
@@ -81,7 +92,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         }
     }
 
-    //Test commit
+
     @Override
     @Transactional
     public boolean cancelBooking(Long bookingId) {
@@ -109,6 +120,4 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     public List<Booking> findBookingsByActivityId(Long activityId) {
         return bookingRepository.findByActivityId(activityId);
     }
-
-
 }
