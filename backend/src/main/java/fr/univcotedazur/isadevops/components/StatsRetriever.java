@@ -66,21 +66,38 @@ public class StatsRetriever implements StatsCustomer, StatsPartner, StatsActivit
     public String retrieveStatsPartner(long idPartner) {
         String result = "";
 
-        /*List<Booking> bookings = bookingHandler.findAllBookings();
-        List<Booking> bookingsPartner = new ArrayList<>();
-        for (Booking booking : bookings) {
-            if (booking.getActivity().getPartner().getId() == idPartner) {
-                bookingsPartner.add(booking);
-            }
-        }*/
+        List<Booking> bookings = bookingHandler.findAllBookings();
 
         Optional<Partner> partner = partnerRegistry.findById((long) idPartner);
         if (partner.isPresent()) {
             result += "Partner " + partner.get().getName() + "\n" + "Location: " + partner.get().getLocation() + "\n" + "Description: " + partner.get().getDescription() + "\n";
-            return result;
         } else {
             return "Partner not found";
         }
+
+        List<Activity> activities = activityService.findAllActivities();
+        List<Activity> activitiesPartner = new ArrayList<>();
+        result += "Activities associated to this partner: \n";
+        for(Activity activity : activities) {
+            if (activity.getPartner().getId() == idPartner) {
+                result += "Activity " + activity.getName() + "\n";
+                activitiesPartner.add(activity);
+            }
+        }
+
+        int count = 0;
+        for(Activity activity: activitiesPartner) {
+            for(Booking booking : bookings) {
+                if (booking.getActivity().getId() == activity.getId()) {
+                    count++;
+                }
+            }
+        }
+
+        result += "Total number of bookings for this partner: " + count + "\n";
+        return result;
+
+
     }
 
 
