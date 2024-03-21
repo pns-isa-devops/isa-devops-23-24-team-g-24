@@ -41,6 +41,7 @@ public class ActivityServiceTest {
         assertEquals(activity, activityReturned);
         assertEquals(activity, activityCreator.findById(activityReturned.getId()).get());
         assertEquals(name, activityReturned.getName());
+        System.out.println("FAAAAAAAAAAAAAAAAAIL");
         assertEquals(3,2 );
     }
 

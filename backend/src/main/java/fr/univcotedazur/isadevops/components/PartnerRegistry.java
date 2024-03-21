@@ -39,11 +39,8 @@ public class PartnerRegistry implements PartnerCreator {
     @Override
     @Transactional
     public void delete(long id) throws PartnerNotFoundException {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Partner partner;
-        System.out.println("BBBBBBBBBBBBB");
         partner= partnerRepository.findById(id).orElse(null);
-        System.out.println("CCCCCCCCCCCCCCCC");
 
         if(partner!=null){
             System.out.println("Deleting partner is working...");
