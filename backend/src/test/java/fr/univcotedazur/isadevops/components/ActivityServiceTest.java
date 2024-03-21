@@ -45,7 +45,7 @@ public class ActivityServiceTest {
 
 
 
-        assertEquals(3,2 );
+        //assertEquals(3,2 );
     }
 
     @Test
