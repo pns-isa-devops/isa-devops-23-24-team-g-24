@@ -20,8 +20,6 @@ public class Partner {
 
     private String description;
 
-    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL)
-    private List<Activity> activities;
 
     public Partner() {
     }
@@ -30,14 +28,6 @@ public class Partner {
         this.name = name;
         this.location = location;
         this.description = description;
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public void addActivity(Activity activity) {
-        activities.add(activity);
     }
     
 
