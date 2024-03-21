@@ -76,9 +76,6 @@ public class BookingHandlerTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String dateString = currentDate.format(formatter);
         when(schedulerProxy.book(dateString, testActivity.getName(), "magicPartner")).thenReturn(Optional.of("test"));
-
-
-        Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId());
         when(bankProxy.pay(any(Customer.class), anyDouble())).thenReturn(Optional.of("RECEIPT:628682be-f22f-4184-9c77-db47fc6c4952"));
         Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId(), false);
 

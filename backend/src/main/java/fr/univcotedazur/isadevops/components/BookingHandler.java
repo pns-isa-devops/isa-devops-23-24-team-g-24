@@ -33,6 +33,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     ActivityCreator activityService;
 
     private Scheduler scheduler;
+    private Payment payment;
 
     @Autowired
     public BookingHandler(
@@ -41,16 +42,17 @@ public class BookingHandler implements BookingCreator, BookingFinder {
                           ActivityRepository activityRepository,
                           CustomerFinder customerFinder,
                           ActivityCreator activityCreator,
-                          Scheduler scheduler
+                          Scheduler scheduler,
+                          Payment payment
                           ){
 
         this.bookingRepository = bookingRepository;
         this.customerRepository = customerRepository;
         this.activityRepository = activityRepository;
-
         this.customerFinder = customerFinder;
         this.activityService = activityCreator;
         this.scheduler = scheduler;
+        this.payment = payment;
     }
 
     @Override
