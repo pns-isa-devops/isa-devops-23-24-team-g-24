@@ -11,7 +11,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                     sh 'pwd'
-                    sh 'cd backend'
+                    sh 'pushd backend'
                     sh 'pwd'
                     sh 'git log -n 1'
                     sh 'sudo mvn clean package'
