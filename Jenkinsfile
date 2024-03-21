@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'agent1'
-    }
+    agent any
 
     environment {
         ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
