@@ -6,18 +6,10 @@ pipeline {
     stages {
         stage('Build and Test') {
             steps {
-                script {
-                    // Utiliser pushd pour naviguer dans le répertoire backend*
-                    sh 'pwd'
-                    sh "sudo cd backend"
-                    sh "pwd"
-
-                    // Exécuter les commandes git et maven
+                dir('/home/jenkins/workspace/ch_Pipeline_TD1_testsJenkinsSmee/backend') {
                     sh 'git log -n 1'
                     sh 'sudo mvn clean package'
                     sh 'sudo mvn test'
-
-
                 }
             }
         }
