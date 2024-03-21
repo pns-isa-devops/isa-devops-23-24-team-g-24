@@ -2,6 +2,13 @@ pipeline {
     agent {
         label 'agent1'
     }
+     tools {
+            maven 'Maven 3.9.6'
+            jdk 'jdk17'
+        }
+        environment {
+            ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
+        }
 
     stages {
         stage('Build and Test') {
