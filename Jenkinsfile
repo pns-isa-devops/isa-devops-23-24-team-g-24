@@ -9,7 +9,7 @@ pipeline {
                 script {
                     // Utiliser pushd pour naviguer dans le répertoire backend*
                     sh 'pwd'
-                    sh "cd backend"
+                    sh "sudo cd backend"
                     sh "pwd"
 
                     // Exécuter les commandes git et maven
