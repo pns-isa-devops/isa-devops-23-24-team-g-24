@@ -40,8 +40,8 @@ public class ActivityCommands {
     }
 
     @ShellMethod("Add activity (add-activity ACTIVITY_NAME LOCATION NUMBER_OF_PLACES)")
-    public String addActivity(String name, String location, Long numberOfPlaces) {
-        CliActivity createdActivity = restTemplate.postForObject(BASE_URI, new CliActivity(name, location, numberOfPlaces), CliActivity.class);
+    public String addActivity(String name, String location, Long numberOfPlaces, Long idPartner) {
+        CliActivity createdActivity = restTemplate.postForObject(BASE_URI, new CliActivity(name, location, numberOfPlaces, idPartner), CliActivity.class);
         return createdActivity != null ? "Activity added with success: " + createdActivity.toString() : "Error while adding activity";
     }
 

@@ -8,11 +8,13 @@ public class CliActivity {
     private int pricePoints;
     private long numberOfPlaces;
     private int pointsEarned;
+    private long idPartner;
 
-    public CliActivity(String name, String location, Long numberOfPlaces) {
+    public CliActivity(String name, String location, Long numberOfPlaces, Long idPartner) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
+        this.idPartner = idPartner;
     }
      public Long getId() {
          return id;
@@ -58,6 +60,14 @@ public class CliActivity {
         this.price = price;
     }
 
+    public long getIdPartner() {
+        return idPartner;
+    }
+
+    public void setIdPartner(long idPartner) {
+        this.idPartner = idPartner;
+    }
+
 
     @Override
     public String toString() {
@@ -66,6 +76,7 @@ public class CliActivity {
                 ", location='" + location + '\'' +
                 ", numberOfPlaces='" + numberOfPlaces + '\'' +
                 ", id='" + id + '\'' +
+                ", idPartner='" + idPartner + '\'' +
                 '}';
     }
 }

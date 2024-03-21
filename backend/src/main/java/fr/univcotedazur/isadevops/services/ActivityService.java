@@ -46,13 +46,13 @@ public class ActivityService implements ActivityCreator {
     public Activity saveActivity(Activity activity) {
         return activityRepository.save(activity);
     }
+    
     @Override
     @Transactional
     public Activity create(String name, String localisation, long numberOfPlaces, long id_partner) throws AlreadyExistingActivityException{
         if (findByName(name).isPresent())
             throw new AlreadyExistingActivityException(name);
         
-
         Activity newactivity = new Activity(name, localisation, numberOfPlaces);
 
         if(id_partner != 0){
