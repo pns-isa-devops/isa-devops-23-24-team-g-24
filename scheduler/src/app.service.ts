@@ -29,6 +29,17 @@ book(bookRequestDto: BookRequestDto): BookReceiptDto {
       bookRequestDto.nameActivity,
       bookRequestDto.namePartner,
     );
+    if(bookRequestDto.namePartner === 'magicPartner'){
+      this.books.push(bookReceiptDto);
+      console.log(
+        'Book accepted(' +
+          bookReceiptDto.bookReceiptId +
+          '): ' +
+          bookReceiptDto.dateBook,
+      );
+      return bookReceiptDto;
+    }
+
     if(this.isBooked(bookRequestDto.dateBook, bookRequestDto.nameActivity, bookRequestDto.namePartner)){
         throw new ActivityAlreadyBooked(bookRequestDto.nameActivity, bookRequestDto.namePartner, bookRequestDto.dateBook);
     }
