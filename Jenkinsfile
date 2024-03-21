@@ -3,14 +3,23 @@ pipeline {
         label 'agent1'
     }
 
+    environment {
+        ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
+    }
+
     stages {
         stage('Build and Test') {
             steps {
-                dir('/home/jenkins/workspace/ch_Pipeline_TD1_testsJenkinsSmee/backend') {
-                    sh 'sudo mvn clean package'
-                    sh 'sudo mvn test'
-                }
+
+
+                    sh 'pwd'
+                    sh 'git log -n 1'
+                    sh 'cd backend && sudo mvn clean package'
+                    sh 'cd backend && sudo mvn test'
+                    sh 'pwd'
+
             }
         }
     }
+
 }
