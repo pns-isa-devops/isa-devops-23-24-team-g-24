@@ -7,8 +7,10 @@ pipeline {
         stage('Build and Test') {
             steps {
                 script {
-                    // Utiliser pushd pour naviguer dans le répertoire backend
+                    // Utiliser pushd pour naviguer dans le répertoire backend*
+                    sh 'pwd'
                     sh "cd backend"
+                    sh "pwd"
 
                     // Exécuter les commandes git et maven
                     sh 'git log -n 1'
