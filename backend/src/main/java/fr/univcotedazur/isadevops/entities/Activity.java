@@ -21,12 +21,31 @@ public class Activity {
     @NotNull
     private Long numberOfPlaces;
 
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
+
     public Activity() {
     }
     public Activity(String name, String location, Long numberOfPlaces) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
+    }
+
+    public Activity(String name, String location, Long numberOfPlaces, Partner partner) {
+        this.name = name;
+        this.location = location;
+        this.numberOfPlaces = numberOfPlaces;
+        this.partner = partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Partner getPartner() {
+        return partner;
     }
 
     @NotNull

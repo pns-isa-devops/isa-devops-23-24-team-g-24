@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.List;
 
 @Entity
 public class Partner {
@@ -19,6 +20,9 @@ public class Partner {
 
     private String description;
 
+    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL)
+    private List<Activity> activities;
+
     public Partner() {
     }
 
@@ -27,6 +31,15 @@ public class Partner {
         this.location = location;
         this.description = description;
     }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void addActivity(Activity activity) {
+        activities.add(activity);
+    }
+    
 
     public Long getId() {
         return id;
