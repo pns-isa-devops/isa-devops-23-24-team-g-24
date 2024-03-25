@@ -1,32 +1,21 @@
 package fr.univcotedazur.isadevops.dto;
 
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 public record ActivityDTO (
         Long id,
-        @NotBlank(message = "name should not be blank") String name,
-        @NotBlank(message = "location should not be blank") String location,
+        @NotBlank(message = "name should not be blank")
+        String name,
+        @NotBlank(message = "location should not be blank")
+        String location,
+        @NotNull
         Long numberOfPlaces,
+        @NotNull
+        Long pointsEarned,
+        @NotNull
+        double price,
+        @NotNull
+        Long pricePoints,
         Long idPartner
-)
-{
-    public Long id() {
-        return id;
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public String location() {
-        return location;
-    }
-
-    public Long numberOfPlaces() {
-        return numberOfPlaces;
-    }
-
-    public Long idPartner() {
-        return idPartner;
-    }
+        ){
 }

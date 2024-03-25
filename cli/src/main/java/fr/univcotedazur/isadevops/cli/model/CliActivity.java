@@ -4,16 +4,20 @@ public class CliActivity {
     private Long id;
     private String name;
     private String location;
+    private Long numberOfPlaces;
+    private Long pointsEarned;
     private double price;
-    private int pricePoints;
-    private long numberOfPlaces;
-    private int pointsEarned;
+    private long pricePoints;
     private long idPartner;
 
-    public CliActivity(String name, String location, Long numberOfPlaces, Long idPartner) {
+
+    public CliActivity(String name, String location, Long numberOfPlaces, Long pointsEarned, double price, Long pricePoints, long idPartner) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
+        this.pointsEarned = pointsEarned;
+        this.price = price;
+        this.pricePoints = pricePoints;
         this.idPartner = idPartner;
     }
      public Long getId() {
@@ -44,11 +48,11 @@ public class CliActivity {
         this.numberOfPlaces = numberOfPlaces;
     }
 
-    public int getPointsEarned() {
+    public Long getPointsEarned() {
         return pointsEarned;
     }
 
-    public void setPointsEarned(int pointsEarned) {
+    public void setPointsEarned(Long pointsEarned) {
         this.pointsEarned = pointsEarned;
     }
 
@@ -60,6 +64,7 @@ public class CliActivity {
         this.price = price;
     }
 
+
     public long getIdPartner() {
         return idPartner;
     }
@@ -68,6 +73,12 @@ public class CliActivity {
         this.idPartner = idPartner;
     }
 
+    public Long getPricePoints() {
+        return pricePoints;
+    }
+    public void setPricePoints(Long pricePoints) {
+        this.pricePoints = pricePoints;
+    }
 
     @Override
     public String toString() {
@@ -76,6 +87,9 @@ public class CliActivity {
                 ", location='" + location + '\'' +
                 ", numberOfPlaces='" + numberOfPlaces + '\'' +
                 ", id='" + id + '\'' +
+                ", pointsEarned='" + pointsEarned + '\'' +
+                ", price='" + price + '\'' +
+                ", pricePoints='" + pricePoints + '\'' +
                 ", idPartner='" + idPartner + '\'' +
                 '}';
     }

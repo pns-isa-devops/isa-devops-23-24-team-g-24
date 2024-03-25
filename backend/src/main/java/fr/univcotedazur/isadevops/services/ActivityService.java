@@ -49,12 +49,11 @@ public class ActivityService implements ActivityCreator {
     
     @Override
     @Transactional
-    public Activity create(String name, String localisation, long numberOfPlaces, long id_partner) throws AlreadyExistingActivityException{
+    public Activity create(String name, String localisation, long numberOfPlaces, long pointEarned, double price, long pricePoints, long id_partner) throws AlreadyExistingActivityException{
         if (findByName(name).isPresent())
             throw new AlreadyExistingActivityException(name);
-        
-        Activity newactivity = new Activity(name, localisation, numberOfPlaces);
-
+        Activity newactivity = new Activity(name, localisation, numberOfPlaces,pointEarned, price, pricePoints);
+        System.out.println(newactivity.getPointEarned());
         if(id_partner != 0){
             partnerRepository.findById(id_partner).ifPresent(newactivity::setPartner);
             newactivity.setPartner(partnerRepository.findById(id_partner).get());

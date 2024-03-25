@@ -3,8 +3,7 @@ package fr.univcotedazur.isadevops.connectors;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
-import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.*;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.BookingRepository;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
@@ -64,14 +63,14 @@ public class ITSchedulerProxy {
 
     @BeforeAll
     static public void setUp() {
-        testCustomer = new Customer("John Doe", "1234567890");
+        testCustomer = new Customer("John Doe", "8969837890");
         testCustomer.setId(1L);
-        testActivity = new Activity("Hiking", "Mountain", 20L);
+        testActivity = new Activity("Hiking", "Mountain", 20L,12L,5,5L);
         testActivity.setId(1L);
     }
 
     @Test
-    public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
+    public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException, PaymentException, NotEnoughPlacesException, NotEnoughPointsException {
         when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
         when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -80,7 +79,7 @@ public class ITSchedulerProxy {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String dateString = currentDate.format(formatter);
 
-        Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId());
+        Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId(), false);
 
         assertNotNull(booking);
         assertEquals(testCustomer.getId(), booking.getCustomer().getId());
