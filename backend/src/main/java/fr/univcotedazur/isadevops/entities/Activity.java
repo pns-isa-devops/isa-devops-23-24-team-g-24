@@ -27,8 +27,14 @@ public class Activity {
     @NotNull
     private Long pointsEarned;
 
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
+
     public Activity() {
     }
+
+    
     public Activity(String name, String location, Long numberOfPlaces, Long pointsEarned, double price, Long pricePoints) {
         this.name = name;
         this.location = location;
@@ -36,6 +42,15 @@ public class Activity {
         this.pointsEarned = pointsEarned;
         this.price = price;
         this.pricePoints = pricePoints;
+    }
+
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Partner getPartner() {
+        return partner;
     }
 
 

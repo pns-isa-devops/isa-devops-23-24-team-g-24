@@ -38,10 +38,11 @@ public class AdminController {
 
     @GetMapping
     public ResponseEntity<List<Partner>> getAllPartners(){
-        List<Partner> partners= partnerRegistry.findAllPartners();
+        //List<Partner> partners= partnerRegistry.findAllPartners();
         System.out.println("Fetching partners");
         return ResponseEntity.ok(partnerRegistry.findAll());
     }
+    
     @GetMapping("/{id}")
     public ResponseEntity<PartnerDTO> getPartnerById(@PathVariable Long id) {
         Optional<Partner> optionalPartner = partnerRegistry.findById(id);
