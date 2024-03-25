@@ -12,6 +12,7 @@
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/entities/Activity.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/PartnerCreator.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/BookingFinder.java
+/mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/controllers/StatsController.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/entities/Customer.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/exceptions/AlreadyExistingActivityException.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/Bank.java
@@ -23,6 +24,7 @@
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/dto/BookingDTO.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/exceptions/NotEnoughPlacesException.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/connectors/SchedulerProxy.java
+/mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/components/StatsRetriever.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/SimpleTcfsServer.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/connectors/externaldto/BookRequestDTO.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/ActivityCreator.java
@@ -39,6 +41,7 @@
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/repositories/BookingRepository.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/dto/PartnerDTO.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/repositories/CustomerRepository.java
+/mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/StatsActivity.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/controllers/CustomerCareController.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/CustomerFinder.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/connectors/externaldto/PaymentRequestDTO.java
@@ -46,6 +49,8 @@
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/repositories/PartnerRepository.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/exceptions/PartnerNotFoundException.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/exceptions/CustomerIdNotFoundException.java
+/mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/StatsPartner.java
+/mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/StatsCustomer.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/exceptions/AlreadyExistingCustomerException.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/repositories/ActivityRepository.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/main/java/fr/univcotedazur/isadevops/interfaces/CustomerRegistration.java

@@ -58,6 +58,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     @Override
     @Transactional
     public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
+        System.out.println("PARAMETRE USE POINTS : " + usePoints);
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
         Activity activity = activityRepository.findById(activityId)
@@ -66,11 +67,16 @@ public class BookingHandler implements BookingCreator, BookingFinder {
             throw new NotEnoughPlacesException();
         }
         if (usePoints) {
+            System.out.println("Nombre de points du client avant paiement : " + customer.getPointsBalance() + " Prix de l'activité : " + activity.getPricePoints());
             if (customer.getPointsBalance() < activity.getPricePoints()) {
                 throw new NotEnoughPointsException();
             }
             customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
         } else {
+            if(activity.getPrice() == -1){
+                throw new PaymentException();
+                //can't pay an extra with euros
+            }
             System.out.println("Paiement de l'activité avec la carte bancaire");
             payment.pay(activity.getPrice(), customer);
             System.out.println("Nombre de points du client avant paiement : " + customer.getPointsBalance());

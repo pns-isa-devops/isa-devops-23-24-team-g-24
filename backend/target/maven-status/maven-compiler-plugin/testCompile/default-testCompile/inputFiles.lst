@@ -9,5 +9,6 @@
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/ActivityServiceTest.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/PartnerRegistryTest.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/repositories/PartnerRepositoryTest.java
+/mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/components/StatsRetrieverTest.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/cucumber/activity/BrowsingActivities.java
 /mnt/c/Users/Proprietaire/Desktop/isa-devops-23-24-team-g-24/backend/src/test/java/fr/univcotedazur/isadevops/controllers/CustomerCareControllerTest.java

@@ -3,6 +3,7 @@ fr/univcotedazur/isadevops/configurations/PersistenceJpaConfig.class
 fr/univcotedazur/isadevops/entities/Activity.class
 fr/univcotedazur/isadevops/repositories/CustomerRepository.class
 fr/univcotedazur/isadevops/aspects/ControllerLogger.class
+fr/univcotedazur/isadevops/controllers/BookingController.class
 fr/univcotedazur/isadevops/interfaces/Bank.class
 fr/univcotedazur/isadevops/connectors/externaldto/PaymentRequestDTO.class
 fr/univcotedazur/isadevops/exceptions/PartnerNotFoundException.class
@@ -12,6 +13,7 @@ fr/univcotedazur/isadevops/repositories/PartnerRepository.class
 fr/univcotedazur/isadevops/entities/Customer.class
 fr/univcotedazur/isadevops/dto/CustomerDTO.class
 fr/univcotedazur/isadevops/connectors/externaldto/BookReceiptDTO.class
+fr/univcotedazur/isadevops/controllers/StatsController.class
 fr/univcotedazur/isadevops/exceptions/AlreadyExistingPartnerException.class
 fr/univcotedazur/isadevops/connectors/SchedulerProxy.class
 fr/univcotedazur/isadevops/interfaces/CustomerFinder.class
@@ -23,13 +25,17 @@ fr/univcotedazur/isadevops/connectors/BankProxy.class
 fr/univcotedazur/isadevops/controllers/CustomerCareController.class
 fr/univcotedazur/isadevops/dto/ActivityDTO.class
 fr/univcotedazur/isadevops/interfaces/PartnerCreator.class
+fr/univcotedazur/isadevops/interfaces/StatsActivity.class
 fr/univcotedazur/isadevops/connectors/externaldto/PaymentReceiptDTO.class
 fr/univcotedazur/isadevops/repositories/ActivityRepository.class
 fr/univcotedazur/isadevops/exceptions/CustomerIdNotFoundException.class
 fr/univcotedazur/isadevops/interfaces/BookingCreator.class
 fr/univcotedazur/isadevops/services/ActivityService.class
 fr/univcotedazur/isadevops/interfaces/Scheduler.class
+fr/univcotedazur/isadevops/interfaces/StatsPartner.class
 fr/univcotedazur/isadevops/controllers/AdminController.class
+fr/univcotedazur/isadevops/components/StatsRetriever.class
+fr/univcotedazur/isadevops/components/BookingHandler.class
 fr/univcotedazur/isadevops/exceptions/AlreadyExistingActivityException.class
 fr/univcotedazur/isadevops/SimpleTcfsServer.class
 fr/univcotedazur/isadevops/connectors/externaldto/BookRequestDTO.class
@@ -39,6 +45,7 @@ fr/univcotedazur/isadevops/interfaces/Payment.class
 fr/univcotedazur/isadevops/components/PartnerRegistry.class
 fr/univcotedazur/isadevops/interfaces/CustomerRegistration.class
 fr/univcotedazur/isadevops/dto/ErrorDTO.class
+fr/univcotedazur/isadevops/interfaces/StatsCustomer.class
 fr/univcotedazur/isadevops/exceptions/ActivityIdNotFoundException.class
 fr/univcotedazur/isadevops/interfaces/BookingFinder.class
 fr/univcotedazur/isadevops/repositories/BookingRepository.class
