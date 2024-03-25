@@ -1,4 +1,4 @@
-package fr.univcotedazur.simpletcfs.cucumber.activity;
+package fr.univcotedazur.isadevops.cucumber.activity;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

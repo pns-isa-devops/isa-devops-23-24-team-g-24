@@ -60,7 +60,7 @@ public class BookingHandlerTest {
         testCustomerWith0Points = new Customer("John Doe", "8969837890");
         testCustomerWith0Points.setPointsBalance(0L);
         testCustomerWith0Points.setId(2L);
-        testActivity = new Activity("Hiking", "Mountain", 20L, 5L, 10, 10L);
+        testActivity = new Activity("Hiking", "Mountain", 20L,10, 10L);
         testActivity.setId(1L);
     }
 

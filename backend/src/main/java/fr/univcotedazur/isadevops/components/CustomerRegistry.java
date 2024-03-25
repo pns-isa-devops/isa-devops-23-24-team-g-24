@@ -59,6 +59,9 @@ public class CustomerRegistry implements CustomerRegistration, CustomerFinder {
     @Override
     @Transactional(readOnly = true)
     public List<Customer> findAll() {
+        for(Customer c : customerRepository.findAll()) {
+            System.out.println(c);
+        }
         return customerRepository.findAll();
     }
 

@@ -71,10 +71,15 @@ public class BookingHandler implements BookingCreator, BookingFinder {
             }
             customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
         } else {
+            System.out.println("Paiement de l'activité avec la carte bancaire");
             payment.pay(activity.getPrice(), customer);
+            System.out.println("Nombre de points du client avant paiement : " + customer.getPointsBalance());
+            customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
+            System.out.println("Nombre de points du client après paiement : " + customer.getPointsBalance());
+            System.out.println("Paiement de l'activité avec la carte bancaire SUCCESS");
         }
-        customer.setPointsBalance(customer.getPointsBalance() + activity.getPointEarned());
         customerRepository.save(customer);
+        System.out.println("Création de la réservation done");
 
         Booking booking = new Booking(customer, activity, usePoints);
         LocalDate currentDate = LocalDate.now();
