@@ -69,13 +69,10 @@ public class BookingHandlerTest {
         when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
         when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        when(schedulerProxy.book("2022", testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
+        when(schedulerProxy.book(testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
 
 
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateString = currentDate.format(formatter);
-        when(schedulerProxy.book(dateString, testActivity.getName(), "magicPartner")).thenReturn(Optional.of("test"));
+        when(schedulerProxy.book(testActivity.getName(), "magicPartner")).thenReturn(Optional.of("test"));
         when(bankProxy.pay(any(Customer.class), anyDouble())).thenReturn(Optional.of("RECEIPT:628682be-f22f-4184-9c77-db47fc6c4952"));
         Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId(), false);
 
@@ -87,7 +84,7 @@ public class BookingHandlerTest {
     @Test
     public void createBooking_shouldThrowException_whenInvalidCustomerGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
         when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
-        when(schedulerProxy.book("2022", testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
+        when(schedulerProxy.book(testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
 
 
         assertThrows(CustomerIdNotFoundException.class ,() -> bookingHandler.createBooking(999L, testActivity.getId(),false));

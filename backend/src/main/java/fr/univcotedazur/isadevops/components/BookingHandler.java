@@ -87,11 +87,8 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         System.out.println("Création de la réservation done");
 
         Booking booking = new Booking(customer, activity, usePoints);
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateString = currentDate.format(formatter);
 
-        Optional<String> result_post = this.scheduler.book(dateString, activity.getName(), "magicPartner");
+        Optional<String> result_post = this.scheduler.book(activity.getName(), "magicPartner");
         if(result_post.isEmpty()){
             System.out.println("Resultat vide de la part du scheduler");
             return null;
