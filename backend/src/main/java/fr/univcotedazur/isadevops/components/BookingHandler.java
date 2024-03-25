@@ -58,7 +58,6 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     @Override
     @Transactional
     public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
-        System.out.println("PARAMETRE USE POINTS : " + usePoints);
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
         Activity activity = activityRepository.findById(activityId)
@@ -77,12 +76,12 @@ public class BookingHandler implements BookingCreator, BookingFinder {
                 throw new PaymentException();
                 //can't pay an extra with euros
             }
-            System.out.println("Paiement de l'activité avec la carte bancaire");
             payment.pay(activity.getPrice(), customer);
-            System.out.println("Nombre de points du client avant paiement : " + customer.getPointsBalance());
-            customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
-            System.out.println("Nombre de points du client après paiement : " + customer.getPointsBalance());
-            System.out.println("Paiement de l'activité avec la carte bancaire SUCCESS");
+
+            //Utilisation d'une regex pour détecter si l'activité booké est un forfait de ski ou non
+            if(!activity.getName().toLowerCase().matches(".*forfait.*ski.*")){
+                customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
+            }
         }
         customerRepository.save(customer);
         System.out.println("Création de la réservation done");
