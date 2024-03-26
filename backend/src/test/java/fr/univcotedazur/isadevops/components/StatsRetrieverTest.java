@@ -46,7 +46,7 @@ public class StatsRetrieverTest {
             testCustomer = new Customer(nameCustomer, creditCard);
             testCustomer.setId(1L);
 
-            testActivity = new Activity(activityName, activityDescription, activitySize, 10L, 10.0, 10L);
+            testActivity = new Activity(activityName, activityDescription, activitySize, 10L, 10L);
             testActivity.setId(1L);
 
             testPartner = new Partner(namePartner, location, description);

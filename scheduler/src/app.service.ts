@@ -23,25 +23,24 @@ export class AppService {
 
 book(bookRequestDto: BookRequestDto): BookReceiptDto {
     let bookReceiptDto: BookReceiptDto;
+
+    var dateActuelle = new Date();
+    var jour = dateActuelle.getDate();
+    var mois = dateActuelle.getMonth() + 1; 
+    var heure = dateActuelle.getHours();
+    var minute = dateActuelle.getMinutes();
+    var seconde = dateActuelle.getSeconds();
+    var timeActivity = jour + "/" + mois + " " + heure + ":" + minute + ":" + seconde;
+
     bookReceiptDto = new BookReceiptDto(
       'RECEIPT:' + randomUUID(),
-      bookRequestDto.dateBook,
+      timeActivity,
       bookRequestDto.nameActivity,
       bookRequestDto.namePartner,
     );
-    if(bookRequestDto.namePartner === 'magicPartner'){
-      this.books.push(bookReceiptDto);
-      console.log(
-        'Book accepted(' +
-          bookReceiptDto.bookReceiptId +
-          '): ' +
-          bookReceiptDto.dateBook,
-      );
-      return bookReceiptDto;
-    }
-
-    if(this.isBooked(bookRequestDto.dateBook, bookRequestDto.nameActivity, bookRequestDto.namePartner)){
-        throw new ActivityAlreadyBooked(bookRequestDto.nameActivity, bookRequestDto.namePartner, bookRequestDto.dateBook);
+    
+    if(this.isBooked(timeActivity, bookRequestDto.nameActivity, bookRequestDto.namePartner)){
+        throw new ActivityAlreadyBooked(bookRequestDto.nameActivity, bookRequestDto.namePartner, timeActivity);
     }
     this.books.push(bookReceiptDto);
     console.log(

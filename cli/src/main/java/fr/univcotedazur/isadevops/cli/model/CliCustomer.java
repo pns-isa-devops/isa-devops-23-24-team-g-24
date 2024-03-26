@@ -9,10 +9,10 @@ public class CliCustomer {
     private String creditCard;
     private double pointsBalance;
 
-    public CliCustomer(String name, String creditCard) {
+    public CliCustomer(String name, String creditCard, double pointsBalance) {
         this.name = name;
         this.creditCard = creditCard;
-        this.pointsBalance = 0;
+        this.pointsBalance = pointsBalance;
     }
 
     public Long getId() {

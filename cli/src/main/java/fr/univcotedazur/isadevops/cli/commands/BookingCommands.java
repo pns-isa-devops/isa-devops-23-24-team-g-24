@@ -33,6 +33,8 @@ public class BookingCommands {
     public String createBooking(Long customerId, Long activityId, boolean usePoints) {
         CliBooking booking = new CliBooking(customerId, activityId, usePoints);
         System.out.println("Creating booking: " + booking.getActivityId() + " for customer " + booking.getCustomerId());
+        if(usePoints) System.out.println("Using points");
+        else System.out.println("Not using points");
         ResponseEntity<CliBooking> response = restTemplate.postForEntity(BASE_URI, booking, CliBooking.class);
 
         if (response.getStatusCode() == HttpStatus.CREATED) {
