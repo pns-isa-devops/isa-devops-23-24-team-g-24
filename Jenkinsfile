@@ -8,6 +8,7 @@ pipeline {
             maven 'Maven 3.9.6'
             jdk 'jdk17'
             jfrog 'jfrog-cli'
+
         }
         environment {
             ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
