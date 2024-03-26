@@ -3,9 +3,15 @@ pipeline {
         label 'agent1'
     }
 
-    environment {
-        ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
-    }
+
+    tools {
+            maven 'Maven 3.9.6'
+            jdk 'jdk17'
+            jfrog 'jfrog-cli'
+        }
+        environment {
+            ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
+        }
 
     stages {
         stage('Build and Test') {
