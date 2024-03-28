@@ -23,7 +23,7 @@ pipeline {
                     sh 'cd backend && sudo mvn clean package'
                     sh 'sudo ./build-all.sh'
                     sh 'sudo docker compose down && sudo docker compose up -d'
-                    sh 'sudo docker attach cli && script demo.txt'
+                    sh 'sudo docker exec cli script demo.txt'
 
 
 
