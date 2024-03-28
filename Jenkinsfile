@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Build and Test') {
             steps {
-                sh 'cd backend && sudo mvn package'
+                sh 'cd backend && sudo mvn clean package'
                 sh 'cd cli && sudo mvn clean install package'
             }
         }
