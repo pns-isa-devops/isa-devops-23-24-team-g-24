@@ -3,14 +3,33 @@ pipeline {
         label 'agent1'
     }
 
+
+    tools {
+            maven 'Maven 3.9.6'
+            jdk 'jdk17'
+            jfrog 'jfrog-cli'
+
+        }
+        environment {
+            ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
+        }
+
     stages {
         stage('Build and Test') {
             steps {
-                dir('/home/jenkins/workspace/ch_Pipeline_TD1_testsJenkinsSmee/backend') {
-                    sh 'sudo mvn clean package'
-                    sh 'sudo mvn test'
+
+                    sh 'cd backend && sudo mvn verify'
+
+
+            }
+        }
+        stage('Upload W4E jar to JFrog Artifactory') {
+            steps {
+                dir("backend/target") {
+                    sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app' // HERE THE IP ADDRESS IS THE IP ADDRESS OF THE ARTIFACTORY DOCKER CONTAINER
                 }
             }
         }
     }
+
 }
