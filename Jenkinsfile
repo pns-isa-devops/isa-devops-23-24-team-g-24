@@ -36,7 +36,7 @@ pipeline {
                        branch 'develop'
                     }
                     steps {
-
+                        sh 'sudo docker compose down && sudo docker compose up -d'
                         sh 'cd backend && sudo mvn package verify'
                         sh 'cd cli && sudo mvn package'
 
