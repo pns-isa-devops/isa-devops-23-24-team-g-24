@@ -22,7 +22,11 @@ pipeline {
                     sh 'git log -n 1'
                     sh 'cd backend && sudo mvn clean package'
                     sh 'sudo ./build-all.sh'
-                    sh 'sudo docker compose down && sudo docker compose up -d'
+//                     sh 'sudo docker compose down && sudo docker compose up -d'
+                    sh 'sudo docker compose up -d
+                        sudo docker attach cli
+                        script demo.txt'
+
 
             }
         }
