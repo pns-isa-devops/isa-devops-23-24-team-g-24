@@ -18,11 +18,11 @@ pipeline {
         stage('Build and Test') {
             steps {
 
-
                     sh 'pwd'
                     sh 'git log -n 1'
                     sh 'cd backend && sudo mvn clean package'
-                    sh 'cd backend && sudo mvn test'
+                    sh 'sudo ./build-all.sh'
+                    sh 'sudo docker compose down && sudo docker compose up -d'
 
 
             }
