@@ -35,7 +35,12 @@ pipeline {
             when{
                 not {
                     branch 'main'
-                    branch 'develop'
+
+                }
+                and{
+                    not {
+                        branch 'develop'
+                    }
                 }
             }
             steps{
