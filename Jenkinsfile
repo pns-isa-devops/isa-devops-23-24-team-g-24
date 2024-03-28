@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Build and Test') {
             steps {
-                ssh 'cd backend && mvn clean verify'
+                sh 'cd backend && mvn clean verify'
             }
         }
         stage('Upload W4E jar to JFrog Artifactory') {
