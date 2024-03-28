@@ -18,7 +18,8 @@ pipeline {
         stage('Build and Test') {
             steps {
 
-                    sh 'cd backend && sudo mvn verify'
+                    sh 'pwd'
+                    sh 'git log -n 1'
 
 
             }
