@@ -28,6 +28,7 @@ pipeline {
                         script demo.txt'
 
 
+
             }
         }
         stage('Upload W4E jar to JFrog Artifactory') {
