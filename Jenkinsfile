@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Build and Test') {
             steps {
-                    sh './build-all.sh'
+
                     sh 'cd backend && sudo mvn clean verify'
             }
         }
