@@ -16,14 +16,20 @@ pipeline {
     stages {
         stage('Build and Test') {
             steps {
-                sh 'cd backend && sudo mvn clean install package && sudo mvn verify'
+                sh 'cd backend && sudo mvn clean install package'
+                sh 'cd cli && sudo mvn clean install package'
+
+                //sudo mvn verify
             }
         }
         stage('Upload W4E jar to JFrog Artifactory') {
             steps {
                 dir("backend/target") {
                     sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app' // HERE THE IP ADDRESS IS THE IP ADDRESS OF THE ARTIFACTORY DOCKER CONTAINER
+
                 }
+                dir("cli/target"){
+                    sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} cli-0.0.1-SNAPSHOT.jar /java_web-app'}
             }
         }
     }
