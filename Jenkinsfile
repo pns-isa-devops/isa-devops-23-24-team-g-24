@@ -14,20 +14,9 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Récupérer le dernier commit
-                script {
-                    git 'checkout origin/develop'
-                    sh 'git pull'
-                }
-            }
-        }
         stage('Build and Test') {
             steps {
-                sh 'pwd'
-                sh 'git log -n 1'
-                // Vos étapes de construction et de test ici
+                ssh 'cd backend && mvn clean verify'
             }
         }
         stage('Upload W4E jar to JFrog Artifactory') {
