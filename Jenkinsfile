@@ -16,10 +16,8 @@ pipeline {
     stages {
         stage('Build and Test') {
             steps {
-                sh 'cd backend && sudo mvn clean install package'
+                sh 'cd backend && sudo mvn package'
                 sh 'cd cli && sudo mvn clean install package'
-
-                //sudo mvn verify
             }
         }
         stage('Upload W4E jar to JFrog Artifactory') {
