@@ -24,6 +24,10 @@ public class CliBooking {
         return activityId;
     }
 
+    public boolean getUsePoints() {
+        return usePoints;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +

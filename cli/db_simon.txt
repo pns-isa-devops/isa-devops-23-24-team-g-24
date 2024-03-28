@@ -1,0 +1,3 @@
+register "simon" "8969830000"
+add-partner "pns" "sophia" "ecole"
+add-activity "manger" "antibes" 10 10 10 1

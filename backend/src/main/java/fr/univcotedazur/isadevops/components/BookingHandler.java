@@ -66,22 +66,29 @@ public class BookingHandler implements BookingCreator, BookingFinder {
             throw new NotEnoughPlacesException();
         }
         if (usePoints) {
+            System.out.println("Nombre de points du client avant paiement : " + customer.getPointsBalance() + " Prix de l'activité : " + activity.getPricePoints());
             if (customer.getPointsBalance() < activity.getPricePoints()) {
                 throw new NotEnoughPointsException();
             }
             customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
         } else {
+            if(activity.getPrice() == -1){
+                throw new PaymentException();
+                //can't pay an extra with euros
+            }
             payment.pay(activity.getPrice(), customer);
+
+            //Utilisation d'une regex pour détecter si l'activité booké est un forfait de ski ou non
+            if(!activity.getName().toLowerCase().matches(".*forfait.*ski.*")){
+                customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
+            }
         }
-        customer.setPointsBalance(customer.getPointsBalance() + activity.getPointEarned());
         customerRepository.save(customer);
+        System.out.println("Création de la réservation done");
 
         Booking booking = new Booking(customer, activity, usePoints);
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateString = currentDate.format(formatter);
 
-        Optional<String> result_post = this.scheduler.book(dateString, activity.getName(), "magicPartner");
+        Optional<String> result_post = this.scheduler.book(activity.getName(), "magicPartner");
         if(result_post.isEmpty()){
             System.out.println("Resultat vide de la part du scheduler");
             return null;
