@@ -33,10 +33,7 @@ pipeline {
         }
         stage("other"){
             when{
-                not {
-                    branch 'feature*'
-
-                }
+                branch 'feature*'
             }
             steps{
                 sh 'cd backend && sudo mvn clean package'
