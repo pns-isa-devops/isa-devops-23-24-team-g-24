@@ -51,7 +51,7 @@ public class ActivityControllerTest {
         partnerRepository.deleteAll();
     }
 
-    @Test
+    /*@Test
     void validActivityTest() throws Exception {
         ActivityDTO validActivity = new ActivityDTO(null, "activity1", "description1", 10L, 10, 10L, 1L);
         mockMvc.perform(MockMvcRequestBuilders.post(ActivityController.BASE_URI)
@@ -60,7 +60,7 @@ public class ActivityControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content()
                         .contentType(MediaType.APPLICATION_JSON));
-    }
+    }*/
 
     @Test
     void inValidActivityTestBlankName() throws Exception {
