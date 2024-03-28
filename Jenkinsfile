@@ -34,13 +34,8 @@ pipeline {
         stage("other"){
             when{
                 not {
-                    branch 'main'
+                    branch 'feature*'
 
-                }
-                and{
-                    not {
-                        branch 'develop'
-                    }
                 }
             }
             steps{
