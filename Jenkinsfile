@@ -18,12 +18,7 @@ pipeline {
         stage('Build and Test') {
             steps {
 
-                    sh 'pwd'
-                    sh 'git log -n 1'
-                    sh 'cd backend && sudo mvn clean package'
-                    sh 'sudo ./build-all.sh'
-                    sh 'sudo docker compose down && sudo docker compose up -d'
-
+                    sh 'sudo su && cd backend && mvn verify'
             }
         }
         stage('Upload W4E jar to JFrog Artifactory') {
