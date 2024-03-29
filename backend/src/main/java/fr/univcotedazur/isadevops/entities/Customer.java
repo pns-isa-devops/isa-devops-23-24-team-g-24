@@ -2,6 +2,7 @@ package fr.univcotedazur.isadevops.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.HashSet;
@@ -22,6 +23,9 @@ public class Customer {
     @Pattern(regexp = "\\d{10}+", message = "Invalid creditCardNumber")
     private String creditCard;
 
+    @NotNull
+    private double pointsBalance = 0;
+
 //    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "customer")
 //    private Set<Order> orders = new HashSet<>();
 //
@@ -34,6 +38,7 @@ public class Customer {
     public Customer(String n, String c) {
         this.name = n;
         this.creditCard = c;
+        this.pointsBalance = 0;
     }
 
     public Long getId() {
@@ -54,6 +59,13 @@ public class Customer {
 
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
+    }
+    public double getPointsBalance() {
+        return pointsBalance;
+    }
+
+    public void setPointsBalance(double pointsBalance) {
+        this.pointsBalance = pointsBalance;
     }
 
 //    public void addOrder(Order o) {
@@ -90,6 +102,16 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(name, creditCard);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creditCard='" + creditCard + '\'' +
+                ", pointsBalance=" + pointsBalance +
+                '}';
     }
 
     public void setId(long l) {

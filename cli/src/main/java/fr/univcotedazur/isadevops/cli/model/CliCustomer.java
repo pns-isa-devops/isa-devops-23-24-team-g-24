@@ -7,10 +7,12 @@ public class CliCustomer {
     private Long id;
     private String name;
     private String creditCard;
+    private double pointsBalance;
 
-    public CliCustomer(String name, String creditCard) {
+    public CliCustomer(String name, String creditCard, double pointsBalance) {
         this.name = name;
         this.creditCard = creditCard;
+        this.pointsBalance = pointsBalance;
     }
 
     public Long getId() {
@@ -43,6 +45,7 @@ public class CliCustomer {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", creditCard='" + creditCard + '\'' +
+                ", pointsBalance='" + pointsBalance + '\'' +
                 '}';
     }
 }

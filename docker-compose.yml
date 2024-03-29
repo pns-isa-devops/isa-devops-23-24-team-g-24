@@ -10,12 +10,15 @@ services:
     environment:
       - BANK_WITH_PORT=bank-system:9090
       - POSTGRES_HOST=postgres:5432
-    entrypoint: "java -jar /opt/app/app.jar --bank.host.baseurl=http://$${BANK_WITH_PORT}"
+      - SCHEDULER_WITH_PORT=scheduler:9091
+    entrypoint: "java -jar /opt/app/app.jar --bank.host.baseurl=http://$${BANK_WITH_PORT} --scheduler.host.baseurl=http://$${SCHEDULER_WITH_PORT}"
     restart: always
     depends_on:
       bank-system:
         condition: service_healthy
       postgres:
+        condition: service_healthy
+      scheduler:
         condition: service_healthy
     healthcheck:
       test: "curl --silent --fail localhost:8080/actuator/health | grep UP || exit 1"
@@ -67,6 +70,19 @@ services:
     container_name: bank
     ports:
       - 9090:9090
+    healthcheck:
+      test: [ "CMD", "/nodejs/bin/node" , "healthcheck.js" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # An external scheduler service in NestJs
+  scheduler:
+    image: team-g-tcf-scheduler-service
+    container_name: scheduler
+    ports:
+      - 9091:9091
     healthcheck:
       test: [ "CMD", "/nodejs/bin/node" , "healthcheck.js" ]
       interval: 5s

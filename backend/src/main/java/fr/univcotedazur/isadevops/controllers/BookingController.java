@@ -31,9 +31,14 @@ public class BookingController {
     public ResponseEntity<Object> createBooking(@RequestBody @Valid BookingDTO bookingDTO) {
         System.out.println("Creation of a booking for customer " + bookingDTO.customerId() + " and activity " + bookingDTO.activityId());
         try {
-            Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId());
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertToDTO(booking));
+            Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId(), bookingDTO.usePoints());
+            if(booking == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Activity already booked for this time slot");
+            }else {
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(convertToDTO(booking));
+            }
         } catch (CustomerIdNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Customer ID " + bookingDTO.customerId() + " not found.");
@@ -42,7 +47,7 @@ public class BookingController {
                     .body("Activity ID " + bookingDTO.activityId() + " not found.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred while creating the booking.");
+                    .body("An error occurred while creating the booking: "+e.getMessage());
         }
     }
 
@@ -65,6 +70,6 @@ public class BookingController {
     // Additional endpoints to list bookings by customer or activity can be similar to listAllBookings()
 
     private BookingDTO convertToDTO(Booking booking) {
-        return new BookingDTO(booking.getId(), booking.getCustomer().getId(), booking.getActivity().getId());
+        return new BookingDTO(booking.getId(), booking.getCustomer().getId(), booking.getActivity().getId(), booking.getUsePoints());
     }
 }

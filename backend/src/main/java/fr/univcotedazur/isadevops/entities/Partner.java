@@ -1,12 +1,10 @@
 package fr.univcotedazur.isadevops.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.List;
 
 @Entity
 public class Partner {
@@ -22,6 +20,7 @@ public class Partner {
 
     private String description;
 
+
     public Partner() {
     }
 
@@ -30,9 +29,14 @@ public class Partner {
         this.location = location;
         this.description = description;
     }
+    
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(long l) {
+        this.id = l;
     }
 
     public String getName() {
