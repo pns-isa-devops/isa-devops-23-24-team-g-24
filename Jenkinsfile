@@ -37,7 +37,7 @@ pipeline {
                     }
                     steps {
                         sh 'cd scheduler && sudo ./build.sh'
-                        sh 'cd backend && sudo mvn clean verifyage'
+                        sh 'cd backend && sudo mvn clean verify'
                         sh 'cd cli && sudo mvn clean install package'
 
                         dir("backend/target") {
