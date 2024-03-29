@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 sh 'sudo ./build-all.sh'
-
+                sh 'sudo docker-compose down && sudo docker-compose up -d'
                 sh 'cd backend && sudo mvn verify'
                 sh 'cd cli && sudo mvn clean package'
                 dir("backend/target") {
