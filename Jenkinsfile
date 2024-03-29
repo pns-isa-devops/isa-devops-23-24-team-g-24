@@ -36,7 +36,8 @@ pipeline {
                        branch 'develop'
                     }
                     steps {
-                        sh 'cd backend && sudo mvn clean verify package'
+                        sh 'cd scheduler && ./build.sh'
+                        sh 'cd backend && sudo mvn clean verifyage'
                         sh 'cd cli && sudo mvn clean install package'
 
                         dir("backend/target") {
