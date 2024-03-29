@@ -36,7 +36,7 @@ pipeline {
                        branch 'develop'
                     }
                     steps {
-                        sh 'cd scheduler && ./build.sh'
+                        sh 'cd scheduler && sudo ./build.sh'
                         sh 'cd backend && sudo mvn clean verifyage'
                         sh 'cd cli && sudo mvn clean install package'
 
