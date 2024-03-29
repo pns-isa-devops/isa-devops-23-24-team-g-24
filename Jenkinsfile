@@ -31,7 +31,7 @@ pipeline {
 
                  sh 'sudo docker tag team-g-tcf-scheduler-service:latest simonbeurel/team-g-tcf-scheduler-service:latest '
                  sh 'sudo docker tag team-g-tcf-bank-service:latest simonbeurel/team-g-tcf-bank-service:latest'
-                 sh 'sudo docker tag team-g-tcf-cli-service:latest simonbeurel/team-g-tcf-bank-service:latest'
+                 sh 'sudo docker tag team-g-tcf-cli-service:latest simonbeurel/team-g-tcf-cli-service:latest'
 
                  sh 'sudo docker push simonbeurel/team-g-tcf-scheduler-service:latest'
                  sh 'sudo docker push simonbeurel/team-g-tcf-bank-service:latest'
