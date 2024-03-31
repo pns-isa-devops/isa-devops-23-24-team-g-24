@@ -3,6 +3,7 @@ package fr.univcotedazur.isadevops.cli.commands;
 import fr.univcotedazur.isadevops.cli.CliContext;
 import fr.univcotedazur.isadevops.cli.model.CliBooking;
 import fr.univcotedazur.isadevops.cli.model.CliCustomer;
+import fr.univcotedazur.isadevops.cli.model.CliTransferPointsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -49,6 +50,11 @@ public class CustomerCommands {
         customerMap.putAll(Arrays.stream(Objects.requireNonNull(restTemplate.getForEntity(BASE_URI, CliCustomer[].class)
                         .getBody())).collect(toMap(CliCustomer::getName, Function.identity())));
         return customerMap.toString();
+    }
+    @ShellMethod("Transfer points from a user to another (transfer-points FROM_CUSTOMER_ID TO_CUSTOMER_ID POINTS)")
+    public String transferPoints(Long fromCustomerId, Long toCustomerId, int points) {
+        restTemplate.postForEntity(BASE_URI + "/transferPoints", new CliTransferPointsRequest(fromCustomerId,toCustomerId,points), CliTransferPointsRequest.class);
+        return "Points transferred";
     }
 
 

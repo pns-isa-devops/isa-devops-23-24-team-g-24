@@ -2,12 +2,15 @@ package fr.univcotedazur.isadevops.controllers;
 
 import fr.univcotedazur.isadevops.dto.CustomerDTO;
 import fr.univcotedazur.isadevops.dto.ErrorDTO;
+import fr.univcotedazur.isadevops.dto.TransferPointsRequestDTO;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
+import fr.univcotedazur.isadevops.exceptions.NotEnoughPointsException;
 import fr.univcotedazur.isadevops.exceptions.PaymentException;
 import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
 import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
+import fr.univcotedazur.isadevops.interfaces.CustomerUpdater;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +31,13 @@ public class CustomerCareController {
     private final CustomerRegistration registry;
 
     private final CustomerFinder finder;
+    private final CustomerUpdater updater;
 
     @Autowired
-    public CustomerCareController(CustomerRegistration registry, CustomerFinder finder) {
+    public CustomerCareController(CustomerRegistration registry, CustomerFinder finder, CustomerUpdater updater) {
         this.registry = registry;
         this.finder = finder;
+        this.updater = updater;
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -70,6 +75,14 @@ public class CustomerCareController {
     private static CustomerDTO convertCustomerToDto(Customer customer) { // In more complex cases, we could use a ModelMapper such as MapStruct
         return new CustomerDTO(customer.getId(), customer.getName(), customer.getCreditCard());
     }
-
+    @PostMapping("/transferPoints")
+    public ResponseEntity<String> transferPoints(@RequestBody TransferPointsRequestDTO request) {
+        try {
+            updater.transferPoints(request.getFromCustomerId(), request.getToCustomerId(), request.getPoints());
+            return ResponseEntity.ok("Transfert de points effectué avec succès.");
+        } catch (CustomerIdNotFoundException | NotEnoughPointsException e) {
+            return ResponseEntity.badRequest().body("Erreur lors du transfert de points : " + e.getMessage());
+        }
+    }
 }
 
