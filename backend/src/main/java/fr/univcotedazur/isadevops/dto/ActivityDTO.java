@@ -11,8 +11,6 @@ public record ActivityDTO (
         @NotNull
         Long numberOfPlaces,
         @NotNull
-        Long pointsEarned,
-        @NotNull
         double price,
         @NotNull
         Long pricePoints,
