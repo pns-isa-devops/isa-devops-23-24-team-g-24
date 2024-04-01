@@ -105,6 +105,16 @@ public class Customer {
         return Objects.hash(name, creditCard);
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creditCard='" + creditCard + '\'' +
+                ", pointsBalance=" + pointsBalance +
+                '}';
+    }
+
     public void setId(long l) {
         this.id = l;
     }

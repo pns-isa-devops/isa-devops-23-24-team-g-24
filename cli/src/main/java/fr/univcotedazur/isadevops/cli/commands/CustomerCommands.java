@@ -5,6 +5,7 @@ import fr.univcotedazur.isadevops.cli.model.CliBooking;
 import fr.univcotedazur.isadevops.cli.model.CliCustomer;
 import fr.univcotedazur.isadevops.cli.model.CliTransferPointsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.web.client.RestTemplate;
@@ -33,14 +34,20 @@ public class CustomerCommands {
 
     @ShellMethod("Register a customer in the CoD backend (register CUSTOMER_NAME CREDIT_CARD_NUMBER)")
     public CliCustomer register(String name, String creditCard) {
-        CliCustomer res = restTemplate.postForObject(BASE_URI, new CliCustomer(name, creditCard), CliCustomer.class);
+        CliCustomer res = restTemplate.postForObject(BASE_URI, new CliCustomer(name, creditCard, 0), CliCustomer.class);
         cliContext.getCustomers().put(Objects.requireNonNull(res).getName(), res);
         return res;
     }
 
     @ShellMethod("List all known customers")
     public String customers() {
-        return cliContext.getCustomers().toString();
+        ResponseEntity<CliCustomer[]> responseEntity = restTemplate.getForEntity(BASE_URI, CliCustomer[].class);
+        CliCustomer[] customers = responseEntity.getBody();
+        if (customers != null) {
+            return Arrays.toString(customers);
+        } else {
+            return "No customers found";
+        }
     }
 
     @ShellMethod("Update all known customers from server")

@@ -21,15 +21,11 @@ public class Cashier implements Payment {
     }
 
 
-
-
-
-
     public void pay(double price, Customer customer) throws PaymentException {
         if (customer.getCreditCard() == null || customer.getCreditCard().isEmpty()) {
             throw new PaymentException(customer.getName(), price);
         }
-
+        System.out.println("Paying " + price + " with credit card " + customer.getCreditCard());
         Optional<String> response = bank.pay(customer, price);
         LOG.info("Response from bank: {}", response);
         if (response.isEmpty()) {

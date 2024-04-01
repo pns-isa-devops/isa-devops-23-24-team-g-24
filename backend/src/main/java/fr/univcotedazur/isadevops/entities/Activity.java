@@ -24,18 +24,30 @@ public class Activity {
     private double price;
     @NotNull
     private Long pricePoints;
-    @NotNull
-    private Long pointsEarned;
+
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
 
     public Activity() {
     }
-    public Activity(String name, String location, Long numberOfPlaces, Long pointsEarned, double price, Long pricePoints) {
+
+    
+    public Activity(String name, String location, Long numberOfPlaces,double price, Long pricePoints) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
-        this.pointsEarned = pointsEarned;
         this.price = price;
         this.pricePoints = pricePoints;
+    }
+
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public Partner getPartner() {
+        return partner;
     }
 
 
@@ -79,10 +91,6 @@ public class Activity {
     public Long getPricePoints() {
         return pricePoints;
     }
-    public Long getPointEarned() {
-        return pointsEarned;
-    }
-
 
     @Override
     public boolean equals(Object o) {

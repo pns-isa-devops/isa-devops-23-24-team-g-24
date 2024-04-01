@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -44,18 +43,21 @@ public class ActivityController {
         LOG.info("Fetching activities");
         return ResponseEntity.ok(activities);
     }
+
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ActivityDTO> addActivity(@RequestBody @Valid ActivityDTO activity) {
         LOG.info("Adding activity");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(), activity.pointsEarned(), activity.price(), activity.pricePoints())));
+                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pricePoints(), activity.idPartner())));
         } catch (AlreadyExistingActivityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 
+
+
     private static ActivityDTO convertActivityToDTO(Activity activity) { // In more complex cases, we could use a ModelMapper such as MapStruct
-        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(), activity.getPointEarned(), activity.getPrice(), activity.getPricePoints());
+        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(),activity.getPrice(), activity.getPricePoints(), activity.getPartner().getId());
     }
 }

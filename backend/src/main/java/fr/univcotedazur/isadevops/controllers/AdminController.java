@@ -41,17 +41,17 @@ public class AdminController {
 
     @GetMapping
     public ResponseEntity<List<Partner>> getAllPartners(){
-        List<Partner> partners= partnerRegistry.findAll();
         LOG.info("Fetching partners");
-        return ResponseEntity.ok(partners);
+        return ResponseEntity.ok(partnerRegistry.findAll());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<PartnerDTO> getPartnerById(@PathVariable Long id) {
         Optional<Partner> optionalPartner = partnerRegistry.findById(id);
+
         return optionalPartner.map(partner -> ResponseEntity.ok(convertPartnerToDTO(partner)))
                 .orElse(ResponseEntity.notFound().build());
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePartner(@PathVariable Long id){

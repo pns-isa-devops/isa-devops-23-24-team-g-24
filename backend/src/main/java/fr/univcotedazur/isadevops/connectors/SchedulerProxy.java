@@ -27,12 +27,12 @@ public class SchedulerProxy implements Scheduler {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public Optional<String> book(String dateBook, String nameActivity, String namePartner) {
+    public Optional<String> book(String nameActivity, String namePartner) {
         System.out.println("ON ENTRE DANS LE SCHEDULER");
         try {
             ResponseEntity<BookReceiptDTO> result = restTemplate.postForEntity(
                     schedulerHostandPort + "/scheduler",
-                    new BookRequestDTO(dateBook, nameActivity, namePartner),
+                    new BookRequestDTO(nameActivity, namePartner),
                     BookReceiptDTO.class
             );
             if (result.getStatusCode().equals(HttpStatus.CREATED) && result.hasBody()) {

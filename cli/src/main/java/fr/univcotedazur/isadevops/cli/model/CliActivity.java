@@ -5,17 +5,18 @@ public class CliActivity {
     private String name;
     private String location;
     private Long numberOfPlaces;
-    private Long pointsEarned;
     private double price;
-    private Long pricePoints;
+    private long pricePoints;
+    private long idPartner;
 
-    public CliActivity(String name, String location, Long numberOfPlaces, Long pointsEarned, double price, Long pricePoints) {
+
+    public CliActivity(String name, String location, Long numberOfPlaces,double price, Long pricePoints, long idPartner) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
-        this.pointsEarned = pointsEarned;
         this.price = price;
         this.pricePoints = pricePoints;
+        this.idPartner = idPartner;
     }
      public Long getId() {
          return id;
@@ -45,14 +46,6 @@ public class CliActivity {
         this.numberOfPlaces = numberOfPlaces;
     }
 
-    public Long getPointsEarned() {
-        return pointsEarned;
-    }
-
-    public void setPointsEarned(Long pointsEarned) {
-        this.pointsEarned = pointsEarned;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -60,6 +53,16 @@ public class CliActivity {
     public void setPrice(double price) {
         this.price = price;
     }
+
+
+    public long getIdPartner() {
+        return idPartner;
+    }
+
+    public void setIdPartner(long idPartner) {
+        this.idPartner = idPartner;
+    }
+
     public Long getPricePoints() {
         return pricePoints;
     }
@@ -74,9 +77,9 @@ public class CliActivity {
                 ", location='" + location + '\'' +
                 ", numberOfPlaces='" + numberOfPlaces + '\'' +
                 ", id='" + id + '\'' +
-                ", pointsEarned='" + pointsEarned + '\'' +
                 ", price='" + price + '\'' +
                 ", pricePoints='" + pricePoints + '\'' +
+                ", idPartner='" + idPartner + '\'' +
                 '}';
     }
 }

@@ -66,15 +66,20 @@ public class BookingHandler implements BookingCreator, BookingFinder {
             }
             customer.setPointsBalance(customer.getPointsBalance() - activity.getPricePoints());
         } else {
+            if(activity.getPrice() == -1){
+                throw new PaymentException();
+                //can't pay an extra with euros
+            }
             payment.pay(activity.getPrice(), customer);
+
+            //Utilisation d'une regex pour détecter si l'activité booké est un forfait de ski ou non
+            if(!activity.getName().toLowerCase().matches(".*forfait.*ski.*")){
+                customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
+            }
         }
-        customer.setPointsBalance(customer.getPointsBalance() + activity.getPointEarned());
         customerRepository.save(customer);
 
         Booking booking = new Booking(customer, activity, usePoints);
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateString = currentDate.format(formatter);
 
         Optional<String> resultPost = this.scheduler.book(dateString, activity.getName(), "magicPartner");
         if(resultPost.isEmpty()){
