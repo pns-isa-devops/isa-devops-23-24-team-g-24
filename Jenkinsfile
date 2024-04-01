@@ -46,30 +46,29 @@ pipeline {
                     when{
                        branch 'develop'
                     }
-                    steps {
+                            steps {
 
-                        sh 'cd backend && sudo ./build.sh'
-                        sh 'cd cli && sudo ./build.sh'
-                        dir("backend/target") {
-                            sh "jf rt download --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app"
+                                sh 'sudo docker pull simonbeurel/team-g-tcf-scheduler-service:latest' //pull scheduler depuis docker hub
+                                sh 'sudo docker pull simonbeurel/team-g-tcf-bank-service:latest' //pull bank depuis docker hub
+
+                                sh 'cd backend && sudo ./build.sh' //build backend
+                                sh 'cd cli && sudo ./build.sh' //build cli
+
+                                sh 'sudo docker compose down && sudo docker compose up -d' //compose up
+
+                                sh 'cd backend && sudo mvn clean verify' // test backend
+                                sh 'cd cli && sudo mvn clean package' // test cli
+
+                                dir("backend/target") {
+                            sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app' //push backend
+
                         }
-                        dir("cli/target") {
-                            sh "jf rt download --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} cli-0.0.1-SNAPSHOT.jar /java_web-app"
+                        dir("cli/target"){
+                            sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} cli-0.0.1-SNAPSHOT.jar /java_web-app' //push cli
                         }
-
-                        sh 'cd backend && sudo mvn clean verify'
-                        sh 'cd cli && sudo mvn clean install'
-
-                        sh 'sudo docker tag team-g-tcf-scheduler-service:latest simonbeurel/team-g-tcf-scheduler-service:latest '
-                        sh 'sudo docker tag team-g-tcf-bank-service:latest simonbeurel/team-g-tcf-bank-service:latest'
-
-
-                        sh 'sudo docker push simonbeurel/team-g-tcf-scheduler-service:latest'
-                        sh 'sudo docker push simonbeurel/team-g-tcf-bank-service:latest'
-
 
                     }
-                }
+        }
 
         stage("other"){
             when{
