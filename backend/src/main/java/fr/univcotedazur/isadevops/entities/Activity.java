@@ -1,6 +1,5 @@
 package fr.univcotedazur.isadevops.entities;
 
-import io.cucumber.java.mk_latn.No;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,8 +23,6 @@ public class Activity {
     @NotNull
     private double price;
     @NotNull
-    private Long pointsEarned;
-    @NotNull
     private Long pricePoints;
 
     @ManyToOne
@@ -36,12 +33,11 @@ public class Activity {
     }
 
     
-    public Activity(String name, String location, Long numberOfPlaces,double price, Long pointsEarned,Long pricePoints) {
+    public Activity(String name, String location, Long numberOfPlaces,double price, Long pricePoints) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
         this.price = price;
-        this.pointsEarned = pointsEarned;
         this.pricePoints = pricePoints;
     }
 
@@ -58,6 +54,7 @@ public class Activity {
     public Long getId() {
         return id;
     }
+
 
     public String getName() {
         return name;
@@ -109,8 +106,5 @@ public class Activity {
 
     public void setId(long l) {
         this.id = l;
-    }
-    public Long getPointsEarned() {
-        return pointsEarned;
     }
 }
