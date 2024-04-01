@@ -49,7 +49,7 @@ public class ActivityController {
         LOG.info("Adding activity");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pointsEarned(), activity.pricePoints(), activity.idPartner())));
+                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pricePoints(), activity.idPartner())));
         } catch (AlreadyExistingActivityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
@@ -57,7 +57,7 @@ public class ActivityController {
 
 
 
-    private static ActivityDTO convertActivityToDTO(Activity activity) {
-        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(), activity.getPrice(), activity.getPointsEarned(), activity.getPricePoints(), activity.getPartner().getId());
+    private static ActivityDTO convertActivityToDTO(Activity activity) { // In more complex cases, we could use a ModelMapper such as MapStruct
+        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(),activity.getPrice(), activity.getPricePoints(), activity.getPartner().getId());
     }
 }

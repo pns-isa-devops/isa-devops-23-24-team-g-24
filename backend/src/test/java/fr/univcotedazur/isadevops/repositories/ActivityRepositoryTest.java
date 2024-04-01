@@ -18,7 +18,7 @@ public class ActivityRepositoryTest {
 
     @Test
     void testIdGenerationAndUnicity() {
-        Activity padel = new Activity("Padel", "Sophia Antipolis", 55L,10,5L, 10L);
+        Activity padel = new Activity("Padel", "Sophia Antipolis", 55L,10, 10L);
         Assertions.assertNull(padel.getId());
         activityRepository.saveAndFlush(padel);
         Assertions.assertNotNull(padel.getId());
@@ -29,22 +29,22 @@ public class ActivityRepositoryTest {
 
     @Test
     void testFindActivityByName() {
-        Activity padel = new Activity("Padel", "Sophia Antipolis", 55L,10,5L, 10L);
+        Activity padel = new Activity("Padel", "Sophia Antipolis", 55L,10, 10L);
         activityRepository.saveAndFlush(padel);
         Assertions.assertEquals(activityRepository.findActivityByName("Padel").get(),padel);
     }
 
     @Test
     void testBlankName() {
-        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("", "Sophia Antipolis", 55L, 10,5L, 10L)));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("    ", "Sophia Antipolis", 55L, 10,5L, 10L)));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("", "Sophia Antipolis", 55L, 10, 10L)));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("    ", "Sophia Antipolis", 55L, 10, 10L)));
     }
 
     @Test
     void testBlankLocation() {
-        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("padel", "", 1L,10,5L, 10L)));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("padel", " ", 1L, 10,5L, 10L)));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("padel", "     ", 1L,10,5L, 10L)));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("padel", "", 1L,10, 10L)));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("padel", " ", 1L, 10, 10L)));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> activityRepository.saveAndFlush(new Activity("padel", "     ", 1L,10, 10L)));
     }
 
 
