@@ -40,6 +40,7 @@ pipeline {
                  sh 'sudo docker push simonbeurel/team-g-tcf-scheduler-service:latest'
                  sh 'sudo docker push simonbeurel/team-g-tcf-bank-service:latest'
 
+                sh 'sudo docker compose down'
             }
         }
         stage('develop') {
@@ -59,6 +60,7 @@ pipeline {
                                 sh 'cd backend && sudo mvn clean verify' // test backend
                                 sh 'cd cli && sudo mvn clean package' // test cli
 
+
                                 dir("backend/target") {
                             sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app' //push backend
 
@@ -66,6 +68,7 @@ pipeline {
                         dir("cli/target"){
                             sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} cli-0.0.1-SNAPSHOT.jar /java_web-app' //push cli
                         }
+                        sh 'sudo docker compose down'
 
                     }
         }
@@ -78,6 +81,7 @@ pipeline {
                 sh 'cd backend && sudo mvn clean package'
                 sh 'cd cli && sudo mvn clean install package'
             }
+            sh 'sudo docker compose down'
 
         }
     }
