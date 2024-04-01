@@ -83,6 +83,8 @@ pipeline {
             }
             sh 'sudo docker compose down'
 
+
+
         }
     }
 }
