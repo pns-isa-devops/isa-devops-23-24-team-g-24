@@ -16,7 +16,7 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private Long id; // Whether Long/Int or UUID are better primary keys, exposable outside is a vast issue, keep it simple here
+    private Long id;
 
     @NotBlank
     @Column(unique = true)
@@ -31,12 +31,6 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "group_id")
     private UserGroup group;
-
-//    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "customer")
-//    private Set<Order> orders = new HashSet<>();
-//
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    private Set<Item> cart = new HashSet<>();
 
     public Customer() {
     }

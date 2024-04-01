@@ -7,8 +7,6 @@ public class GroupDTO {
     private String name;
     private Set<Long> memberIds;
 
-    public GroupDTO() {}
-
     public GroupDTO(Long id, String name, Set<Long> memberIds) {
         this.id = id;
         this.name = name;
@@ -31,9 +29,6 @@ public class GroupDTO {
         this.name = name;
     }
 
-    public Set<Long> getMemberIds() {
-        return memberIds;
-    }
 
     public void setMemberIds(Set<Long> memberIds) {
         this.memberIds = memberIds;

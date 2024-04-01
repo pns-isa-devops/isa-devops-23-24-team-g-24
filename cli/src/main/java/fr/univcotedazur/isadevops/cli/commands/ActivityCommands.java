@@ -3,6 +3,8 @@ package fr.univcotedazur.isadevops.cli.commands;
 import fr.univcotedazur.isadevops.cli.CliContext;
 import fr.univcotedazur.isadevops.cli.model.CliActivity;
 import fr.univcotedazur.isadevops.cli.model.CliCustomer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -23,17 +25,16 @@ public class ActivityCommands {
 
     private final RestTemplate restTemplate;
 
-    private final CliContext cliContext;
+    private static final Logger LOG = LoggerFactory.getLogger(ActivityCommands.class);
 
     @Autowired
     public ActivityCommands(RestTemplate restTemplate, CliContext cliContext) {
         this.restTemplate = restTemplate;
-        this.cliContext = cliContext;
     }
 
     @ShellMethod("List all activities")
     public String listActivities() {
-        System.out.println("Fetching activities from server...");
+        LOG.info("Fetching activities from server...");
         CliActivity[] activities = restTemplate.getForObject(BASE_URI, CliActivity[].class);
         if (activities == null || activities.length == 0) return "No activities found.";
         return Arrays.stream(activities).map(Object::toString).collect(Collectors.joining("\n"));

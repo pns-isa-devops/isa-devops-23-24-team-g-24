@@ -7,7 +7,6 @@ import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
 import fr.univcotedazur.isadevops.exceptions.NotEnoughPointsException;
-import fr.univcotedazur.isadevops.exceptions.PaymentException;
 import fr.univcotedazur.isadevops.interfaces.CustomerFinder;
 import fr.univcotedazur.isadevops.interfaces.CustomerRegistration;
 import fr.univcotedazur.isadevops.interfaces.CustomerUpdater;
@@ -41,10 +40,6 @@ public class CustomerCareController {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    // The 422 (Unprocessable Entity) status code means the server understands the content type of the request entity
-    // (hence a 415(Unsupported Media Type) status code is inappropriate), and the syntax of the request entity is
-    // correct (thus a 400 (Bad Request) status code is inappropriate) but was unable to process the contained
-    // instructions.
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public ErrorDTO handleExceptions(MethodArgumentNotValidException e) {
         return new ErrorDTO("Cannot process Customer information", e.getMessage());
@@ -52,12 +47,10 @@ public class CustomerCareController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomerDTO> register(@RequestBody @Valid CustomerDTO cusdto) {
-        // Note that there is no validation at all on the CustomerDto mapped
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(convertCustomerToDto(registry.register(cusdto.name(), cusdto.creditCard())));
         } catch (AlreadyExistingCustomerException e) {
-            // Note: Returning 409 (Conflict) can also be seen a security/privacy vulnerability, exposing a service for account enumeration
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }

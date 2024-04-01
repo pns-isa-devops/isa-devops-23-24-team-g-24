@@ -2,8 +2,6 @@ package fr.univcotedazur.isadevops.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-
 
 public record ActivityDTO (
         Long id,

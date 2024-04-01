@@ -49,7 +49,7 @@ public class GroupController {
     @GetMapping
     public ResponseEntity<List<GroupDTO>> getAllGroups() {
         List<UserGroup> groups = groupService.getAllGroups();
-        List<GroupDTO> groupDTOs = groups.stream().map(this::convertToDTO).collect(Collectors.toList());
+        List<GroupDTO> groupDTOs = groups.stream().map(this::convertToDTO).toList();
         return ResponseEntity.ok(groupDTOs);
     }
 
