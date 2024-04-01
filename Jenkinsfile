@@ -78,6 +78,8 @@ pipeline {
                 branch 'feature*'
             }
             steps{
+                sh 'cd backend && sudo ./build.sh' //build backend
+                sh 'cd cli && sudo ./build.sh' //build cli
                 sh 'cd backend && sudo mvn clean package'
                 sh 'cd cli && sudo mvn clean install package'
                 sh 'sudo docker compose down'
