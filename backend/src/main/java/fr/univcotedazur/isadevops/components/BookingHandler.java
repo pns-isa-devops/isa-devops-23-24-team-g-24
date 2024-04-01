@@ -81,7 +81,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
 
         Booking booking = new Booking(customer, activity, usePoints);
 
-        Optional<String> resultPost = this.scheduler.book(dateString, activity.getName(), "magicPartner");
+        Optional<String> resultPost = this.scheduler.book(activity.getName(), "magicPartner");
         if(resultPost.isEmpty()){
             LOG.info("Resultat vide de la part du scheduler");
             return null;

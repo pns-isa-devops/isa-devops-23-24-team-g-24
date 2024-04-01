@@ -6,15 +6,17 @@ public class CliActivity {
     private String location;
     private Long numberOfPlaces;
     private double price;
-    private long pricePoints;
-    private long idPartner;
+    private Long pointsEarned;
+    private Long pricePoints;
+    private Long idPartner;
 
 
-    public CliActivity(String name, String location, Long numberOfPlaces,double price, Long pricePoints, long idPartner) {
+    public CliActivity(String name, String location, Long numberOfPlaces,double price, Long pointsEarned, Long pricePoints, Long idPartner) {
         this.name = name;
         this.location = location;
         this.numberOfPlaces = numberOfPlaces;
         this.price = price;
+        this.pointsEarned = pointsEarned;
         this.pricePoints = pricePoints;
         this.idPartner = idPartner;
     }

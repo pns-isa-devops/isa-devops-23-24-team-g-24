@@ -65,7 +65,7 @@ public class ITSchedulerProxy {
     static public void setUp() {
         testCustomer = new Customer("John Doe", "8969837890");
         testCustomer.setId(1L);
-        testActivity = new Activity("Hiking", "Mountain", 20L,5,5L);
+        testActivity = new Activity("Hiking", "Mountain", 20L,5,5L,5L);
         testActivity.setId(1L);
     }
 

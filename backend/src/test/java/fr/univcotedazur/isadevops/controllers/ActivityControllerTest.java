@@ -65,7 +65,7 @@ public class ActivityControllerTest {
     @Test
     void inValidActivityTestBlankName() throws Exception {
         // Creating an invalid activity with a blank name
-        ActivityDTO invalidActivityWithBlankName = new ActivityDTO(null, "", "location", 10L, 10, 10L, 1L);
+        ActivityDTO invalidActivityWithBlankName = new ActivityDTO(null, "", "location", 10L, 10, 10L, 10L, 1L);
         mockMvc.perform(MockMvcRequestBuilders.post(ActivityController.BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidActivityWithBlankName)))
@@ -77,7 +77,7 @@ public class ActivityControllerTest {
     @Test
     void inValidActivityTestBlankDescription() throws Exception {
         // Creating an invalid activity with a blank description
-        ActivityDTO invalidActivityWithBlankDescription = new ActivityDTO(null, "activity1", "", 10L,10, 10L, 1L);
+        ActivityDTO invalidActivityWithBlankDescription = new ActivityDTO(null, "activity1", "", 10L,10, 10L, 10L, 1L);
         mockMvc.perform(MockMvcRequestBuilders.post(ActivityController.BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidActivityWithBlankDescription)))

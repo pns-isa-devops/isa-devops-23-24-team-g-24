@@ -41,8 +41,8 @@ public class ActivityCommands {
     }
 
     @ShellMethod("Add activity (add-activity ACTIVITY_NAME LOCATION NUMBER_OF_PLACES PRICE PRICE_POINTS ID_PARTNER)")
-    public String addActivity(String name, String location, Long numberOfPlaces,double price, Long pricePoints, Long idPartner) {
-        CliActivity createdActivity = restTemplate.postForObject(BASE_URI, new CliActivity(name, location, numberOfPlaces,price, pricePoints, idPartner), CliActivity.class);
+    public String addActivity(String name, String location, Long numberOfPlaces,double price, Long pointsEarned, Long pricePoints, Long idPartner) {
+        CliActivity createdActivity = restTemplate.postForObject(BASE_URI, new CliActivity(name, location, numberOfPlaces,price, pointsEarned, pricePoints, idPartner), CliActivity.class);
         return createdActivity != null ? "Activity added with success: " + createdActivity.toString() : "Error while adding activity";
     }
 
