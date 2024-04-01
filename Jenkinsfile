@@ -80,9 +80,8 @@ pipeline {
             steps{
                 sh 'cd backend && sudo mvn clean package'
                 sh 'cd cli && sudo mvn clean install package'
+                sh 'sudo docker compose down'
             }
-            sh 'sudo docker compose down'
-
 
 
         }
