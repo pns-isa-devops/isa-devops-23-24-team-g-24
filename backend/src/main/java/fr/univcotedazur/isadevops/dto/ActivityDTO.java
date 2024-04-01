@@ -13,6 +13,8 @@ public record ActivityDTO (
         @NotNull
         double price,
         @NotNull
+        Long pointsEarned,
+        @NotNull
         Long pricePoints,
         Long idPartner
         ){

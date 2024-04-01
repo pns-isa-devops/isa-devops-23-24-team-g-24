@@ -1,14 +1,13 @@
 package fr.univcotedazur.isadevops.controllers;
 
 import fr.univcotedazur.isadevops.dto.ActivityDTO;
-import fr.univcotedazur.isadevops.dto.CustomerDTO;
 import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.entities.Activity;
-import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingActivityException;
-import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.services.ActivityService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +22,8 @@ import java.util.List;
 @RequestMapping(path = ActivityController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class ActivityController {
     private final ActivityService activityService;
-
     public static final String BASE_URI = "/activities";
+    private static final Logger LOG = LoggerFactory.getLogger(ActivityController.class);
 
 
     @Autowired
@@ -33,10 +32,6 @@ public class ActivityController {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    // The 422 (Unprocessable Entity) status code means the server understands the content type of the request entity
-    // (hence a 415(Unsupported Media Type) status code is inappropriate), and the syntax of the request entity is
-    // correct (thus a 400 (Bad Request) status code is inappropriate) but was unable to process the contained
-    // instructions.
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public ErrorDTO handleExceptions(MethodArgumentNotValidException e) {
         return new ErrorDTO("Cannot process Activity information", e.getMessage());
@@ -45,16 +40,16 @@ public class ActivityController {
     @GetMapping
     public ResponseEntity<List<Activity>> getAllActivities() {
         List<Activity> activities = activityService.findAllActivities();
-        System.out.println("Fetching activities");
+        LOG.info("Fetching activities");
         return ResponseEntity.ok(activities);
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ActivityDTO> addActivity(@RequestBody @Valid ActivityDTO activity) {
-        System.out.println("Adding activity");
+        LOG.info("Adding activity");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pricePoints(), activity.idPartner())));
+                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pointsEarned(), activity.pricePoints(), activity.idPartner())));
         } catch (AlreadyExistingActivityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
@@ -62,7 +57,7 @@ public class ActivityController {
 
 
 
-    private static ActivityDTO convertActivityToDTO(Activity activity) { // In more complex cases, we could use a ModelMapper such as MapStruct
-        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(),activity.getPrice(), activity.getPricePoints(), activity.getPartner().getId());
+    private static ActivityDTO convertActivityToDTO(Activity activity) {
+        return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(), activity.getPrice(), activity.getPointsEarned(), activity.getPricePoints(), activity.getPartner().getId());
     }
 }

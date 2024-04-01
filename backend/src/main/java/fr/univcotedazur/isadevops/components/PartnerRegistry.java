@@ -5,6 +5,8 @@ import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
 import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
 import fr.univcotedazur.isadevops.interfaces.PartnerCreator;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Service
 public class PartnerRegistry implements PartnerCreator {
     private final PartnerRepository partnerRepository;
+    private static final Logger LOG = LoggerFactory.getLogger(PartnerRegistry.class);
 
     @Autowired
     public PartnerRegistry(PartnerRepository partnerRepository) {
@@ -30,7 +33,7 @@ public class PartnerRegistry implements PartnerCreator {
     @Override
     @Transactional
     public Partner create(String name, String location, String description) throws AlreadyExistingPartnerException {
-        if (findByName(name).isPresent())
+        if (partnerRepository.findPartnerByName(name).isPresent())
             throw new AlreadyExistingPartnerException(name);
         Partner newPartner = new Partner(name, location, description);
         return partnerRepository.save(newPartner);
@@ -39,17 +42,14 @@ public class PartnerRegistry implements PartnerCreator {
     @Override
     @Transactional
     public void delete(long id) throws PartnerNotFoundException {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Partner partner;
-        System.out.println("BBBBBBBBBBBBB");
         partner= partnerRepository.findById(id).orElse(null);
-        System.out.println("CCCCCCCCCCCCCCCC");
 
         if(partner!=null){
-            System.out.println("Deleting partner is working...");
+            LOG.info("Deleting partner is working...");
             partnerRepository.deleteById(id);
         }else {
-            System.out.println("Deleting partner is not working...");
+            LOG.info("Deleting partner is not working...");
             throw new PartnerNotFoundException("Partner not found");
         }
 
