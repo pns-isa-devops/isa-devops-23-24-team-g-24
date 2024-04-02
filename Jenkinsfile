@@ -24,7 +24,7 @@ pipeline {
                 sh 'cd backend && sudo mvn verify'
                 sh 'cd cli && sudo mvn clean package'
 
-                sh 'docker exec -i cli sh -c 'cat demo.txt' > cli/e2e_output.txt'
+                sh "sudo docker exec -i cli sh -c 'cat demo.txt' > cli/e2e_output.txt"
                 // check whether output match the expected output
                 def diffOutput = sh(
                     script: "diff cli/e2e_output.txt cli/e2e_expected_output.txt",
