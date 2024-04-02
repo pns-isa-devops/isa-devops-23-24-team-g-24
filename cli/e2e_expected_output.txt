@@ -18,4 +18,3 @@ echo "Liste des réservations avant l'ajout"
 list-bookings
 echo "Ajout de la réservation"
 create-booking 1 1 false
-BREAKS THE VERIFICATION
