@@ -2,8 +2,9 @@ echo "Réaliation du script de démonstration End2End"
 echo "Premier test : Enregistrement d'un customer ayant comme nom Simon LeAigri avec comme numéro de carte 1234896983"
 echo "Liste des customers avant l'ajout"
 customers
-echo "Ajout du customer"
+echo "Ajout de deux customers"
 register "Simon LeAigri" "1234896983"
+register "Customer2" "1244896983"
 echo "Liste des customers après l'ajout"
 customers
 echo "Deuxième test : Ajout d'une activité de type Padel effectué à Sophia avec 5 places disponibles faisant gagner 2 points coutant 10 euros ou 12 points dans la liste des activités"
@@ -18,3 +19,10 @@ echo "Liste des réservations avant l'ajout"
 list-bookings
 echo "Ajout de la réservation"
 create-booking 1 1 false
+echo "Liste des groupes avant ajout"
+get-all-groups
+echo "Ajout d'un groupe"
+create-group "Groupe1"
+echo "Liste des groupes après ajout"
+get-all-groups
+transfer-points 1 2 10

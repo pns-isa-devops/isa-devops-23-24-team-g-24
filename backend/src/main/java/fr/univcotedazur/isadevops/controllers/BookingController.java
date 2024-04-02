@@ -4,8 +4,8 @@ import fr.univcotedazur.isadevops.components.BookingHandler;
 import fr.univcotedazur.isadevops.dto.BookingDTO;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
-import fr.univcotedazur.isadevops.exceptions.AlreadyExistingActivityException;
-import fr.univcotedazur.isadevops.exceptions.AlreadyExistingBookingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
-
+    private static final Logger LOG = LoggerFactory.getLogger(BookingController.class);
     private final BookingHandler bookingHandler;
 
     @Autowired
@@ -29,7 +28,7 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<Object> createBooking(@RequestBody @Valid BookingDTO bookingDTO) {
-        System.out.println("Creation of a booking for customer " + bookingDTO.customerId() + " and activity " + bookingDTO.activityId());
+        LOG.info("Creation of a booking for customer {} and activity {}", bookingDTO.customerId(), bookingDTO.activityId());
         try {
             Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId(), bookingDTO.usePoints());
             if(booking == null){
@@ -64,10 +63,8 @@ public class BookingController {
     @GetMapping
     public ResponseEntity<List<BookingDTO>> listAllBookings() {
         List<Booking> bookings = bookingHandler.findAllBookings();
-        return ResponseEntity.ok(bookings.stream().map(this::convertToDTO).collect(Collectors.toList()));
+        return ResponseEntity.ok(bookings.stream().map(this::convertToDTO).toList());
     }
-
-    // Additional endpoints to list bookings by customer or activity can be similar to listAllBookings()
 
     private BookingDTO convertToDTO(Booking booking) {
         return new BookingDTO(booking.getId(), booking.getCustomer().getId(), booking.getActivity().getId(), booking.getUsePoints());
