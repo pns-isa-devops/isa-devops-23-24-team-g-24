@@ -5,7 +5,6 @@ import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.exceptions.*;
 import fr.univcotedazur.isadevops.interfaces.*;
-import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.BookingRepository;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
 import org.slf4j.Logger;
@@ -16,16 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 @Service
 public class BookingHandler implements BookingCreator, BookingFinder {
     private final BookingRepository bookingRepository;
-    private final CustomerRepository customerRepository;
-    private final ActivityRepository activityRepository;
-    CustomerFinder customerFinder;
-    ActivityCreator activityService;
+    private final CustomerUpdater customerUpdater;
+    private final ActivityFinder activityFinder;
+    private final CustomerFinder customerFinder;
     private final Scheduler scheduler;
     private final Payment payment;
     private static final Logger LOG = LoggerFactory.getLogger(BookingHandler.class);
@@ -33,19 +28,18 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     @Autowired
     public BookingHandler(
                           BookingRepository bookingRepository,
-                          CustomerRepository customerRepository,
-                          ActivityRepository activityRepository,
+                          ActivityFinder activityFinder,
                           CustomerFinder customerFinder,
-                          ActivityCreator activityCreator,
+                          CustomerUpdater customerUpdater,
                           Scheduler scheduler,
                           Payment payment
                           ){
 
         this.bookingRepository = bookingRepository;
-        this.customerRepository = customerRepository;
-        this.activityRepository = activityRepository;
+        this.customerUpdater = customerUpdater;
+        this.activityFinder = activityFinder;
         this.customerFinder = customerFinder;
-        this.activityService = activityCreator;
+
         this.scheduler = scheduler;
         this.payment = payment;
     }
@@ -53,9 +47,9 @@ public class BookingHandler implements BookingCreator, BookingFinder {
     @Override
     @Transactional
     public Booking createBooking(Long customerId, Long activityId, boolean usePoints) throws CustomerIdNotFoundException, ActivityIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
-        Customer customer = customerRepository.findById(customerId)
+        Customer customer = customerFinder.findById(customerId)
                 .orElseThrow(() -> new CustomerIdNotFoundException(customerId));
-        Activity activity = activityRepository.findById(activityId)
+        Activity activity = activityFinder.findById(activityId)
                 .orElseThrow(() -> new ActivityIdNotFoundException(activityId));
         if(bookingRepository.findByActivityId(activityId).size()>=activity.getNumberOfPlaces()){
             throw new NotEnoughPlacesException();
@@ -77,7 +71,7 @@ public class BookingHandler implements BookingCreator, BookingFinder {
                 customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
             }
         }
-        customerRepository.save(customer);
+        customerUpdater.updateCustomer(customer);
 
         Booking booking = new Booking(customer, activity, usePoints);
 

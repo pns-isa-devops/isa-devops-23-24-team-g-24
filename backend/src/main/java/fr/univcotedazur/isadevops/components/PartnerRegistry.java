@@ -3,7 +3,8 @@ package fr.univcotedazur.isadevops.components;
 import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingPartnerException;
 import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
-import fr.univcotedazur.isadevops.interfaces.PartnerCreator;
+import fr.univcotedazur.isadevops.interfaces.PartnerFinder;
+import fr.univcotedazur.isadevops.interfaces.PartnerManager;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PartnerRegistry implements PartnerCreator {
+public class PartnerRegistry implements PartnerManager, PartnerFinder {
     private final PartnerRepository partnerRepository;
     private static final Logger LOG = LoggerFactory.getLogger(PartnerRegistry.class);
 
