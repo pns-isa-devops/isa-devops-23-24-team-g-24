@@ -13,47 +13,97 @@ pipeline {
         ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
     }
 
-    stages {
-        stage('main') {
-            when{
-               branch 'main'
-            }
-            steps {
-                sh 'sudo ./build-all.sh'
-                sh 'sudo docker compose down && sudo docker compose up -d'
-                sh 'cd backend && sudo mvn verify'
-                sh 'cd cli && sudo mvn clean package'
-
-                sh "sudo docker exec -i cli sh -c 'cat demo.txt' > cli/e2e_output.txt"
-                // check whether output match the expected output
-                sh '''
-                    if diff -q cli/e2e_output.txt cli/e2e_expected_output.txt; then
-                        echo "Output matches expected output."
-                    else
-                        echo "Output does not match expected output."
-                        exit 1
-                    fi
-                '''
-                dir("backend/target") {
-                    sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app' // HERE THE IP ADDRESS IS THE IP ADDRESS OF THE ARTIFACTORY DOCKER CONTAINER
-
+     stages {
+            stage('Build') {
+                when {
+                    branch 'main'
                 }
-                dir("cli/target"){
-                    sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} cli-0.0.1-SNAPSHOT.jar /java_web-app'
+                steps {
+                    script {
+                        echo 'Executing Build stage...'
+                        sh 'sudo ./build-all.sh'
+                    }
                 }
-
-
-
-                 sh 'sudo docker tag team-g-tcf-scheduler-service:latest simonbeurel/team-g-tcf-scheduler-service:latest '
-                 sh 'sudo docker tag team-g-tcf-bank-service:latest simonbeurel/team-g-tcf-bank-service:latest'
-
-
-                 sh 'sudo docker push simonbeurel/team-g-tcf-scheduler-service:latest'
-                 sh 'sudo docker push simonbeurel/team-g-tcf-bank-service:latest'
-
-                sh 'sudo docker compose down'
             }
-        }
+
+            stage('Docker') {
+                when {
+                    branch 'main'
+                }
+                steps {
+                    script {
+                        echo 'Executing Docker stage...'
+                        sh 'sudo docker compose down && sudo docker compose up -d'
+                    }
+                }
+            }
+
+            stage('Test') {
+                when {
+                    branch 'main'
+                }
+                steps {
+                    script {
+                        echo 'Executing Test stage...'
+                        sh 'cd backend && sudo mvn verify'
+                        sh 'cd cli && sudo mvn clean package'
+                        sh "sudo docker exec -i cli sh -c 'cat demo.txt' > cli/e2e_output.txt"
+                        sh '''
+                            if diff -q cli/e2e_output.txt cli/e2e_expected_output.txt; then
+                                echo "Output matches expected output."
+                            else
+                                echo "Output does not match expected output."
+                                exit 1
+                            fi
+                        '''
+                    }
+                }
+            }
+
+            stage('Artifactory') {
+                when {
+                    branch 'main'
+                }
+                steps {
+                    script {
+                        echo 'Executing Artifactory stage...'
+                        dir("backend/target") {
+                            sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} simpleTCFS-0.0.1-SNAPSHOT.jar /java_web-app'
+                        }
+                        dir("cli/target") {
+                            sh 'jf rt upload --url http://vmpx07.polytech.unice.fr:8002/artifactory --access-token ${ARTIFACTORY_ACCESS_TOKEN} cli-0.0.1-SNAPSHOT.jar /java_web-app'
+                        }
+                    }
+                }
+            }
+
+            stage('Docker Hub') {
+                when {
+                    branch 'main'
+                }
+                steps {
+                    script {
+                        echo 'Executing Docker Hub stage...'
+                        sh 'sudo docker tag team-g-tcf-scheduler-service:latest simonbeurel/team-g-tcf-scheduler-service:latest '
+                        sh 'sudo docker tag team-g-tcf-bank-service:latest simonbeurel/team-g-tcf-bank-service:latest'
+                        sh 'sudo docker push simonbeurel/team-g-tcf-scheduler-service:latest'
+                        sh 'sudo docker push simonbeurel/team-g-tcf-bank-service:latest'
+                    }
+                }
+            }
+
+            stage('Cleanup') {
+                when {
+                    branch 'main'
+                }
+                steps {
+                    script {
+                        echo 'Executing Cleanup stage...'
+                        sh 'sudo docker compose down'
+                    }
+                }
+            }
+
         stage('develop') {
                     when{
                        branch 'develop'
