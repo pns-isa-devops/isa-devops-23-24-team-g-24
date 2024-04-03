@@ -3,6 +3,9 @@ package fr.univcotedazur.isadevops.controllers;
 import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.entities.Customer;
 import fr.univcotedazur.isadevops.components.StatsRetriever;
+import fr.univcotedazur.isadevops.interfaces.StatsActivity;
+import fr.univcotedazur.isadevops.interfaces.StatsCustomer;
+import fr.univcotedazur.isadevops.interfaces.StatsPartner;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +20,17 @@ import java.util.List;
 @RestController
 @RequestMapping(path = StatsController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class StatsController {
-    private final StatsRetriever statsRetriever;
+    private final StatsPartner statsPartner;
+    private final StatsActivity statsActivity;
+    private final StatsCustomer statsCustomer;
 
     public static final String BASE_URI = "/stats";
 
     @Autowired
-    public StatsController(StatsRetriever statsRetriever) {
-        this.statsRetriever = statsRetriever;
+    public StatsController(StatsActivity statsActivity, StatsCustomer statsCustomer, StatsPartner statsPartner) {
+        this.statsCustomer = statsCustomer;
+        this.statsPartner = statsPartner;
+        this.statsActivity = statsActivity;
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -38,16 +45,16 @@ public class StatsController {
 
     @GetMapping(path = "/activity/{activityId}")
     public ResponseEntity<String> getCustomers(@PathVariable("activityId") Long activityId) {
-        return ResponseEntity.ok(statsRetriever.retrieveActivityStats(activityId));
+        return ResponseEntity.ok(statsActivity.retrieveActivityStats(activityId));
     }
 
     @GetMapping(path = "/customer/{customerId}")
     public ResponseEntity<String> getStatsCustomer(@PathVariable("customerId") Long customerId) {
-        return ResponseEntity.ok(statsRetriever.retrieveStatsCustomer(customerId));
+        return ResponseEntity.ok(statsCustomer.retrieveStatsCustomer(customerId));
     }
 
     @GetMapping(path = "/partner/{partnerId}")
     public ResponseEntity<String> getStatsPartner(@PathVariable("partnerId") Long partnerId) {
-        return ResponseEntity.ok(statsRetriever.retrieveStatsPartner(partnerId));
+        return ResponseEntity.ok(statsPartner.retrieveStatsPartner(partnerId));
     }
 }

@@ -4,6 +4,8 @@ import fr.univcotedazur.isadevops.components.BookingHandler;
 import fr.univcotedazur.isadevops.dto.BookingDTO;
 import fr.univcotedazur.isadevops.entities.Booking;
 import fr.univcotedazur.isadevops.exceptions.ActivityIdNotFoundException;
+import fr.univcotedazur.isadevops.interfaces.BookingCreator;
+import fr.univcotedazur.isadevops.interfaces.BookingFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
@@ -19,18 +21,20 @@ import java.util.List;
 @RequestMapping("/booking")
 public class BookingController {
     private static final Logger LOG = LoggerFactory.getLogger(BookingController.class);
-    private final BookingHandler bookingHandler;
+    private final BookingCreator bookingCreator;
+    private final BookingFinder bookingFinder;
 
     @Autowired
-    public BookingController(BookingHandler bookingHandler) {
-        this.bookingHandler = bookingHandler;
+    public BookingController(BookingCreator bookingCreator, BookingFinder bookingFinder) {
+        this.bookingCreator = bookingCreator;
+        this.bookingFinder = bookingFinder;
     }
 
     @PostMapping
     public ResponseEntity<Object> createBooking(@RequestBody @Valid BookingDTO bookingDTO) {
         LOG.info("Creation of a booking for customer {} and activity {}", bookingDTO.customerId(), bookingDTO.activityId());
         try {
-            Booking booking = bookingHandler.createBooking(bookingDTO.customerId(), bookingDTO.activityId(), bookingDTO.usePoints());
+            Booking booking = bookingCreator.createBooking(bookingDTO.customerId(), bookingDTO.activityId(), bookingDTO.usePoints());
             if(booking == null){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Activity already booked for this time slot");
@@ -52,7 +56,7 @@ public class BookingController {
 
     @DeleteMapping("/{bookingId}")
     public ResponseEntity<Void> cancelBooking(@PathVariable Long bookingId) {
-        boolean result = bookingHandler.cancelBooking(bookingId);
+        boolean result = bookingCreator.cancelBooking(bookingId);
         if (result) {
             return ResponseEntity.ok().build();
         } else {
@@ -62,7 +66,7 @@ public class BookingController {
 
     @GetMapping
     public ResponseEntity<List<BookingDTO>> listAllBookings() {
-        List<Booking> bookings = bookingHandler.findAllBookings();
+        List<Booking> bookings = bookingFinder.findAllBookings();
         return ResponseEntity.ok(bookings.stream().map(this::convertToDTO).toList());
     }
 

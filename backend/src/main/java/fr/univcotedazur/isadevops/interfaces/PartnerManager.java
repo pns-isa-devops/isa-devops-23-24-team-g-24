@@ -7,11 +7,7 @@ import fr.univcotedazur.isadevops.exceptions.PartnerNotFoundException;
 import java.util.Optional;
 import java.util.List;
 
-public interface PartnerCreator {
+public interface PartnerManager {
     Partner create(String name, String address, String description) throws AlreadyExistingPartnerException;
-    Optional<Partner> findByName(String name);
-    Optional<Partner> findById(long id);
-    List<Partner> findAll();
-    List<Partner> findAllPartners();
     void delete(long id) throws PartnerNotFoundException;
 }

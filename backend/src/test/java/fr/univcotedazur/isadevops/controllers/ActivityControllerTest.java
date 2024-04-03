@@ -1,9 +1,6 @@
 package fr.univcotedazur.isadevops.controllers;
 import fr.univcotedazur.isadevops.dto.ActivityDTO;
-import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.entities.Partner;
-import fr.univcotedazur.isadevops.exceptions.AlreadyExistingActivityException;
-import fr.univcotedazur.isadevops.services.ActivityService;
 import io.cucumber.java.AfterAll;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
