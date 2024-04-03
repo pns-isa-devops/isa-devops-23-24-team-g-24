@@ -223,10 +223,10 @@ Ainsi, dès qu'un développeur pousse des modifications sur une branche, le pipe
 
 Cela nous permet de détecter rapidement les problèmes potentiels et de les corriger avant qu'ils ne deviennent des problèmes majeurs, contribuant ainsi à maintenir un flux de développement fluide et efficace.
 
-Nous avons établi un plan d'exécution de test selon les branches:
-main:
-develop:
-autres: (mettre les tests effectués)
+Nous avons établi un plan d'exécution de test selon les branches :
+autres que develop et main : effectue uniquement les tests unitaires dans l'optique de s'assurer que la fonctionnalité ajoutée fonctionne correctement.
+develop : effectue seulement les tests unitaires et d'intégration pour s'assurer que la fonctionnalité ajoutée sur develop s'intègre correctement au projet.
+main : effectue tous les tests : unitaires, d'intégration et end to end pour s'assurer que le projet soit stable et livrable.
 
 
 ## Une sauvegarde de builds valide
