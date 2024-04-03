@@ -25,7 +25,7 @@ public class GroupCommands {
 
     @ShellMethod("Ajoute un membre à un groupe")
     public String addMemberToGroup(Long groupId, Long customerId) {
-        restTemplate.postForEntity(BASE_URI + groupId + "/members/" + customerId, null, Void.class);
+        restTemplate.postForEntity(BASE_URI +"/"+ groupId + "/members/" + customerId, null, Void.class);
         return "Membre ajouté au groupe";
     }
     @ShellMethod

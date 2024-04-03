@@ -81,8 +81,9 @@ public class BookingHandlerTest {
 
         when(schedulerProxy.book(testActivity.getName(), "magicPartner")).thenReturn(Optional.of("test"));
         when(bankProxy.pay(any(Customer.class), anyDouble())).thenReturn(Optional.of("RECEIPT:628682be-f22f-4184-9c77-db47fc6c4952"));
+        assertEquals(100, testCustomer.getPointsBalance());
         Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId(), false);
-
+        assertEquals(120, testCustomer.getPointsBalance());
         assertNotNull(booking);
         assertEquals(testCustomer.getId(), booking.getCustomer().getId());
         assertEquals(testActivity.getId(), booking.getActivity().getId());

@@ -62,13 +62,16 @@ public class BookingHandler implements BookingCreator, BookingFinder {
         } else {
             if(activity.getPrice() == -1){
                 throw new PaymentException();
-                //can't pay an extra with euros
             }
             payment.pay(activity.getPrice(), customer);
-
+            System.out.println("PAYINGGGGG");
             //Utilisation d'une regex pour détecter si l'activité booké est un forfait de ski ou non
             if(!activity.getName().toLowerCase().matches(".*forfait.*ski.*")){
+                System.out.println("GETTING POINTS");
+                System.out.println("Activity price : " + activity.getPrice());
+                System.out.println("Customer points balance : " + customer.getPointsBalance());
                 customer.setPointsBalance(customer.getPointsBalance() + activity.getPrice()*2);
+                System.out.println("Customer points balance after : " + customer.getPointsBalance());
             }
         }
         customerUpdater.updateCustomer(customer);

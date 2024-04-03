@@ -9,6 +9,7 @@ import fr.univcotedazur.isadevops.interfaces.GroupManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,13 +49,14 @@ public class GroupController {
     }
 
     @GetMapping
+    @Transactional
     public ResponseEntity<List<GroupDTO>> getAllGroups() {
         List<UserGroup> groups = groupManager.getAllGroups();
         List<GroupDTO> groupDTOs = groups.stream().map(this::convertToDTO).toList();
         return ResponseEntity.ok(groupDTOs);
     }
 
-    private GroupDTO convertToDTO(UserGroup group) {
+    GroupDTO convertToDTO(UserGroup group) {
         return new GroupDTO(group.getId(), group.getName(), group.getMembers().stream()
                 .map(Customer::getId)
                 .collect(Collectors.toSet()));

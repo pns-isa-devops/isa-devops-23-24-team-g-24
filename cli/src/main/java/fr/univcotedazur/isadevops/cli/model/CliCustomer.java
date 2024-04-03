@@ -8,6 +8,7 @@ public class CliCustomer {
     private String name;
     private String creditCard;
     private double pointsBalance;
+    private Long groupId;
 
     public CliCustomer(String name, String creditCard, double pointsBalance) {
         this.name = name;
@@ -39,6 +40,22 @@ public class CliCustomer {
         this.creditCard = creditCard;
     }
 
+    public double getPointsBalance() {
+        return pointsBalance;
+    }
+
+    public void setPointsBalance(double pointsBalance) {
+        this.pointsBalance = pointsBalance;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -46,6 +63,7 @@ public class CliCustomer {
                 ", name='" + name + '\'' +
                 ", creditCard='" + creditCard + '\'' +
                 ", pointsBalance='" + pointsBalance + '\'' +
+                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }
