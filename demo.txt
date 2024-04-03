@@ -1,2 +1,56 @@
-Script started on Wed Apr  3 18:13:35 2024
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                           [0m[27m[24m[Jdamienstengel@MacBook-Pro-2 isa-devops-23-24 % [K[?2004h
+echo "Début du script de démonstration End2End"
+
+echo "Premier test: Enregistrement de deux clients avec les nom Simon et Lorenzo"
+customers
+echo "Ajout de deux clients"
+register "Simon" "1234896983"
+register "Lorenzo" "1244896983"
+echo "Affichage des clients après ajout"
+customers
+
+echo "Création d'un partenaire 'GymX' situé à Nice"
+add-partner "GymX" "Nice" "A state-of-the-art gym in the heart of Nice"
+echo "Affichage des partenaires après ajout"
+list-partners
+
+echo "Deuxième test: Ajout d'une activité de type Padel à Sophia avec 5 places disponibles et coûtant 10 euros ou 12 points"
+list-activities
+echo "Ajout de l'activité Padel avec partenaire 'GymX'"
+add-activity "Padel" "Sophia" 1 10 12 1
+echo "Affichage des activités après ajout"
+list-activities
+
+echo "Troisième test: Création d'une réservation de l'activité Padel pour Simon"
+list-bookings
+echo "Ajout de la réservation"
+create-booking 1 1 false
+echo "Affichage des réservations après ajout et du solde de points de Simon"
+list-bookings
+customers
+
+
+echo "Quatrième test: Gestion des groupes et transferts de points"
+get-all-groups
+echo "Création d'un groupe nommé 'Groupe1'"
+create-group "Groupe1"
+get-all-groups
+echo "Ajout de membres au groupe"
+add-member-to-group 1 1
+add-member-to-group 1 2
+
+
+echo "Transfert de points entre membres du même groupe (sans pénalité)"
+transfer-points 1 2 10
+echo "Affichage des clients après transfert de points"
+customers
+
+echo "Test de l'ajout d'un client existant (doit échouer)"
+register "Simon" "1234896983"
+
+echo "Test de l'ajout d'une activité existante (doit échouer)"
+add-activity "Padel" "Sophia" 5 10 2 12 1
+
+echo "Test de création d'une réservation pour une activité complète (doit échouer)"
+create-booking 1 1 false
+
+echo "Fin du script de démonstration End2End"
