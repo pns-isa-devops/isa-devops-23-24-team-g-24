@@ -1,11 +1,14 @@
 package fr.univcotedazur.isadevops.entities;
 
+import fr.univcotedazur.isadevops.exceptions.NotEnoughPointsException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -13,7 +16,7 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private Long id; // Whether Long/Int or UUID are better primary keys, exposable outside is a vast issue, keep it simple here
+    private Long id;
 
     @NotBlank
     @Column(unique = true)
@@ -22,11 +25,12 @@ public class Customer {
     @Pattern(regexp = "\\d{10}+", message = "Invalid creditCardNumber")
     private String creditCard;
 
-//    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY, mappedBy = "customer")
-//    private Set<Order> orders = new HashSet<>();
-//
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    private Set<Item> cart = new HashSet<>();
+    @NotNull
+    private double pointsBalance = 0;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private UserGroup group;
 
     public Customer() {
     }
@@ -34,8 +38,13 @@ public class Customer {
     public Customer(String n, String c) {
         this.name = n;
         this.creditCard = c;
+        this.pointsBalance = 0;
     }
-
+    public Customer(String n, String c, double p) {
+        this.name = n;
+        this.creditCard = c;
+        this.pointsBalance = p;
+    }
     public Long getId() {
         return id;
     }
@@ -55,30 +64,34 @@ public class Customer {
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
+    public double getPointsBalance() {
+        return pointsBalance;
+    }
 
-//    public void addOrder(Order o) {
-//        this.orders.add(o);
-//    }
-//
-//    public Set<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(Set<Order> orders) {
-//            this.orders = orders;
-//    }
-//
-//    public Set<Item> getCart() {
-//        return cart;
-//    }
-//
-//    public void setCart(Set<Item> cart) {
-//        this.cart = cart;
-//    }
-//
-//    public void clearCart() {
-//        this.cart.clear();
-//    }
+    public void setPointsBalance(double pointsBalance) {
+        this.pointsBalance = pointsBalance;
+    }
+
+    public UserGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(UserGroup group) {
+        this.group = group;
+    }
+    public void transferPointsTo(Customer recipient, double points) throws NotEnoughPointsException {
+        if (this.pointsBalance < points) {
+            throw new NotEnoughPointsException();
+        }
+
+        boolean sameGroup = Optional.ofNullable(this.group)
+                .equals(Optional.ofNullable(recipient.getGroup()));
+
+        double finalPoints = sameGroup ? points : points * 0.9;
+
+        this.pointsBalance -= points;
+        recipient.pointsBalance += finalPoints;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,6 +103,16 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(name, creditCard);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creditCard='" + creditCard + '\'' +
+                ", pointsBalance=" + pointsBalance +
+                '}';
     }
 
     public void setId(long l) {

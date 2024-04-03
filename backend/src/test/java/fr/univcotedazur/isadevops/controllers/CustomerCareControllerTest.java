@@ -36,7 +36,7 @@ public class CustomerCareControllerTest {
 
     @Test
     void validCustomerTest() throws Exception {
-        CustomerDTO validCustomer = new CustomerDTO(null, "john", "1234567890");
+        CustomerDTO validCustomer = new CustomerDTO(null, "john", "1234567890", 10, null);
         mockMvc.perform(MockMvcRequestBuilders.post(CustomerCareController.BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(validCustomer)))
@@ -47,7 +47,7 @@ public class CustomerCareControllerTest {
 
     @Test
     void inValidCustomerTest() throws Exception {
-        CustomerDTO badCreditCardCustomer = new CustomerDTO(null, "badCreditCard", "123");
+        CustomerDTO badCreditCardCustomer = new CustomerDTO(null, "badCreditCard", "123",10,null);
         mockMvc.perform(MockMvcRequestBuilders.post(CustomerCareController.BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(badCreditCardCustomer)))

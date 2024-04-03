@@ -14,9 +14,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="entityManagerFactory" />
-        </datasource-mapping>
+        <datasource-mapping />
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -177,6 +175,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.31.0" level="project" />
   </component>
   <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="57d4fe20-0704-40b5-a5cb-619f0ca7c1f2" />
+    <option name="uniqueId" value="9202b43c-b4e8-4e2d-a80c-d46a1b60f83f" />
   </component>
 </module>
