@@ -57,6 +57,7 @@ public class CustomerCareController {
 
     @GetMapping
     public ResponseEntity<List<CustomerDTO>> getCustomers() {
+        System.out.println("Getting all customers");
         return ResponseEntity.ok(finder.findAll().stream().map(CustomerCareController::convertCustomerToDto).toList());
     }
 
@@ -65,8 +66,15 @@ public class CustomerCareController {
         return ResponseEntity.ok(convertCustomerToDto(finder.retrieveCustomer(customerId)));
     }
 
-    private static CustomerDTO convertCustomerToDto(Customer customer) { // In more complex cases, we could use a ModelMapper such as MapStruct
-        return new CustomerDTO(customer.getId(), customer.getName(), customer.getCreditCard());
+    private static CustomerDTO convertCustomerToDto(Customer customer) {
+        System.out.println("Converting Customer to DTO: " + customer);
+
+        CustomerDTO dto = new CustomerDTO(customer.getId(), customer.getName(), customer.getCreditCard(), customer.getPointsBalance(), (customer.getGroup() != null) ? customer.getGroup().getId() : null);
+
+        // Log après la conversion
+        System.out.println("Converted DTO: " + dto);
+
+        return dto;
     }
     @PostMapping("/transferPoints")
     public ResponseEntity<String> transferPoints(@RequestBody TransferPointsRequestDTO request) {

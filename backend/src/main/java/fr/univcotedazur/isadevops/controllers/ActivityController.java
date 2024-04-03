@@ -4,7 +4,9 @@ import fr.univcotedazur.isadevops.dto.ActivityDTO;
 import fr.univcotedazur.isadevops.dto.ErrorDTO;
 import fr.univcotedazur.isadevops.entities.Activity;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingActivityException;
-import fr.univcotedazur.isadevops.services.ActivityService;
+import fr.univcotedazur.isadevops.components.ActivityService;
+import fr.univcotedazur.isadevops.interfaces.ActivityCreator;
+import fr.univcotedazur.isadevops.interfaces.ActivityFinder;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +23,16 @@ import java.util.List;
 @RestController
 @RequestMapping(path = ActivityController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class ActivityController {
-    private final ActivityService activityService;
+    private final ActivityCreator activityCreator;
+    private final ActivityFinder activityFinder;
     public static final String BASE_URI = "/activities";
     private static final Logger LOG = LoggerFactory.getLogger(ActivityController.class);
 
 
     @Autowired
-    public ActivityController(ActivityService activityService) {
-        this.activityService = activityService;
+    public ActivityController(ActivityCreator activityCreator, ActivityFinder activityFinder) {
+        this.activityCreator = activityCreator;
+        this.activityFinder = activityFinder;
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -39,7 +43,7 @@ public class ActivityController {
 
     @GetMapping
     public ResponseEntity<List<Activity>> getAllActivities() {
-        List<Activity> activities = activityService.findAllActivities();
+        List<Activity> activities = activityFinder.findAllActivities();
         LOG.info("Fetching activities");
         return ResponseEntity.ok(activities);
     }
@@ -49,15 +53,13 @@ public class ActivityController {
         LOG.info("Adding activity");
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(convertActivityToDTO(activityService.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pricePoints(), activity.idPartner())));
+                    .body(convertActivityToDTO(activityCreator.create(activity.name(), activity.location(), activity.numberOfPlaces(),activity.price(), activity.pricePoints(), activity.idPartner())));
         } catch (AlreadyExistingActivityException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 
-
-
-    private static ActivityDTO convertActivityToDTO(Activity activity) { // In more complex cases, we could use a ModelMapper such as MapStruct
+    private static ActivityDTO convertActivityToDTO(Activity activity) {
         return new ActivityDTO(activity.getId(), activity.getName(), activity.getLocation(), activity.getNumberOfPlaces(),activity.getPrice(), activity.getPricePoints(), activity.getPartner().getId());
     }
 }

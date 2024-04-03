@@ -9,6 +9,7 @@ import fr.univcotedazur.isadevops.repositories.BookingRepository;
 import fr.univcotedazur.isadevops.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -50,10 +51,16 @@ public class ITSchedulerProxy {
     private BookingRepository bookingRepository;
 
     @MockBean
-    private CustomerRepository customerRepository;
+    private CustomerFinder customerFinder;
+    @MockBean
+    private CustomerUpdater customerUpdater;
+    @MockBean
+    private CustomerRegistration customerRegistration;
 
     @MockBean
-    private ActivityRepository activityRepository;
+    private ActivityFinder activityFinder;
+    @MockBean
+    private ActivityCreator activityCreator;
 
     @Autowired
     private BookingHandler bookingHandler;
@@ -71,8 +78,8 @@ public class ITSchedulerProxy {
 
     @Test
     public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException, PaymentException, NotEnoughPlacesException, NotEnoughPointsException {
-        when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
-        when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
+        when(customerFinder.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
+        when(activityFinder.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
         
         LocalDate currentDate = LocalDate.now();

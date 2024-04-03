@@ -34,10 +34,17 @@ public class BookingHandlerTest {
     private BookingRepository bookingRepository;
 
     @MockBean
-    private CustomerRepository customerRepository;
+    private CustomerFinder customerFinder;
 
     @MockBean
-    private ActivityRepository activityRepository;
+    private CustomerUpdater customerUpdater;
+    @MockBean
+    private CustomerRegistration customerRegistration;
+
+    @MockBean
+    private ActivityFinder activityFinder;
+    @MockBean
+    private ActivityCreator activityCreator;
 
     @MockBean
     private BankProxy bankProxy;
@@ -66,16 +73,17 @@ public class BookingHandlerTest {
 
     @Test
     public void createBooking_shouldCreateBooking_whenValidCustomerAndActivityGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException, PaymentException, NotEnoughPointsException, NotEnoughPlacesException {
-        when(customerRepository.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
-        when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
+        when(customerFinder.findById(testCustomer.getId())).thenReturn(Optional.of(testCustomer));
+        when(activityFinder.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         when(bookingRepository.save(any(Booking.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(schedulerProxy.book(testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
 
 
         when(schedulerProxy.book(testActivity.getName(), "magicPartner")).thenReturn(Optional.of("test"));
         when(bankProxy.pay(any(Customer.class), anyDouble())).thenReturn(Optional.of("RECEIPT:628682be-f22f-4184-9c77-db47fc6c4952"));
+        assertEquals(100, testCustomer.getPointsBalance());
         Booking booking = bookingHandler.createBooking(testCustomer.getId(), testActivity.getId(), false);
-
+        assertEquals(120, testCustomer.getPointsBalance());
         assertNotNull(booking);
         assertEquals(testCustomer.getId(), booking.getCustomer().getId());
         assertEquals(testActivity.getId(), booking.getActivity().getId());
@@ -83,7 +91,7 @@ public class BookingHandlerTest {
 
     @Test
     public void createBooking_shouldThrowException_whenInvalidCustomerGiven() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
-        when(customerRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(customerFinder.findById(anyLong())).thenReturn(Optional.empty());
         when(schedulerProxy.book(testActivity.getName(), "sophia")).thenReturn(Optional.of("test"));
 
 
@@ -92,8 +100,8 @@ public class BookingHandlerTest {
 
     @Test
     public void createBooking_shouldThrowException_whenNotEnoughtPoints() throws ActivityIdNotFoundException, CustomerIdNotFoundException {
-        when(customerRepository.findById(testCustomerWith0Points.getId())).thenReturn(Optional.of(testCustomerWith0Points));
-        when(activityRepository.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
+        when(customerFinder.findById(testCustomerWith0Points.getId())).thenReturn(Optional.of(testCustomerWith0Points));
+        when(activityFinder.findById(testActivity.getId())).thenReturn(Optional.of(testActivity));
         assertThrows(NotEnoughPointsException.class ,() -> bookingHandler.createBooking(testCustomerWith0Points.getId(), testActivity.getId(),true));
     }
 

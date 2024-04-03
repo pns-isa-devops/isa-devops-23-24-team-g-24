@@ -60,7 +60,7 @@ public class CustomerCommands {
     }
     @ShellMethod("Transfer points from a user to another (transfer-points FROM_CUSTOMER_ID TO_CUSTOMER_ID POINTS)")
     public String transferPoints(Long fromCustomerId, Long toCustomerId, int points) {
-        restTemplate.postForEntity(BASE_URI + "/transferPoints", new CliTransferPointsRequest(fromCustomerId,toCustomerId,points), CliTransferPointsRequest.class);
+        restTemplate.postForEntity(BASE_URI + "/transferPoints", new CliTransferPointsRequest(fromCustomerId,toCustomerId,points), String.class);
         return "Points transferred";
     }
 

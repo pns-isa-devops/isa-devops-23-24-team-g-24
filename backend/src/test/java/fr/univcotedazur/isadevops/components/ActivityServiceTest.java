@@ -6,6 +6,7 @@ import fr.univcotedazur.isadevops.entities.Partner;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingActivityException;
 import fr.univcotedazur.isadevops.exceptions.AlreadyExistingCustomerException;
 import fr.univcotedazur.isadevops.interfaces.ActivityCreator;
+import fr.univcotedazur.isadevops.interfaces.ActivityFinder;
 import fr.univcotedazur.isadevops.repositories.ActivityRepository;
 import fr.univcotedazur.isadevops.repositories.PartnerRepository;
 
@@ -27,6 +28,9 @@ public class ActivityServiceTest {
     @Autowired
     private ActivityCreator activityCreator;
 
+    @Autowired
+    private ActivityFinder activityFinder;
+
     private final String name = "Tennis";
     private final String localisation = "Nice";
     private final long numberOfPlaces = 10;
@@ -40,17 +44,17 @@ public class ActivityServiceTest {
 
     @Test
     void unknownCustomer() {
-        assertFalse(activityCreator.findByName(name).isPresent());
+        assertFalse(activityFinder.findByName(name).isPresent());
     }
 
     @Test
     void addActivity() throws Exception, AlreadyExistingActivityException {
         Activity activity = activityCreator.create(name, localisation, numberOfPlaces,price, pricePoints, 0L);
-        Optional<Activity> returned = activityCreator.findByName(name);
+        Optional<Activity> returned = activityFinder.findByName(name);
         assertTrue(returned.isPresent());
         Activity activityReturned = returned.get();
         assertEquals(activity, activityReturned);
-        assertEquals(activity, activityCreator.findById(activityReturned.getId()).get());
+        assertEquals(activity, activityFinder.findById(activityReturned.getId()).get());
         assertEquals(name, activityReturned.getName());
     }
 
@@ -62,18 +66,18 @@ public class ActivityServiceTest {
 
     @Test
     void findAllCustomersEmptyInitially() {
-        List<Activity> activities = activityCreator.findAllActivities();
+        List<Activity> activities = activityFinder.findAllActivities();
         assertTrue(activities.isEmpty());
     }
 
     @Test
     void findAllCustomers() throws Exception, AlreadyExistingActivityException {
         activityCreator.create(name, localisation, numberOfPlaces,price, pricePoints, 0L);
-        List<Activity> activities = activityCreator.findAllActivities();
+        List<Activity> activities = activityFinder.findAllActivities();
         assertFalse(activities.isEmpty());
         assertEquals(1, activities.size());
         activityCreator.create("Football", "Nice", 20,20, 20, 0L);
-        activities = activityCreator.findAllActivities();
+        activities = activityFinder.findAllActivities();
         assertFalse(activities.isEmpty());
         assertEquals(2, activities.size());
     }

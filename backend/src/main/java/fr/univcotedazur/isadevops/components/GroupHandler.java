@@ -3,6 +3,7 @@ package fr.univcotedazur.isadevops.components;
 import fr.univcotedazur.isadevops.entities.UserGroup;
 import fr.univcotedazur.isadevops.exceptions.CustomerIdNotFoundException;
 import fr.univcotedazur.isadevops.interfaces.CustomerUpdater;
+import fr.univcotedazur.isadevops.interfaces.GroupManager;
 import fr.univcotedazur.isadevops.repositories.GroupRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class GroupHandler {
+public class GroupHandler implements GroupManager {
 
     private final GroupRepository groupRepository;
     private final CustomerUpdater customerUpdater;
@@ -24,6 +25,7 @@ public class GroupHandler {
     }
 
     @Transactional
+    @Override
     public UserGroup createGroup(String name) {
         UserGroup group = new UserGroup();
         group.setName(name);
@@ -31,6 +33,7 @@ public class GroupHandler {
     }
 
     @Transactional
+    @Override
     public void addMemberToGroup(Long groupId, Long customerId) throws CustomerIdNotFoundException {
         UserGroup group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("Groupe non trouvé"));
@@ -38,12 +41,14 @@ public class GroupHandler {
     }
 
     @Transactional
+    @Override
     public boolean deleteGroup(Long groupId) {
         groupRepository.deleteById(groupId);
         return true;
     }
 
     @Transactional
+    @Override
     public List<UserGroup> getAllGroups() {
         return groupRepository.findAll();
     }
