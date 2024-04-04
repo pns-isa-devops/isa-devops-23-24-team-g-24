@@ -59,7 +59,6 @@ pipeline {
                     }
                 }
             }
-
             stage('Artifactory') {
                 when {
                     branch 'main'
@@ -76,7 +75,6 @@ pipeline {
                     }
                 }
             }
-
             stage('Docker Hub') {
                 when {
                     branch 'main'
