@@ -59,6 +59,7 @@ pipeline {
                     }
                 }
             }
+
             stage('Artifactory') {
                 when {
                     branch 'main'
