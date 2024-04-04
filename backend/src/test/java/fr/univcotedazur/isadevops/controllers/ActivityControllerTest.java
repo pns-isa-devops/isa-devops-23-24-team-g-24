@@ -61,6 +61,7 @@ public class ActivityControllerTest {
 
     @Test
     void inValidActivityTestBlankName() throws Exception {
+
         // Creating an invalid activity with a blank name
         ActivityDTO invalidActivityWithBlankName = new ActivityDTO(null, "", "location", 10L, 10, 10L, 1L);
         mockMvc.perform(MockMvcRequestBuilders.post(ActivityController.BASE_URI)

@@ -56,6 +56,8 @@ public class ActivityServiceTest {
         assertEquals(activity, activityReturned);
         assertEquals(activity, activityFinder.findById(activityReturned.getId()).get());
         assertEquals(name, activityReturned.getName());
+        //ERROR ON PURPOSE
+        assertEquals(3,2);
     }
 
     @Test
